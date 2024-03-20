@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "npx hardhat test",
-    "local": "npx hardhat node",
+    "localhost": "npx hardhat node",
     "deploy:localhost": "npx hardhat run --network localhost scripts/deploy.js",
     "deploy:testnet": "npx hardhat run --network testnet scripts/deploy.js",
     "deploy:mainnet": "npx hardhat run --network mainnet scripts/deploy.js"
@@ -15,12 +15,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^15.2.10",
-    "@angular/cdk": "^14.2.7",
+    "@angular/cdk": "^15.2.9",
     "@angular/common": "^15.2.10",
     "@angular/compiler": "^15.2.10",
     "@angular/core": "^15.2.10",
     "@angular/forms": "^15.2.10",
-    "@angular/material": "^14.2.7",
+    "@angular/material": "^15.2.9",
     "@angular/platform-browser": "^15.2.10",
     "@angular/platform-browser-dynamic": "^15.2.10",
     "@angular/router": "^15.2.10",
