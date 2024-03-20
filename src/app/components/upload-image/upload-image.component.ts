@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { IpfsService } from "../../services/ipfs.service"
-import { FormBuilder, Validators } from "@angular/forms"
+import { UntypedFormBuilder, Validators } from "@angular/forms"
 import { Router } from "@angular/router"
 import { GalleryService } from "../../services/gallery.service";
 
@@ -21,7 +21,7 @@ export class UploadImageComponent {
 
   constructor(
     private ipfs: IpfsService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private gallery: GalleryService
   ) { }
