@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GalleryService } from "../../services/gallery.service";
+import { DappazonService } from "../../services/dappazon.service";
 import { HttpClient } from "@angular/common/http";
 
 @Component({
@@ -11,7 +11,7 @@ export class ImagesByAuthorComponent implements OnInit {
   public images: any[] = []
 
   constructor(
-    private gallery: GalleryService,
+    private gallery: DappazonService,
     private http: HttpClient
   ) { }
 

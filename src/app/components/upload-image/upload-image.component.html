@@ -3,7 +3,7 @@
   <p *ngIf="formError" class="error">{{formError}}</p>
   <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
     <p>
-      <mat-form-field appearance="legacy">
+      <mat-form-field appearance="fill">
         <mat-label>Image Title</mat-label>
         <input matInput formControlName="title">
       </mat-form-field>
@@ -21,7 +21,7 @@
     </div>
 
     <p>
-      <mat-form-field appearance="legacy">
+      <mat-form-field appearance="fill">
         <mat-label>Image Description</mat-label>
         <textarea matInput formControlName="description"></textarea>
       </mat-form-field>

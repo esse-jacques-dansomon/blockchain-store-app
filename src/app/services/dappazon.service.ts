@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
 import { ethers } from "ethers";
 import { environment } from "../../environments/environment";
-import Gallery from '../../../artifacts/contracts/Gallery.sol/Gallery.json'
+import Gallery from '../../../artifacts/contracts/Dappazon.sol/Dappazon.json'
 import detectEthereumProvider from "@metamask/detect-provider";
 
 @Injectable({
   providedIn: 'root'
 })
-export class GalleryService {
+export class DappazonService {
   public async getAllImages(): Promise<any[]> {
-    const contract = await GalleryService.getContract()
+    const contract = await DappazonService.getContract()
 
     return await contract['retrieveAllImages']()
   }
 
   public async getImagesByAuthor(): Promise<any[]> {
-    const contract = await GalleryService.getContract(true)
+    const contract = await DappazonService.getContract(true)
 
     return await contract['retrieveImagesByAuthor']()
   }
 
   public async addImage(title: string, fileUrl: string): Promise<boolean> {
-    const contract = await GalleryService.getContract(true)
+    const contract = await DappazonService.getContract(true)
     const transaction = await contract['store'](
       title,
       fileUrl
@@ -32,7 +32,7 @@ export class GalleryService {
   }
 
   private static async getContract(bySigner=false) {
-    const provider = await GalleryService.getWebProvider()
+    const provider = await DappazonService.getWebProvider()
     const signer = provider.getSigner()
 
     return new ethers.Contract(

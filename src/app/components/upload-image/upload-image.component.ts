@@ -2,7 +2,7 @@ import { Component } from '@angular/core'
 import { IpfsService } from "../../services/ipfs.service"
 import { UntypedFormBuilder, Validators } from "@angular/forms"
 import { Router } from "@angular/router"
-import { GalleryService } from "../../services/gallery.service";
+import { DappazonService } from "../../services/dappazon.service";
 
 @Component({
   selector: 'app-upload-image',
@@ -23,7 +23,7 @@ export class UploadImageComponent {
     private ipfs: IpfsService,
     private fb: UntypedFormBuilder,
     private router: Router,
-    private gallery: GalleryService
+    private gallery: DappazonService
   ) { }
 
   public async uploadImage(eventTarget: any) {

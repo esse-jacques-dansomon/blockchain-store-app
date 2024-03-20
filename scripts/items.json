@@ -1,0 +1,94 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Camera",
+      "description": "A camera is an optical instrument used to record images. At their most basic, cameras are sealed boxes (the camera body) with a small hole (the aperture) that allow light in to capture an image on a light-sensitive surface (usually photographic film or a digital sensor). Cameras have various mechanisms to control how the light falls onto the light-sensitive surface. Lenses focus the light entering the camera, the size of the aperture can be widened or narrowed to let more or less light into the camera, and a shutter mechanism determines the amount of time the photo-sensitive surface is exposed to the light.",
+      "category": "electronics",
+      "image": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/camera.jpg",
+      "cost": "1",
+      "rating": 4,
+      "stock": 10
+    },
+    {
+      "id": 2,
+      "name": "Drone",
+      "description": "An unmanned aerial vehicle (UAV), commonly known as a drone, is an aircraft without a human pilot aboard. UAVs are a component of an unmanned aircraft system (UAS); which include a UAV, a ground-based controller, and a system of communications between the two. The flight of UAVs may operate with various degrees of autonomy: either under remote control by a human operator or autonomously by onboard computers.",
+      "category": "electronics",
+      "image": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/drone.jpg",
+      "cost": "2",
+      "rating": 5,
+      "stock": 6
+    },
+    {
+      "id": 3,
+      "name": "Headset",
+      "description": "A headset combines a headphone with a microphone. Headsets are made with either a single-earpiece (mono) or a double-earpiece (mono to both ears or stereo). Headsets provide the equivalent functionality of a telephone handset but with hands-free operation. They have many uses including in call centers and other telephone-intensive jobs and for anybody wishing to have both hands free during a telephone conversation.",
+      "category": "electronics",
+      "image": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/headset.jpg",
+      "cost": "0.25",
+      "rating": 2,
+      "stock": 24
+    },
+    {
+      "id": 4,
+      "name": "Shoes",
+      "description": "Shoes are also used as an item of decoration and fashion. The design of shoes has varied enormously through time and from culture to culture, with appearance originally being tied to function. Additionally, fashion has often dictated many design elements, such as whether shoes have very high heels or flat ones. Contemporary footwear varies widely in style, complexity and cost. Basic sandals may consist of only a thin sole and simple strap and be sold for a low cost. High fashion shoes made by famous designers may be made of expensive materials, use complex construction and sell for hundreds or even thousands of dollars a pair.",
+      "category": "clothing",
+      "image": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/shoes.jpg",
+      "cost": "0.25",
+      "rating": 5,
+      "stock": 3
+    },
+    {
+      "id": 5,
+      "name": "Sunglasses",
+      "description": "Sunglasses or sun glasses (informally called shades) are a form of protective eyewear designed primarily to prevent bright sunlight and high-energy visible light from damaging or discomforting the eyes. They can sometimes also function as a visual aid, as variously termed spectacles or glasses exist, featuring lenses that are colored, polarized or darkened. In the early 20th century, they were also known as sun cheaters (cheaters being an American slang term for glasses).",
+      "category": "clothing",
+      "image": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/sunglasses.jpg",
+      "cost": "0.10",
+      "rating": 4,
+      "stock": 12
+    },
+    {
+      "id": 6,
+      "name": "Watch",
+      "description": "A watch is a timepiece intended to be carried or worn by a person. It is designed to keep working despite the motions caused by the person's activities. A wristwatch is designed to be worn around the wrist, attached by a watch strap or other type of bracelet. A pocket watch is designed for a person to carry in a pocket. The study of timekeeping is known as horology.",
+      "category": "clothing",
+      "image": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/watch.jpg",
+      "cost": "1.25",
+      "rating": 4,
+      "stock": 0
+    },
+    {
+      "id": 7,
+      "name": "Puzzle Cube",
+      "description": "A puzzle is a game, problem, or toy that tests a person's ingenuity or knowledge. In a puzzle, the solver is expected to put pieces together in a logical way, in order to arrive at the correct or fun solution of the puzzle. There are different genres of puzzles, such as crossword puzzles, word-search puzzles, number puzzles, or logic puzzles.",
+      "category": "toys",
+      "image": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/cube.jpg",
+      "cost": "0.05",
+      "rating": 4,
+      "stock": 15
+    },
+    {
+      "id": 8,
+      "name": "Train Set",
+      "description": "A train set is a set of toys that can be used to create a train track and play with toy trains. It is a classic toy that has been around for many years and is still popular today. Train sets can be made of wood, plastic, or metal and can be simple or complex. They can be used by children of all ages and can be a great way to encourage creativity and imagination. Train sets can be used to teach children about the different parts of a train and how they work together. They can also be used to teach children about the different types of trains and how they are used.",
+      "category": "toys",
+      "image": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/train.jpg",
+      "cost": "0.20",
+      "rating": 4,
+      "stock": 0
+    },
+    {
+      "id": 9,
+      "name": "Robot Set",
+      "description": "A robot is a machine—especially one programmable by a computer—capable of carrying out a complex series of actions automatically. Robots can be guided by an external control device or the control may be embedded within. Robots may be constructed on the lines of human form, but most robots are machines designed to perform a task with no regard to their aesthetics. Robots can be autonomous or semi-autonomous and range from humanoids such as Honda's Advanced Step in Innovative Mobility (ASIMO) and TOSY's TOSY Ping Pong Playing Robot (TOPIO) to industrial robots, medical operating robots, patient assist robots, dog therapy robots, collectively programmed swarm robots, UAV drones such as General Atomics MQ-1 Predator, and even microscopic nano robots. By mimicking a lifelike appearance or automating movements, a robot may convey a sense of intelligence or thought of its own.",
+      "category": "toys",
+      "image": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/robots.jpg",
+      "cost": "0.15",
+      "rating": 3,
+      "stock": 12
+    }
+  ]
+}

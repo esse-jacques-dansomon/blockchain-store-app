@@ -1,14 +1,35 @@
 const hre = require('hardhat')
-
+const tokens = (n) => hre.ethers.utils.parseUnits(n.toString(), 'ether')
+const { items} = require('./items.json')
 async function main() {
-  const Gallery = await hre.ethers.getContractFactory('Gallery')
-  const gallery = await Gallery.deploy()
-  await gallery.deployed()
+  // We get the contract to deploy
+  const [deployer] = await hre.ethers.getSigners()
+  console.log('Deploying contracts with the account:', deployer.address)
 
-  const txHash = gallery.deployTransaction.hash;
-  const txReceipt = await hre.ethers.provider.waitForTransaction(txHash);
-  console.log(`check your contract: https://mumbai.polygonscan.com/address/${txReceipt.contractAddress}`)
-  console.log("contract address:", txReceipt.contractAddress);
+  // We get the contract to deploy
+  const Dappazon = await hre.ethers.getContractFactory('Dappazon')
+  const dappazon = await Dappazon.deploy()
+  await dappazon.deployed()
+
+  console.log('Dappazon deployed to:', dappazon.address)
+
+  // add products
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i]
+    let transaction = await dappazon.connect(deployer).addProduct(
+      item.id,
+      item.name,
+      item.category,
+      item.description,
+      item.image,
+      tokens(item.cost),
+      item.stock,
+      item.rating
+      )
+    await transaction.wait();
+  }
+
+
 }
 
 main()

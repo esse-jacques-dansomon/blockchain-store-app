@@ -12,7 +12,16 @@ contract Dappazon {
   address public owner;
 
   //product structure
-  struct Product {uint256 id;string name;string category;string description;string image;uint256 cost;uint256 stock;uint256 rating;}
+  struct Product {
+    uint256 id;
+    string name;
+    string category;
+    string description;
+    string image;
+    uint256 cost;
+    uint256 stock;
+    uint256 rating;
+  }
   //order structure
   struct Order {
     uint256 id;
