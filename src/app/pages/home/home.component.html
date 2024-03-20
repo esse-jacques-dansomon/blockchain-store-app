@@ -1,0 +1,11 @@
+<h2>
+  Dappazon Best seller
+</h2>
+
+@for (category of productsByCategory; track category.category) {
+  <app-section [title]="category.category" [items]="category.products"/>
+} @empty {
+  <p>
+    No products found
+  </p>
+}

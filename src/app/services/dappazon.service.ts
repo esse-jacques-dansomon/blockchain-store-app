@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ethers } from "ethers";
 import { environment } from "../../environments/environment";
-import Gallery from '../../../artifacts/contracts/Dappazon.sol/Dappazon.json'
+import Dappazon from '../../../artifacts/contracts/Dappazon.sol/Dappazon.json'
 import detectEthereumProvider from "@metamask/detect-provider";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DappazonService {
-  public async getAllImages(): Promise<any[]> {
+  public async getAllProducts(): Promise<any[]> {
     const contract = await DappazonService.getContract()
-
-    return await contract['retrieveAllImages']()
+    return await contract['getProducts']()
   }
 
   public async getImagesByAuthor(): Promise<any[]> {
@@ -37,8 +36,8 @@ export class DappazonService {
 
     return new ethers.Contract(
       environment.contractAddress,
-      Gallery.abi,
-      bySigner ? signer : provider,
+      Dappazon.abi,
+      provider,
     )
   }
 
@@ -50,5 +49,16 @@ export class DappazonService {
     }
 
     return new ethers.providers.Web3Provider(provider)
+  }
+
+  public async getAccount() {
+    const provider = await DappazonService.getWebProvider()
+    const signer = provider.getSigner()
+
+    return await signer.getAddress()
+  }
+
+  connect() {
+    return DappazonService.getWebProvider()
   }
 }

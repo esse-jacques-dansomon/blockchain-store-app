@@ -1,12 +1,38 @@
-<mat-toolbar color="primary">
-  <span>Image Gallery</span>
-
-  <div>
-    <button mat-button routerLink="/home" routerLinkActive="active">Home</button>
-    <button mat-button routerLink="/authors-images" routerLinkActive="active">My Images</button>
-    <button mat-button routerLink="/upload" routerLinkActive="active">Upload Image</button>
+<nav>
+  <div class="nav__brand">
+    <h1>Dappazon</h1>
   </div>
-</mat-toolbar>
+
+  <input
+    type="text"
+    class="nav__search"
+  />
+
+  <ng-container *ngIf="account">
+    <button
+      type="button"
+      class="nav__connect"
+    >
+      {{ account.slice(0, 6) + '...' + account.slice(38, 42) }}
+    </button>
+  </ng-container>
+  <ng-container *ngIf="!account">
+    <button
+      type="button"
+      class="nav__connect"
+      (click)="connectHandler()"
+    >
+      Connect
+    </button>
+  </ng-container>
+
+  <ul class="nav__links">
+    <li><a href="#Clothing & Jewelry">Clothing & Jewelry</a></li>
+    <li><a href="#Electronics & Gadgets">Electronics & Gadgets</a></li>
+    <li><a href="#Toys & Gaming">Toys & Gaming</a></li>
+  </ul>
+</nav>
+
 
 <main>
   <router-outlet></router-outlet>

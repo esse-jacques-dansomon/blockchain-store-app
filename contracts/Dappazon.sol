@@ -29,8 +29,10 @@ contract Dappazon {
     Product product;
   }
 
+
+  uint256 public productsCount;
   //products list
-  mapping(uint256 => Product) public products;
+  Product[] public products;
   //orders counter
   mapping(address => uint256) public ordersCounter;
   //orders list
@@ -54,13 +56,13 @@ contract Dappazon {
 
   //only if the product exists
   modifier productExists(uint256 _id) {
-    require(products[_id].id != 0, "Product does not exist");
+    require(_id > 0 && _id <= products.length, "Product does not exist");
     _;
   }
 
   //only if the product is in stock
   modifier productInStock(uint256 _id, uint256 _quantity) {
-    require(products[_id].stock >= _quantity, "Product is out of stock");
+    require(products[_id].stock >= _quantity, "Product is not in stock");
     _;
   }
 
@@ -78,6 +80,7 @@ contract Dappazon {
     name = "Dappazon";
     //set the contract owner
     owner = msg.sender;
+    productsCount = 0;
   }
 
   //Add products
@@ -91,15 +94,18 @@ contract Dappazon {
     uint256 _stock,
     uint256 _rating
   ) public {
-
+    uint256 produitId = productsCount++;
     //create a new product
-    Product memory product = Product(_id, _name, _category, _description, _image, _cost, _stock, _rating);
-
+    Product memory product = Product(produitId, _name, _category, _description, _image, _cost, _stock, _rating);
     //add the product to the products list
-    products[_id] = product;
-
+    products.push(product);
     //emit the ProductAdded event
     emit ProductAdded(_id, _name, _category, _description, _image, _cost, _stock, _rating);
+  }
+
+  //get all products
+  function getProducts() public view returns (Product[] memory) {
+    return products;
   }
 
   //Get product by id
