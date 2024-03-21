@@ -61,4 +61,46 @@ export class DappazonService {
   connect() {
     return DappazonService.getWebProvider()
   }
+
+  async buyHandler(idProduct: any) {
+    const provider = await DappazonService.getWebProvider()
+    const signer = provider.getSigner()
+
+    const contract = await DappazonService.getContract()
+    const transaction = await contract.connect(signer)['buyProduct'](
+      idProduct, 1
+    )
+    await transaction.wait()
+  }
+
+  async sellHandler() {
+    const provider = await DappazonService.getWebProvider()
+    const signer = provider.getSigner()
+
+    const contract = await DappazonService.getContract()
+    const transaction = await contract.connect(signer)['sell'](
+      1
+    )
+    await transaction.wait()
+  }
+
+  formatUnits(amount: string) {
+    return ethers.utils.formatUnits(amount, 'ether')
+  }
+
+  async fetchOrder(id: number) {
+    const provider =  await DappazonService.getWebProvider()
+    const signer = provider.getSigner()
+    const contract = await DappazonService.getContract()
+    console.log(contract)
+    const orderCount = await contract['ordersCounter'](signer.getAddress())
+    console.log('orderCount', orderCount.toString())
+
+    const orders = await contract['orders'](signer.getAddress(), orderCount)
+    console.log('orders', orders)
+    return orders.filter((order: any) =>{
+      console.log(order)
+      return order.product.id == id
+    })
+  }
 }

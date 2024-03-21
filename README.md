@@ -2,7 +2,7 @@
 
 This template uses following versions
 
-* Angular 15
+* Angular 17
 * Hardhat 2.8
 * Ethers 5.5
 * Solidity 0.8.4
@@ -12,7 +12,7 @@ This template uses following versions
 1. Clone this repository 
 
 ```shell
-git clone git@github.com:essejacques/blockchain-dappazon.git
+git clone git@github.com:essejacquesdansomon/blockchain-dappazon.git
 ```
 
 2. Install dependencies

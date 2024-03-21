@@ -1,0 +1,43 @@
+<mat-dialog-content>
+
+  <div class="product__details">
+    <div class="product__image">
+      <img [src]="item.image" alt="Product" />
+    </div>
+    <div class="product__overview">
+      <h1>{{ item.name }}</h1>
+      <app-rating [value]="item.rating"></app-rating>
+      <hr />
+      <p>{{ item.address }}</p>
+      <h2>{{ formatUnits(item.cost) }} ETH</h2>
+      <hr />
+      <h2>Overview</h2>
+      <p>
+        {{ item.description }}
+      </p>
+    </div>
+    <div class="product__order">
+      <h1>{{ formatUnits(item.cost)  }} ETH</h1>
+      <p>
+        FREE delivery <br />
+        <strong>
+          {{ deliveryDate | date: 'fullDate' }}
+        </strong>
+      </p>
+      <p>{{ item.stock > 0 ? 'In Stock' : 'Out of Stock' }}</p>
+      <button class="product__buy" (click)="buyHandler()">Buy Now</button>
+      <p><small>Ships from</small> Dappazon</p>
+      <p><small>Sold by</small> Dappazon</p>
+      <div *ngIf="order" class="product__bought">
+        Item bought on <br />
+        <strong>
+          {{ order.time | date: 'fullDate' }}
+        </strong>
+      </div>
+    </div>
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+</mat-dialog-actions>
