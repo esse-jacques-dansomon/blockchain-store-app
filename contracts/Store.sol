@@ -15,8 +15,16 @@ contract Store {
     uint256 availableQuantity;
     address seller;
     bool available;
+    uint256 categoryId;
   }
 
+  // Structure to represent a category
+  struct Category {
+    uint256 id;
+    string name;
+    string description;
+    address storeOwner;
+  }
 
   // Structure to represent an order
   struct Order {
@@ -49,13 +57,16 @@ contract Store {
 
   // Storage variable for products
   Product[] public products;
-
-  // Storage variable for store information
-  mapping(address => StoreInfo) public stores;
-
   // Mapping to track products of each store
   mapping(address => uint256[]) public storeProducts;
 
+  // Storage variable for categories
+  Category[] public categories;
+  // Mapping to track categories of each store
+  mapping(address => uint256[]) public storeCategories;
+
+  // Storage variable for store information
+  mapping(address => StoreInfo) public stores;
   // Mapping to track orders
   mapping(uint256 => Order) public orders;
 
@@ -73,14 +84,16 @@ contract Store {
   }
 
   // Function to create a new product in a store
-  function createProduct(string memory _name, string memory _image, uint256 _price, uint256 _quantity) public {
+  function createProduct(string memory _name, string memory _image, uint256 _price, uint256 _quantity, uint256 _categoryId) public {
     require(bytes(_name).length > 0, "Product name cannot be empty");
     require(bytes(_image).length > 0, "Product image cannot be empty");
     require(_price > 0, "Product price must be greater than zero");
     require(_quantity > 0, "Product quantity must be greater than zero");
     require(stores[msg.sender].owner != address(0), "Store does not exist");
+    require(_categoryId < categories.length, "Category does not exist");
+    require(categories[_categoryId].storeOwner == msg.sender, "Category does not belong to this store");
     uint256 productId = products.length;
-    Product memory newProduct = Product(productId, _name, _image, _price, _quantity, msg.sender, true);
+    Product memory newProduct = Product(productId, _name, _image, _price, _quantity, msg.sender, true, _categoryId);
     products.push(newProduct);
     storeProducts[msg.sender].push(productId);
     emit ProductCreated(_name, _image, _price, _quantity, msg.sender);
@@ -94,6 +107,26 @@ contract Store {
     product.price = _newPrice;
     product.availableQuantity = _newQuantity;
     emit ProductModified(_newName, _newPrice, _newQuantity);
+  }
+
+  // Function to create a new category
+  function createCategory(string memory _name, string memory _description) public {
+    require(bytes(_name).length > 0, "Category name cannot be empty");
+    require(bytes(_description).length > 0, "Category description cannot be empty");
+    require(stores[msg.sender].owner != address(0), "Store does not exist");
+    uint256 categoryId = categories.length;
+    Category memory newCategory = Category(categoryId, _name, _description, msg.sender);
+    categories.push(newCategory);
+    storeCategories[msg.sender].push(categoryId);
+  }
+
+
+  // Function to update a category
+  function updateCategory(uint256 _categoryId, string memory _newName, string memory _newDescription) public {
+    Category storage category = categories[_categoryId];
+    require(msg.sender == category.storeOwner, "You are not authorized to modify this category");
+    category.name = _newName;
+    category.description = _newDescription;
   }
 
   // Function to purchase products
@@ -142,6 +175,15 @@ contract Store {
     StoreInfo memory info = stores[_owner];
     require(info.owner != address(0), "Store does not exist");
     return info;
+  }
+
+  // Function to get categories of a store
+  function getStoreCategories(address _owner) public view returns (uint256[] memory) {
+    return storeCategories[_owner];
+  }
+
+  function getCategory(uint256 _categoryID) public view returns (Category memory category){
+    return categories[_categoryID];
   }
 
   // Function to get product information
