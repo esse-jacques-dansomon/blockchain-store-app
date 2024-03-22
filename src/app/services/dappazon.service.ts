@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ethers } from "ethers";
 import { environment } from "../../environments/environment";
-import Dappazon from '../../../artifacts/contracts/Dappazon.sol/Dappazon.json'
+import Dappazon from '../../../artifacts/contracts/Store.sol/Store.json'
 import detectEthereumProvider from "@metamask/detect-provider";
 
 @Injectable({

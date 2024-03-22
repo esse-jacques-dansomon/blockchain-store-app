@@ -1,11 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { DappazonService } from "../../services/dappazon.service";
 import { HttpClient } from "@angular/common/http";
+import {MatCard, MatCardContent, MatCardHeader, MatCardImage} from "@angular/material/card";
 
 @Component({
   selector: 'app-images-by-author',
   templateUrl: './images-by-author.component.html',
-  styleUrls: ['./images-by-author.component.scss']
+  styleUrls: ['./images-by-author.component.scss'],
+  standalone: true,
+  imports: [
+    MatCard,
+    MatCardHeader,
+    MatCardImage,
+    MatCardContent
+  ]
 })
 export class ImagesByAuthorComponent implements OnInit {
   public images: any[] = []

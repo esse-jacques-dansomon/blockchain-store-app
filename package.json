@@ -25,11 +25,14 @@
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
     "@metamask/detect-provider": "^1.2.0",
+    "@ngrx/effects": "^17.1.1",
+    "@ngrx/store": "^17.1.1",
+    "@ngrx/store-devtools": "^17.1.1",
     "dotenv": "^10.0.0",
-    "rxjs": "~7.4.0",
+    "ipfs-http-client": "^54.0.2",
+    "rxjs": "^6.5.3 || ^7.5.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.4",
-    "ipfs-http-client": "^54.0.2"
+    "zone.js": "~0.14.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.3.0",
@@ -50,6 +53,6 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
-    "typescript": "^5.4.2"
+    "typescript": "5.3.3"
   }
 }
