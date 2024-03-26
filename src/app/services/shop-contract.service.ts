@@ -1,26 +1,42 @@
 import { Injectable } from '@angular/core';
 import { ethers } from "ethers";
 import { environment } from "../../environments/environment";
-import Dappazon from '../../../artifacts/contracts/Store.sol/Store.json'
+import Store from '../../../artifacts/contracts/Store.sol/Store.json'
 import detectEthereumProvider from "@metamask/detect-provider";
 
 @Injectable({
   providedIn: 'root'
 })
-export class DappazonService {
-  public async getAllProducts(): Promise<any[]> {
-    const contract = await DappazonService.getContract()
-    return await contract['getProducts']()
+export class ShopContractService {
+
+  async getShop() {
+    const contract = await ShopContractService.getContract(true)
+    const signer = contract.signer
+    return await contract['stores'](signer.getAddress())
   }
 
+  public async getProducts(): Promise<any[]> {
+    const contract = await ShopContractService.getContract(true)
+    const signer = contract.signer
+    return await contract['getStoreProducts'](signer.getAddress())
+  }
+
+
+  public async getStoreCategories(): Promise<any[]> {
+    const contract = await ShopContractService.getContract(true)
+    const signer = contract.signer
+    return await contract['getStoreCategories'](signer.getAddress())
+  }
+
+
   public async getImagesByAuthor(): Promise<any[]> {
-    const contract = await DappazonService.getContract(true)
+    const contract = await ShopContractService.getContract(true)
 
     return await contract['retrieveImagesByAuthor']()
   }
 
   public async addImage(title: string, fileUrl: string): Promise<boolean> {
-    const contract = await DappazonService.getContract(true)
+    const contract = await ShopContractService.getContract(true)
     const transaction = await contract['store'](
       title,
       fileUrl
@@ -31,15 +47,17 @@ export class DappazonService {
   }
 
   private static async getContract(bySigner=false) {
-    const provider = await DappazonService.getWebProvider()
+    const provider = await ShopContractService.getWebProvider()
     const signer = provider.getSigner()
+    console.log('signer', signer)
 
     return new ethers.Contract(
       environment.contractAddress,
-      Dappazon.abi,
-      provider,
+      Store.abi,
+      bySigner ? signer : provider
     )
   }
+
 
   private static async getWebProvider(requestAccounts = true) {
     const provider: any = await detectEthereumProvider()
@@ -52,21 +70,21 @@ export class DappazonService {
   }
 
   public async getAccount() {
-    const provider = await DappazonService.getWebProvider()
+    const provider = await ShopContractService.getWebProvider(true)
     const signer = provider.getSigner()
 
     return await signer.getAddress()
   }
 
-  connect() {
-    return DappazonService.getWebProvider()
+  async connect() {
+    return await ShopContractService.getWebProvider()
   }
 
   async buyHandler(idProduct: any) {
-    const provider = await DappazonService.getWebProvider()
+    const provider = await ShopContractService.getWebProvider()
     const signer = provider.getSigner()
 
-    const contract = await DappazonService.getContract()
+    const contract = await ShopContractService.getContract()
     const transaction = await contract.connect(signer)['buyProduct'](
       idProduct, 1
     )
@@ -74,10 +92,10 @@ export class DappazonService {
   }
 
   async sellHandler() {
-    const provider = await DappazonService.getWebProvider()
+    const provider = await ShopContractService.getWebProvider()
     const signer = provider.getSigner()
 
-    const contract = await DappazonService.getContract()
+    const contract = await ShopContractService.getContract()
     const transaction = await contract.connect(signer)['sell'](
       1
     )
@@ -89,9 +107,9 @@ export class DappazonService {
   }
 
   async fetchOrder(id: number) {
-    const provider =  await DappazonService.getWebProvider()
+    const provider =  await ShopContractService.getWebProvider()
     const signer = provider.getSigner()
-    const contract = await DappazonService.getContract()
+    const contract = await ShopContractService.getContract()
     console.log(contract)
     const orderCount = await contract['ordersCounter'](signer.getAddress())
     console.log('orderCount', orderCount.toString())
@@ -103,4 +121,5 @@ export class DappazonService {
       return order.product.id == id
     })
   }
+
 }

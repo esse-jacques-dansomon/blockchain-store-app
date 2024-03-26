@@ -1,0 +1,238 @@
+{
+  "stores": [
+    {
+      "name": "Store A",
+      "location": "Location A",
+      "categories": [
+        {
+          "name": "Electronics",
+          "description": "Electronic products",
+          "products": [
+            {
+              "name": "Laptop",
+              "image": "https://placehold.co/400?text=Store+A+Laptop",
+              "price": 800,
+              "quantity": 5
+            },
+            {
+              "name": "Smartphone",
+              "image": "https://placehold.co/400?text=Store+A+Smartphone",
+              "price": 600,
+              "quantity": 10
+            },
+            {
+              "name": "Tablet",
+              "image": "https://placehold.co/400?text=Store+A+Tablet",
+              "price": 400,
+              "quantity": 15
+            }
+          ]
+        },
+        {
+          "name": "Clothing",
+          "description": "Clothing products",
+          "products": [
+            {
+              "name": "T-Shirt",
+              "image": "https://placehold.co/400?text=Store+A+T-Shirt",
+              "price": 20,
+              "quantity": 20
+            },
+            {
+              "name": "Jeans",
+              "image": "https://placehold.co/400?text=Store+A+Jeans",
+              "price": 50,
+              "quantity": 15
+            }
+          ]
+        },
+        {
+          "name": "Shoes",
+          "description": "Shoes products",
+          "products": [
+            {
+              "name": "Sneakers",
+              "image": "https://placehold.co/400?text=Store+A+Sneakers",
+              "price": 60,
+              "quantity": 10
+            },
+            {
+              "name": "Boots",
+              "image": "https://placehold.co/400?text=Store+A+Boots",
+              "price": 80,
+              "quantity": 8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Store B",
+      "location": "Location B",
+      "categories": [
+        {
+          "name": "Books",
+          "description": "Book products",
+          "products": [
+            {
+              "name": "Fantasy Novel",
+              "image": "https://placehold.co/400?text=Store+B+Fantasy+Novel",
+              "price": 15,
+              "quantity": 30
+            },
+            {
+              "name": "Science Fiction",
+              "image": "https://placehold.co/400?text=Store+B+Science+Fiction",
+              "price": 18,
+              "quantity": 25
+            }
+          ]
+        },
+        {
+          "name": "Home Appliances",
+          "description": "Home appliance products",
+          "products": [
+            {
+              "name": "Microwave Oven",
+              "image": "https://placehold.co/400?text=Store+B+Microwave+Oven",
+              "price": 150,
+              "quantity": 8
+            },
+            {
+              "name": "Blender",
+              "image": "https://placehold.co/400?text=Store+B+Blender",
+              "price": 50,
+              "quantity": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Store C",
+      "location": "Location C",
+      "categories": [
+        {
+          "name": "Furniture",
+          "description": "Furniture products",
+          "products": [
+            {
+              "name": "Sofa",
+              "image": "https://placehold.co/400?text=Store+C+Sofa",
+              "price": 300,
+              "quantity": 10
+            },
+            {
+              "name": "Dining Table",
+              "image": "https://placehold.co/400?text=Store+C+Dining+Table",
+              "price": 200,
+              "quantity": 15
+            }
+          ]
+        },
+        {
+          "name": "Kitchenware",
+          "description": "Kitchenware products",
+          "products": [
+            {
+              "name": "Cookware Set",
+              "image": "https://placehold.co/400?text=Store+C+Cookware+Set",
+              "price": 100,
+              "quantity": 20
+            },
+            {
+              "name": "Cutlery Set",
+              "image": "https://placehold.co/400?text=Store+C+Cutlery+Set",
+              "price": 50,
+              "quantity": 25
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Store D",
+      "location": "Location D",
+      "categories": [
+        {
+          "name": "Toys",
+          "description": "Toy products",
+          "products": [
+            {
+              "name": "Action Figure",
+              "image": "https://placehold.co/400?text=Store+D+Action+Figure",
+              "price": 10,
+              "quantity": 50
+            },
+            {
+              "name": "Doll",
+              "image": "https://placehold.co/400?text=Store+D+Doll",
+              "price": 8,
+              "quantity": 60
+            }
+          ]
+        },
+        {
+          "name": "Sporting Goods",
+          "description": "Sporting goods products",
+          "products": [
+            {
+              "name": "Basketball",
+              "image": "https://placehold.co/400?text=Store+D+Basketball",
+              "price": 20,
+              "quantity": 30
+            },
+            {
+              "name": "Soccer Ball",
+              "image": "https://placehold.co/400?text=Store+D+Soccer+Ball",
+              "price": 15,
+              "quantity": 40
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Store E",
+      "location": "Location E",
+      "categories": [
+        {
+          "name": "Health & Beauty",
+          "description": "Health & beauty products",
+          "products": [
+            {
+              "name": "Shampoo",
+              "image": "https://placehold.co/400?text=Store+E+Shampoo",
+              "price": 5,
+              "quantity": 100
+            },
+            {
+              "name": "Toothpaste",
+              "image": "https://placehold.co/400?text=Store+E+Toothpaste",
+              "price": 3,
+              "quantity": 150
+            }
+          ]
+        },
+        {
+          "name": "Pet Supplies",
+          "description": "Pet supplies products",
+          "products": [
+            {
+              "name": "Dog Food",
+              "image": "https://placehold.co/400?text=Store+E+Dog+Food",
+              "price": 10,
+              "quantity": 80
+            },
+            {
+              "name": "Cat Litter",
+              "image": "https://placehold.co/400?text=Store+E+Cat+Litter",
+              "price": 8,
+              "quantity": 90
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

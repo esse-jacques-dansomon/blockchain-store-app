@@ -6,28 +6,28 @@
     </div>
     <div class="product__overview">
       <h1>{{ item.name }}</h1>
-      <app-rating [value]="item.rating"></app-rating>
+      <app-rating [value]="3"></app-rating>
       <hr />
-      <p>{{ item.address }}</p>
-      <h2>{{ formatUnits(item.cost) }} ETH</h2>
+      <p>{{ item.seller }}</p>
+      <h2>{{ formatUnits(item.price) }} ETH</h2>
       <hr />
       <h2>Overview</h2>
       <p>
-        {{ item.description }}
+        {{ item.name }}
       </p>
     </div>
     <div class="product__order">
-      <h1>{{ formatUnits(item.cost)  }} ETH</h1>
+      <h1>{{ formatUnits(item.price)  }} ETH</h1>
       <p>
         FREE delivery <br />
         <strong>
           {{ deliveryDate | date: 'fullDate' }}
         </strong>
       </p>
-      <p>{{ item.stock > 0 ? 'In Stock' : 'Out of Stock' }}</p>
+      <p>{{ item.availableQuantity > 0 ? 'In Stock' : 'Out of Stock' }}</p>
       <button class="product__buy" (click)="buyHandler()">Buy Now</button>
-      <p><small>Ships from</small> Dappazon</p>
-      <p><small>Sold by</small> Dappazon</p>
+      <p><small>Ships from</small> {{item.seller}}</p>
+      <p><small>Sold by</small> {{item.seller}}</p>
       <div *ngIf="order" class="product__bought">
         Item bought on <br />
         <strong>

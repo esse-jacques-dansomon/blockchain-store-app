@@ -9,7 +9,8 @@ import {
   MatDialogTitle
 } from "@angular/material/dialog";
 import {MatButton} from "@angular/material/button";
-import {DappazonService} from "../../services/dappazon.service";
+import {ShopContractService} from "../../services/shop-contract.service";
+import {Product} from "../../data/product";
 
 @Component({
   selector: 'app-product',
@@ -30,7 +31,7 @@ export class ProductComponent implements OnInit{
   constructor(
     public dialogRef: MatDialogRef<ProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dappazonService: DappazonService
+    private dappazonService: ShopContractService
   ) {
     this.item = data.item;
 
@@ -43,7 +44,7 @@ export class ProductComponent implements OnInit{
     })
     this.fetchOrder();
   }
-   item: any;
+   item: Product;
    account: any;
 
   order: any = null;
@@ -58,12 +59,12 @@ export class ProductComponent implements OnInit{
   }
 
    fetchOrder() {
-    console.log('fetching order', this.account)
-    if (!this.account) return;
-    this.dappazonService.fetchOrder(this.item.id).then((order) => {
-      this.order = order;
-      console.log('order', order)
-    });
+    // console.log('fetching order', this.account)
+    // if (!this.account) return;
+    // this.dappazonService.fetchOrder(this.item.id).then((order) => {
+    //   this.order = order;
+    //   console.log('order', order)
+    // });
   }
 
 

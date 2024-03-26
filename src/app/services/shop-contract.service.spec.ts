@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DappazonService } from './dappazon.service';
+import { ShopContractService } from './shop-contract.service';
 
 describe('GalleryService', () => {
-  let service: DappazonService;
+  let service: ShopContractService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DappazonService);
+    service = TestBed.inject(ShopContractService);
   });
 
   it('should be created', () => {

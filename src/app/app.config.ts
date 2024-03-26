@@ -6,6 +6,7 @@ import {appReducer, metaReducersProvider} from "./store/app.reducer";
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideStore } from '@ngrx/store';
+import {createFeatureReducerFactory} from "@ngrx/store/src/utils";
 
 export const appConfig: ApplicationConfig = {
   providers: [

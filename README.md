@@ -3,6 +3,7 @@
 This template uses following versions
 
 * Angular 17
+* NgRx 17
 * Hardhat 2.8
 * Ethers 5.5
 * Solidity 0.8.4

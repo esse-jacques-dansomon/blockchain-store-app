@@ -1,11 +1,22 @@
 <h2>
-  Dappazon Best seller
+  Multivers Best seller
 </h2>
 
-@for (category of productsByCategory; track category.category) {
-  <app-section [title]="category.category" [items]="category.products"/>
-} @empty {
-  <p>
-    No products found
-  </p>
-}
+<ng-container *ngIf="productsByCategory$ | async as items">
+  @if (items.length > 0) {
+    @for (pc of items; track pc.category){
+      <app-section [title]="pc.category" [items]="pc.produits"></app-section>
+    } @empty {
+      <p>
+        No products found
+      </p>
+    }
+  } @else {
+    <p>
+      No products found
+    </p>
+  }
+</ng-container>
+
+
+

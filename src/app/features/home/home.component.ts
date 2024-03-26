@@ -1,52 +1,66 @@
-import { Component, OnInit } from '@angular/core';
-import { DappazonService } from "../../services/dappazon.service";
+import {Component, OnInit} from '@angular/core';
 import {SectionComponent} from "../../components/section/section.component";
+import {Product} from "../../data/product";
+import {ShopStoreService} from "../store/shop-store.service";
+import {AsyncPipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
+import {ProductComponent} from "../../components/product/product.component";
+import {combineLatest, map, Subscription} from "rxjs";
+
 // import {groupBy} from "rxjs";
 
-interface Product {
-  id: number;
-  name: string;
-  category: string;
-}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   standalone: true,
   imports: [
-    SectionComponent
+    SectionComponent,
+    AsyncPipe,
+    NgIf,
+    ProductComponent,
+    NgForOf,
+    JsonPipe
   ]
 })
 export class HomeComponent implements OnInit {
-  public images: Product[] = []
-  public productsByCategory : { category: string; products: Product[] }[] = [];
+  public productsByCategory$ = this.groupProductsByCategory();
+
+  categories$ = this.shopStoreService.selectSelectedShopCategories$();
+  products$ = this.shopStoreService.selectSelectedShopProducts$();
 
   constructor(
-    private dappazonService: DappazonService,
+    private shopStoreService: ShopStoreService,
   ) { }
 
   public async ngOnInit(): Promise<void> {
-    await this.dappazonService.getAllProducts().then(
-      (images) => {
-        this.images = images
-      }
-    )
-
-    this.productsByCategory = this.groupProductsByCategory();
-    console.log(this.productsByCategory)
+    // this.groupProductsByCategory().subscribe(
+    //   (productsByCategory) => {
+    //     this.productsByCategory = productsByCategory;
+    //   }
+    // );
   }
 
-  private groupProductsByCategory(): { category: string, products: Product[] }[] {
-    const groupedProductsMap = new Map<string, Product[]>();
-    this.images.forEach(product => {
-      const categoryProducts = groupedProductsMap.get(product.category) || [];
-      categoryProducts.push(product);
-      groupedProductsMap.set(product.category, categoryProducts);
-    });
-
-    return Array.from(groupedProductsMap.entries()).map(([category, products]) => ({
-      category,
-      products
-    }));
+  private groupProductsByCategory() {
+   return   combineLatest(
+      this.shopStoreService.selectSelectedShopCategories$(),
+      this.shopStoreService.selectSelectedShopProducts$()
+    ).pipe(
+      map(([categories, products]) => {
+        // Group products by category
+        if (!categories || !products) return [];
+        return categories!.map(category => {
+          console.log('category', category);
+          let d =  {
+            category: category.name,
+            produits: products!.filter(product =>{
+              console.log('product', product.categoryId)
+             return  product.categoryId.toString() == category.id.toString()
+            })
+          };
+          return d;
+        });
+      })
+    )
   }
 }

@@ -1,34 +1,43 @@
 import { Component } from '@angular/core';
-import {DappazonService} from "./services/dappazon.service";
+import {ShopContractService} from "./services/shop-contract.service";
 import {NgIf} from "@angular/common";
 import {RouterOutlet} from "@angular/router";
+import {ShopStoreService} from "./features/store/shop-store.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  standalone: true,
-  imports: [
-    NgIf,
-    RouterOutlet
-  ]
+  // standalone: true,
+  // imports: [
+  //   NgIf,
+  //   RouterOutlet
+  // ],
+
 })
 export class AppComponent {
   title = 'angular-dapp';
   account: any;
 
    constructor(
-    private dappazonService: DappazonService
+    private shopContractService: ShopContractService,
+    private shopStoreService:ShopStoreService
   ) {
-     this.dappazonService.getAccount().then(
+     this.shopContractService.getAccount().then(
       (account: any) => {
         this.account = account;
+        this.shopStoreService.loadShop(account)
+        this.shopStoreService.loadShopCategories(account)
+        this.shopStoreService.loadShopProducts(account)
       }
      );
+
+
+
   }
 
-  connectHandler() {
-    this.dappazonService.connect().then(
+  async connectHandler() {
+    await this.shopContractService.connect().then(
       (account: any) => {
         this.account = account;
       }

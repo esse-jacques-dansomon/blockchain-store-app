@@ -4,6 +4,7 @@ import {NgForOf} from "@angular/common";
 import {ProductComponent} from "../product/product.component";
 import {MatDialog} from "@angular/material/dialog";
 import {formatUnits} from "ethers/lib/utils";
+import {Product} from "../../data/product";
 
 @Component({
   selector: 'app-section',
@@ -23,8 +24,8 @@ import {formatUnits} from "ethers/lib/utils";
           </div>
           <div class="card__info">
             <h4>{{ item.name }}</h4>
-            <app-rating [value]="item.rating"></app-rating>
-            <p>{{ formatUnits(item.cost) }} ETH</p>
+            <app-rating [value]="3"></app-rating>
+            <p>{{ formatUnits(item.price) }} ETH</p>
           </div>
         </div>
       </div>
@@ -33,7 +34,7 @@ import {formatUnits} from "ethers/lib/utils";
 })
 export class SectionComponent {
   @Input() title!: string;
-  @Input() items!: any[];
+  @Input() items!: Product[];
 
   constructor(
     public dialog: MatDialog

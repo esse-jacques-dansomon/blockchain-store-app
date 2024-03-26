@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DappazonService } from "../../services/dappazon.service";
+import { ShopContractService } from "../../services/shop-contract.service";
 import { HttpClient } from "@angular/common/http";
 import {MatCard, MatCardContent, MatCardHeader, MatCardImage} from "@angular/material/card";
 
@@ -19,7 +19,7 @@ export class ImagesByAuthorComponent implements OnInit {
   public images: any[] = []
 
   constructor(
-    private gallery: DappazonService,
+    private gallery: ShopContractService,
     private http: HttpClient
   ) { }
 

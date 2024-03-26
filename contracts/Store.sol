@@ -65,6 +65,7 @@ contract Store {
   // Mapping to track categories of each store
   mapping(address => uint256[]) public storeCategories;
 
+  StoreInfo[] public shops;
   // Storage variable for store information
   mapping(address => StoreInfo) public stores;
   // Mapping to track orders
@@ -80,6 +81,7 @@ contract Store {
     require(stores[msg.sender].owner == address(0), "Store already exists");
     StoreInfo memory newStore = StoreInfo(_name, _location, msg.sender);
     stores[msg.sender] = newStore;
+    shops.push(newStore);
     emit StoreCreated(_name, _location, msg.sender);
   }
 
@@ -110,7 +112,7 @@ contract Store {
   }
 
   // Function to create a new category
-  function createCategory(string memory _name, string memory _description) public {
+  function createCategory(string memory _name, string memory _description) public   {
     require(bytes(_name).length > 0, "Category name cannot be empty");
     require(bytes(_description).length > 0, "Category description cannot be empty");
     require(stores[msg.sender].owner != address(0), "Store does not exist");
@@ -118,6 +120,7 @@ contract Store {
     Category memory newCategory = Category(categoryId, _name, _description, msg.sender);
     categories.push(newCategory);
     storeCategories[msg.sender].push(categoryId);
+//    return categoryId;
   }
 
 
@@ -178,8 +181,13 @@ contract Store {
   }
 
   // Function to get categories of a store
-  function getStoreCategories(address _owner) public view returns (uint256[] memory) {
-    return storeCategories[_owner];
+  function getStoreCategories(address _owner) public view returns (Category[] memory) {
+    uint256[] memory cats = storeCategories[_owner];
+    Category[] memory storeCategoriesList = new Category[](cats.length);
+    for (uint i = 0; i < cats.length; i++) {
+      storeCategoriesList[i] = categories[cats[i]];
+    }
+    return storeCategoriesList;
   }
 
   function getCategory(uint256 _categoryID) public view returns (Category memory category){
@@ -188,25 +196,34 @@ contract Store {
 
   // Function to get product information
   function getProduct(uint256 _productId) public view returns (Product memory product) {
-    Product memory product = products[_productId];
-    return product;
+    return products[_productId];
   }
 
   // Function to get store products
-  function getStoreProducts(address _owner) public view returns (uint256[] memory) {
-    return storeProducts[_owner];
+  function getStoreProducts(address _owner) public view returns (Product[] memory) {
+    uint256[] memory productsId  =   storeProducts[_owner];
+    Product[] memory storeProductsList = new Product[](productsId.length);
+    for (uint i = 0; i < productsId.length; i++) {
+      storeProductsList[i] = products[productsId[i]];
+    }
+    return storeProductsList;
   }
 
   // Function to get order information
   function getOrder(uint256 _orderId) public view returns (Order memory order) {
-    Order memory order = orders[_orderId];
-    return order;
+    return orders[_orderId];
   }
 
   // Withdraw funds from the contract
   function withdraw() public onlyOwner {
     (bool success, ) = owner.call{value: address(this).balance}("");
     require(success, "Failed to send ether");
+  }
+
+
+  // Function to retrieve all stores
+  function getAllStores() public view returns (StoreInfo[] memory) {
+  return shops;
   }
 
 
