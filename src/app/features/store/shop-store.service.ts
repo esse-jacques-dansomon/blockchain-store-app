@@ -34,4 +34,15 @@ export class ShopStoreService {
   loadLogin = (user: any) => this.store.dispatch(login({user:  user }));
   selectAccount$ = () => this.store.select(state => state.shop.authState.user);
 
+  deleteProduct(id: number) {
+
+  }
+
+  updateProduct(id: any, value: any) {
+
+  }
+
+  addProduct(value:any) {
+
+  }
 }

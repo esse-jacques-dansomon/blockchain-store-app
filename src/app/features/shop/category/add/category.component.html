@@ -1,0 +1,20 @@
+
+
+
+<p *ngIf="formError" class="error">{{formError}}</p>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex-container">
+  <mat-form-field >
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name">
+  </mat-form-field>
+  <mat-form-field >
+    <mat-label>Description</mat-label>
+    <input matInput formControlName="description">
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" type="submit" [disabled]="isLoading">
+    <span *ngIf="!isLoading">Create category</span>
+    <span *ngIf="isLoading">Loading...</span>
+  </button>
+</form>

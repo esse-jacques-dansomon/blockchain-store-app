@@ -38,6 +38,7 @@ registerLocaleData(localeFr);
     shopStoreModule
   ],
   providers: [
+
     metaReducersProvider,
     {
       provide: LOCALE_ID,

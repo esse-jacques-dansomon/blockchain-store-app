@@ -50,11 +50,9 @@ export class HomeComponent implements OnInit {
         // Group products by category
         if (!categories || !products) return [];
         return categories!.map(category => {
-          console.log('category', category);
           let d =  {
             category: category.name,
             produits: products!.filter(product =>{
-              console.log('product', product.categoryId)
              return  product.categoryId.toString() == category.id.toString()
             })
           };

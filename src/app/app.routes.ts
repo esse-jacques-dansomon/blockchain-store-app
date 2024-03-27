@@ -4,7 +4,8 @@ import {UploadImageComponent} from "./features/shop/upload-image/upload-image.co
 import {ShopFormComponent} from "./features/shop/shop-from/shop-form.component";
 import {hasShopGuard} from "./core/guards/has-shop.guard";
 import {isAuthGuard} from "./core/guards/is-auth.guard";
-import {CategoryComponent} from "./features/shop/category/category.component";
+import {CategoryComponent} from "./features/shop/category/add/category.component";
+import {ProductListComponent} from "./features/shop/products/product-list/product-list.component";
 
 export const appRoutes: Route[] = [
     {'path': '', redirectTo: 'home', pathMatch: 'full'},
@@ -18,8 +19,9 @@ export const appRoutes: Route[] = [
         path: 'store',
         canActivate: [hasShopGuard],
         children: [
-          {'path': 'add-category', loadComponent: () => CategoryComponent},
-          {'path': 'add-product', loadComponent: () => UploadImageComponent},
+          {'path': 'category', loadComponent: () => CategoryComponent},
+          {'path': 'shop', loadComponent: () => ShopFormComponent},
+          {'path': 'product', loadComponent: () => ProductListComponent},
         ]
     }
 ];

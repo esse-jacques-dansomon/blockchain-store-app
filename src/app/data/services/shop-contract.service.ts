@@ -50,8 +50,6 @@ export class ShopContractService {
   private static async getContract(bySigner=false) {
     const provider = await ShopContractService.getWebProvider()
     const signer = provider.getSigner()
-    console.log('signer', signer)
-
     return new ethers.Contract(
       environment.contractAddress,
       Store.abi,
@@ -84,7 +82,6 @@ export class ShopContractService {
     }catch (
       error
       ){
-      console.error('error', error)
     }
   }
 
@@ -118,14 +115,10 @@ export class ShopContractService {
     const provider =  await ShopContractService.getWebProvider()
     const signer = provider.getSigner()
     const contract = await ShopContractService.getContract()
-    console.log(contract)
     const orderCount = await contract['ordersCounter'](signer.getAddress())
-    console.log('orderCount', orderCount.toString())
 
     const orders = await contract['orders'](signer.getAddress(), orderCount)
-    console.log('orders', orders)
     return orders.filter((order: any) =>{
-      console.log(order)
       return order.product.id == id
     })
   }

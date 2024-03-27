@@ -81,7 +81,6 @@ export class ShopEffects {
       exhaustMap((action) =>
         this.shopContractService.getAccount().then(
           (user: any) => {
-            console.log("account",user)
             return {
               type: ShopActionTypes.LoginSuccess,
               user

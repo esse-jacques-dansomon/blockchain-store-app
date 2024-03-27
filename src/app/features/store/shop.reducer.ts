@@ -208,7 +208,6 @@ export function shopReducer(state: ShopState, action:ShopActions): ShopState {
       };
 
     case ShopActionTypes.LoadProductsSuccess:
-      console.log(action.products)
       return {
         ...state,
         shopState: {
