@@ -1,9 +1,9 @@
 import {createAction, props, Store} from "@ngrx/store";
-import {User} from "../../data/user";
-import {Category} from "../../data/category";
-import {Product} from "../../data/product";
-import {Shop} from "../../data/shop";
-import {Order} from "../../data/order";
+import {User} from "../../data/models/user";
+import {Category} from "../../data/models/category";
+import {Product} from "../../data/models/product";
+import {Shop} from "../../data/models/shop";
+import {Order} from "../../data/models/order";
 
 export enum ShopActionTypes {
   LoadShops = '[Shop] Load Shops',
@@ -60,7 +60,7 @@ export const login = createAction(
 
 export const loginSuccess = createAction(
   ShopActionTypes.LoginSuccess,
-  props<{ user: User }>()
+  props<{ user: string }>()
 );
 
 export const loginFailure = createAction(

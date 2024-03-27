@@ -3,7 +3,7 @@ import {StoreConfig, StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
 import {shopFeatureKey, shopInitialState, shopReducer, ShopState} from "./shop.reducer";
 import {featureStoreConfigFactory, StoreStateService} from "../../store";
-import {ShopContractService} from "../../services/shop-contract.service";
+import {ShopContractService} from "../../data/services/shop-contract.service";
 import {ShopEffects} from "./shop.effects";
 
 const featureKey =shopFeatureKey;

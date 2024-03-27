@@ -1,11 +1,11 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {ShopContractService} from "../../services/shop-contract.service";
+import {ShopContractService} from "../../data/services/shop-contract.service";
 import {exhaustMap, map, switchMap} from "rxjs";
 import {ShopActionTypes} from "./shop.action";
-import {Shop} from "../../data/shop";
-import {Category} from "../../data/category";
-import {Product} from "../../data/product";
+import {Shop} from "../../data/models/shop";
+import {Category} from "../../data/models/category";
+import {Product} from "../../data/models/product";
 
 @Injectable()
 export class ShopEffects {
@@ -16,8 +16,6 @@ export class ShopEffects {
         exhaustMap((action) =>
           this.shopContractService.getShop().then(
             (shop: Shop) => {
-              console.log('Shop',shop.name)
-
               return {
                 type: ShopActionTypes.SelectShopSuccess,
               shop
@@ -76,6 +74,29 @@ export class ShopEffects {
         )
       )
     );
+
+  login = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ShopActionTypes.Login),
+      exhaustMap((action) =>
+        this.shopContractService.getAccount().then(
+          (user: any) => {
+            console.log("account",user)
+            return {
+              type: ShopActionTypes.LoginSuccess,
+              user
+            };
+          },
+          (error) => {
+            return {
+              type: ShopActionTypes.LoginFailure,
+              error,
+            };
+          }
+        )
+      )
+    )
+  );
 
   constructor(
     private actions$: Actions,

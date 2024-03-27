@@ -4,7 +4,7 @@ import {NgForOf} from "@angular/common";
 import {ProductComponent} from "../product/product.component";
 import {MatDialog} from "@angular/material/dialog";
 import {formatUnits} from "ethers/lib/utils";
-import {Product} from "../../data/product";
+import {Product} from "../../data/models/product";
 
 @Component({
   selector: 'app-section',

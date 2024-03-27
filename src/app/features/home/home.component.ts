@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SectionComponent} from "../../components/section/section.component";
-import {Product} from "../../data/product";
+import {Product} from "../../data/models/product";
 import {ShopStoreService} from "../store/shop-store.service";
 import {AsyncPipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {ProductComponent} from "../../components/product/product.component";

@@ -1,12 +1,15 @@
 import { Component } from '@angular/core'
-import { IpfsService } from "../../services/ipfs.service"
+import { IpfsService } from "../../../data/services/ipfs.service"
 import {ReactiveFormsModule, UntypedFormBuilder, Validators} from "@angular/forms"
 import { Router } from "@angular/router"
-import { ShopContractService } from "../../services/shop-contract.service";
-import {NgIf} from "@angular/common";
-import {MatFormField} from "@angular/material/form-field";
+import { ShopContractService } from "../../../data/services/shop-contract.service";
+import {AsyncPipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
+import {HttpClientModule} from "@angular/common/http";
+import {ShopStoreService} from "../../store/shop-store.service";
+import {MatOption, MatSelect} from "@angular/material/select";
 
 @Component({
   selector: 'app-upload-image',
@@ -18,24 +21,35 @@ import {MatButton} from "@angular/material/button";
     ReactiveFormsModule,
     MatFormField,
     MatInput,
-    MatButton
+    MatButton,
+    HttpClientModule,
+    MatLabel,
+    MatSelect,
+    MatOption,
+    NgForOf,
+    AsyncPipe,
+    JsonPipe,
   ]
 })
 export class UploadImageComponent {
   public uploadForm = this.fb.group({
-    title: this.fb.control('', Validators.required),
-    fileUrl: this.fb.control('', Validators.required),
-    description: this.fb.control('', Validators.required),
+    name: this.fb.control('', Validators.required),
+    price: this.fb.control('', Validators.required),
+    quantity: this.fb.control('', Validators.required),
+    category: this.fb.control('', Validators.required),
+    image: this.fb.control('', Validators.required),
   })
   public uploadedImage = ''
   public formError = ''
   public isLoading = false
+  categories$ = this.shopContractService.selectSelectedShopCategories$();
 
   constructor(
     private ipfs: IpfsService,
     private fb: UntypedFormBuilder,
     private router: Router,
-    private gallery: ShopContractService
+    private gallery: ShopContractService,
+    private shopContractService: ShopStoreService
   ) { }
 
   public async uploadImage(eventTarget: any) {

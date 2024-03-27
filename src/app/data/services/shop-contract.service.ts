@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ethers } from "ethers";
-import { environment } from "../../environments/environment";
-import Store from '../../../artifacts/contracts/Store.sol/Store.json'
+import { environment } from "../../../environments/environment";
+import Store from '../../../../artifacts/contracts/Store.sol/Store.json'
 import detectEthereumProvider from "@metamask/detect-provider";
 import {Observable, of} from "rxjs";
 
@@ -78,7 +78,14 @@ export class ShopContractService {
   }
 
   async connect() {
-    return await ShopContractService.getWebProvider()
+    try {
+      const provider: any = await detectEthereumProvider()
+      return await provider.request({ method: 'eth_requestAccounts' })
+    }catch (
+      error
+      ){
+      console.error('error', error)
+    }
   }
 
   async buyHandler(idProduct: any) {

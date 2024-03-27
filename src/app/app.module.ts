@@ -10,6 +10,7 @@ import {appRoutes} from "./app.routes";
 import {BrowserModule} from "@angular/platform-browser";
 import {shopStoreModule} from "./features/store/shop-store.module";
 import localeFr from '@angular/common/locales/fr';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 registerLocaleData(localeFr);
 
 
@@ -17,6 +18,7 @@ registerLocaleData(localeFr);
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes,{
       useHash: true,
       scrollPositionRestoration: 'enabled' ,

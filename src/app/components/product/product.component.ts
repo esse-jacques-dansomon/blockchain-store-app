@@ -9,8 +9,8 @@ import {
   MatDialogTitle
 } from "@angular/material/dialog";
 import {MatButton} from "@angular/material/button";
-import {ShopContractService} from "../../services/shop-contract.service";
-import {Product} from "../../data/product";
+import {ShopContractService} from "../../data/services/shop-contract.service";
+import {Product} from "../../data/models/product";
 
 @Component({
   selector: 'app-product',

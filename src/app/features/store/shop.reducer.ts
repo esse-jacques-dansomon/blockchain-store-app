@@ -1,12 +1,25 @@
-import {Category} from "../../data/category";
-import {Product} from "../../data/product";
-import {Shop} from "../../data/shop";
-import {User} from "../../data/user";
+import {Category} from "../../data/models/category";
+import {Product} from "../../data/models/product";
+import {Shop} from "../../data/models/shop";
+import {User} from "../../data/models/user";
 import {ShopActions, ShopActionTypes} from "./shop.action";
-import {Order} from "../../data/order";
+import {Order} from "../../data/models/order";
 
 export interface ShopState {
 
+  // Auth State
+  authState: {
+    user: string | null;
+    token: string | null;
+
+    // categories: Category[] | null;
+    // selectedCategory: Category | null;
+    //
+    // products: Product[] | null;
+    // selectedProduct: Product | null;
+  }
+
+  // Shop State
   shopState: {
 
     shops: Shop[] | null;
@@ -24,10 +37,6 @@ export interface ShopState {
     selectedOrder: Order | null;
   }
 
-  authState: {
-    user: User | null;
-    token: string | null;
-  }
   isLoading: boolean,
   error: any;
 }
