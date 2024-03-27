@@ -1,0 +1,17 @@
+<p *ngIf="formError" class="error">{{formError}}</p>
+
+<form [formGroup]="shopForm" (ngSubmit)="onSubmit()" class="shop-form">
+  <mat-form-field >
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name">
+  </mat-form-field>
+  <mat-form-field >
+    <mat-label>Description</mat-label>
+    <input matInput formControlName="description">
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" type="submit" [disabled]="isLoading">
+    <span *ngIf="!isLoading">Create shop</span>
+    <span *ngIf="isLoading">Loading...</span>
+  </button>
+</form>
