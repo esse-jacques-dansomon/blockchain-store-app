@@ -223,7 +223,7 @@ contract Store {
 
   // Function to retrieve all stores
   function getAllStores() public view returns (StoreInfo[] memory) {
-  return shops;
+    return shops;
   }
 
 

@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import { environment } from "../../environments/environment";
 import Store from '../../../artifacts/contracts/Store.sol/Store.json'
 import detectEthereumProvider from "@metamask/detect-provider";
+import {Observable, of} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class ShopContractService {
   async getShop() {
     const contract = await ShopContractService.getContract(true)
     const signer = contract.signer
-    return await contract['stores'](signer.getAddress())
+    return await contract['getStore'](signer.getAddress())
   }
 
   public async getProducts(): Promise<any[]> {

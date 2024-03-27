@@ -8,29 +8,40 @@
     class="nav__search"
   />
 
-  <ng-container *ngIf="account">
-    <button
-      type="button"
-      class="nav__connect"
-    >
-      {{ account.slice(0, 6) + '...' + account.slice(38, 42) }}
-    </button>
+  <ng-container *ngIf="account ;else notAuth">
+      <ng-container *ngIf="shop$ | async as shop; else noShop">
+        <button
+          type="button"
+          class="nav__connect">
+          {{ shop.name }}
+        </button>
+        <ul class="nav__links">
+          <li><button >Ajouter une categorie</button></li>
+          <li><button >Ajouter un produit</button></li>
+          <li><button >Copier le lien de la boutique</button></li>
+        </ul>
+      </ng-container>
+    <ng-template #noShop>
+      <button
+        type="button"
+        class="nav__connect">
+        Create your shop
+      </button>
+    </ng-template>
+
+
+
   </ng-container>
-  <ng-container *ngIf="!account">
+  <ng-template #notAuth>
     <button
       type="button"
       class="nav__connect"
-      (click)="connectHandler()"
-    >
+      (click)="connectHandler()">
       Connect
     </button>
-  </ng-container>
+  </ng-template>
 
-  <ul class="nav__links">
-    <li><a href="#Clothing&Jewelry">Clothing & Jewelry</a></li>
-    <li><a href="#Electronics&Gadgets">Electronics & Gadgets</a></li>
-    <li><a href="#Toys&Gaming">Toys & Gaming</a></li>
-  </ul>
+
 </nav>
 
 

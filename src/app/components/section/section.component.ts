@@ -45,6 +45,7 @@ export class SectionComponent {
 
   togglePop(item: any) {
     const dialogRef = this.dialog.open(ProductComponent, {
+      width: '500px',
       data: {
         item: item,
         user:item

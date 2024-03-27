@@ -154,6 +154,17 @@ export function shopReducer(state: ShopState, action:ShopActions): ShopState {
         isLoading: false,
       };
 
+    case ShopActionTypes.SelectShopFailure:
+      return {
+        ...state,
+        error: action.error,
+        isLoading: false,
+        shopState: {
+          ...state.shopState,
+          selectedShop: null,
+        }
+      };
+
 
       // Load Categories
     case ShopActionTypes.LoadCategories:

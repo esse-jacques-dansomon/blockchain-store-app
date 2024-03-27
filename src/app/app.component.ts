@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import {ShopContractService} from "./services/shop-contract.service";
-import {NgIf} from "@angular/common";
-import {RouterOutlet} from "@angular/router";
 import {ShopStoreService} from "./features/store/shop-store.service";
+import {of} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -18,6 +17,7 @@ import {ShopStoreService} from "./features/store/shop-store.service";
 export class AppComponent {
   title = 'angular-dapp';
   account: any;
+  shop$ = this.shopStoreService.selectSelectedShop$();
 
    constructor(
     private shopContractService: ShopContractService,
@@ -31,6 +31,16 @@ export class AppComponent {
         this.shopStoreService.loadShopProducts(account)
       }
      );
+
+     (window as any).ethereum.on('accountsChanged',(accounts: any) =>{
+       let account = accounts[0]
+       console.log('account changed', account)
+       this.account = account;
+       this.shopStoreService.loadShop(account)
+       this.shopStoreService.loadShopCategories(account)
+       this.shopStoreService.loadShopProducts(account)
+     })
+
 
 
 
