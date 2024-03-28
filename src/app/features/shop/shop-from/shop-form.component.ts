@@ -6,7 +6,7 @@ import {MatSelect} from "@angular/material/select";
 import {ShopStoreService} from "../store/shop-store.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
-import {NgIf} from "@angular/common";
+import {AsyncPipe, NgIf} from "@angular/common";
 import {Shop} from "../../../data/models/shop";
 
 @Component({
@@ -20,23 +20,25 @@ import {Shop} from "../../../data/models/shop";
     MatSelect,
     ReactiveFormsModule,
     MatButton,
-    NgIf
+    NgIf,
+    AsyncPipe
   ],
   templateUrl: './shop-form.component.html',
   styleUrl: './shop-form.component.scss'
 })
 export class ShopFormComponent {
-  public isLoading = false
+  public isLoading$ = this.shopStoreService.selectShopLoading$();
   public formError: string=  '';
   shop: Shop | undefined;
-  constructor(
-    private shopStoreService: ShopStoreService,
-  ) {
-  }
   shopForm : FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
     location: new FormControl('', Validators.required),
   });
+  constructor(
+    private shopStoreService: ShopStoreService,
+  ) {
+  }
+
 
   ngOnInit() {
     this.shopStoreService.selectSelectedShop$().subscribe(shop => {
@@ -50,8 +52,11 @@ export class ShopFormComponent {
 
   public async onSubmit() {
     if (this.shopForm.valid) {
-      this.isLoading = true
-
+      if (this.shop) {
+        this.shopStoreService.updateShop(this.shopForm.value)
+      }else {
+        this.shopStoreService.createShop(this.shopForm.value)
+      }
     } else {
       console.error('form is not valid')
       this.formError = 'Form is not valid'

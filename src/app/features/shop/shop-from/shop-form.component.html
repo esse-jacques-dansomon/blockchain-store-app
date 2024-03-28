@@ -10,9 +10,16 @@
     <input matInput formControlName="location">
   </mat-form-field>
 
-  <button mat-flat-button color="primary" type="submit" [disabled]="isLoading">
-    <span *ngIf="!isLoading && shop == undefined">Create shop</span>
-    <span *ngIf="!isLoading && shop !== undefined">Update shop</span>
+  <ng-container *ngIf="isLoading$ | async as isLoading; else we">
     <span *ngIf="isLoading">Loading...</span>
-  </button>
+  </ng-container>
+  <ng-template #we>
+      <button mat-flat-button color="primary" type="submit" >
+        <span *ngIf="!shop">Create shop</span>
+        <span *ngIf="shop">Update shop</span>
+      </button>
+  </ng-template>
+
+
+
 </form>

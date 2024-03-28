@@ -54,6 +54,7 @@ export enum ShopActionTypes {
   UpdateProductSuccess = '[Shop] Update Product Success by shop',
   UpdateProductFailure = '[Shop] Update Product Failure by shop',
 
+
   SelectCategory = '[Shop] Select category by shop',
   SelectCategorySuccess = '[Shop] Select category Success by shop',
   SelectCategoryFailure = '[Shop] Select category Failure by shop',
@@ -254,6 +255,7 @@ export const updateProductFailure = createAction(
 );
 
 
+
 /**
  * Create Category, Success, Failure
  */
@@ -372,4 +374,8 @@ export type ShopActions =
 
   ReturnType<typeof updateProduct> |
   ReturnType<typeof updateProductSuccess> |
-  ReturnType<typeof updateProductFailure> ;
+  ReturnType<typeof updateProductFailure>
+
+
+
+  ;

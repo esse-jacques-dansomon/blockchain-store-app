@@ -92,7 +92,6 @@ contract Store {
   function updateStore(string memory _name, string memory _location) public returns (StoreInfo memory){
     require(bytes(_name).length > 0, "Store name cannot be empty");
     require(bytes(_location).length > 0, "Store location cannot be empty");
-    require(stores[msg.sender].owner == address(0), "Store already exists");
     StoreInfo storage store = stores[msg.sender];
     store.name = _name;
     store.location = _location;

@@ -199,7 +199,7 @@ export function shopReducer(state: ShopState, action:ShopActions): ShopState {
           ...state,
           shopState: {
             ...state.shopState,
-            shops: state.shopState.shops?.map(shop => shop.owner === action.shop.owner ? action.shop : shop) ?? null,
+            selectedShop: action.shop,
           },
           isLoading: false,
         };
