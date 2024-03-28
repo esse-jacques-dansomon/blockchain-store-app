@@ -1,7 +1,7 @@
 import {CanActivateFn, Router} from '@angular/router';
 import {inject} from "@angular/core";
-import {ShopStoreService} from "../../features/store/shop-store.service";
 import {catchError, map, of} from "rxjs";
+import { ShopStoreService } from 'src/app/features/shop/store/shop-store.service';
 export const hasShopGuard: CanActivateFn = (route, state, ) => {
   const router = inject(Router);
   return inject(ShopStoreService).selectSelectedShop$()

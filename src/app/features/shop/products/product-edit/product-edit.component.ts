@@ -9,7 +9,7 @@ import {
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {MatFormField, MatHint, MatLabel} from "@angular/material/form-field";
 import {SnackBarService} from "../../../../shared/services/snack-bar.service";
-import {ShopStoreService} from "../../../store/shop-store.service";
+import {ShopStoreService} from "../../store/shop-store.service";
 import {MatInput} from "@angular/material/input";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";

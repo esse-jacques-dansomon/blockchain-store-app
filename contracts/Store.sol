@@ -54,6 +54,9 @@ contract Store {
     _;
   }
 
+  //validate store data
+
+
 
   // Storage variable for products
   Product[] public products;
@@ -85,6 +88,15 @@ contract Store {
     emit StoreCreated(_name, _location, msg.sender);
   }
 
+  function updateStore(string memory _name, string memory _location) public {
+    require(bytes(_name).length > 0, "Store name cannot be empty");
+    require(bytes(_location).length > 0, "Store location cannot be empty");
+    require(stores[msg.sender].owner == address(0), "Store already exists");
+    StoreInfo storage store = stores[msg.sender];
+    store.name = _name;
+    store.location = _location;
+  }
+
   // Function to create a new product in a store
   function createProduct(string memory _name, string memory _image, uint256 _price, uint256 _quantity, uint256 _categoryId) public {
     require(bytes(_name).length > 0, "Product name cannot be empty");
@@ -111,6 +123,13 @@ contract Store {
     emit ProductModified(_newName, _newPrice, _newQuantity);
   }
 
+  // Function to delete a product
+  function deleteProduct(uint256 _productId) public {
+    Product storage product = products[_productId];
+    require(msg.sender == product.seller, "You are not authorized to delete this product");
+    product.available = false;
+  }
+
   // Function to create a new category
   function createCategory(string memory _name, string memory _description) public   {
     require(bytes(_name).length > 0, "Category name cannot be empty");
@@ -120,7 +139,6 @@ contract Store {
     Category memory newCategory = Category(categoryId, _name, _description, msg.sender);
     categories.push(newCategory);
     storeCategories[msg.sender].push(categoryId);
-//    return categoryId;
   }
 
 

@@ -2,8 +2,8 @@ import {InjectionToken, NgModule} from "@angular/core";
 import {StoreConfig, StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
 import {shopFeatureKey, shopInitialState, shopReducer, ShopState} from "./shop.reducer";
-import {featureStoreConfigFactory, StoreStateService} from "../../store";
-import {ShopContractService} from "../../data/services/shop-contract.service";
+import {featureStoreConfigFactory, StoreStateService} from "src/app/store";
+import {ShopContractService} from "src/app/data/services/shop-contract.service";
 import {ShopEffects} from "./shop.effects";
 
 const featureKey =shopFeatureKey;

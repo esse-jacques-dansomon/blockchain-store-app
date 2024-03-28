@@ -8,9 +8,9 @@ import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {PreloadAllModules, RouterModule, RouterOutlet} from "@angular/router";
 import {appRoutes} from "./app.routes";
 import {BrowserModule} from "@angular/platform-browser";
-import {shopStoreModule} from "./features/store/shop-store.module";
 import localeFr from '@angular/common/locales/fr';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {shopStoreModule} from "./features/shop/store/shop-store.module";
 registerLocaleData(localeFr);
 
 

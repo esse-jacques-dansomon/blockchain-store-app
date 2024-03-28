@@ -11,7 +11,7 @@ import {
 import {MatDialog} from "@angular/material/dialog";
 import {MatSort, MatSortHeader, MatSortModule} from "@angular/material/sort";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
-import {ShopStoreService} from "../../../store/shop-store.service";
+import {ShopStoreService} from "../../store/shop-store.service";
 import {SnackBarService} from "../../../../shared/services/snack-bar.service";
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatButton, MatIconButton} from "@angular/material/button";

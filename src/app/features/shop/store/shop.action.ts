@@ -1,9 +1,9 @@
 import {createAction, props, Store} from "@ngrx/store";
-import {User} from "../../data/models/user";
-import {Category} from "../../data/models/category";
-import {Product} from "../../data/models/product";
-import {Shop} from "../../data/models/shop";
-import {Order} from "../../data/models/order";
+import {User} from "../../../data/models/user";
+import {Category} from "../../../data/models/category";
+import {Product} from "../../../data/models/product";
+import {Shop} from "../../../data/models/shop";
+import {Order} from "../../../data/models/order";
 
 export enum ShopActionTypes {
   LoadShops = '[Shop] Load Shops',

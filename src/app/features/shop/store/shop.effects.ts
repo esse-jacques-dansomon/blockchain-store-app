@@ -1,11 +1,11 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {ShopContractService} from "../../data/services/shop-contract.service";
 import {exhaustMap, map, switchMap} from "rxjs";
 import {ShopActionTypes} from "./shop.action";
-import {Shop} from "../../data/models/shop";
-import {Category} from "../../data/models/category";
-import {Product} from "../../data/models/product";
+import {Shop} from "../../../data/models/shop";
+import {Category} from "../../../data/models/category";
+import {Product} from "../../../data/models/product";
+import {ShopContractService} from "../../../data/services/shop-contract.service";
 
 @Injectable()
 export class ShopEffects {

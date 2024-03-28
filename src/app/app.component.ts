@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {ShopContractService} from "./data/services/shop-contract.service";
-import {ShopStoreService} from "./features/store/shop-store.service";
 import {Router} from "@angular/router";
+import {ShopStoreService} from "./features/shop/store/shop-store.service";
 
 @Component({
   selector: 'app-root',

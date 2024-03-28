@@ -1,9 +1,8 @@
-import {Category} from "../../data/models/category";
-import {Product} from "../../data/models/product";
-import {Shop} from "../../data/models/shop";
-import {User} from "../../data/models/user";
+import {Category} from "../../../data/models/category";
+import {Product} from "../../../data/models/product";
+import {Shop} from "../../../data/models/shop";
 import {ShopActions, ShopActionTypes} from "./shop.action";
-import {Order} from "../../data/models/order";
+import {Order} from "../../../data/models/order";
 
 export interface ShopState {
 

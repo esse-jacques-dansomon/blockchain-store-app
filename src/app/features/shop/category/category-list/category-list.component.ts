@@ -16,7 +16,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, MatSortHeader} from "@angular/material/sort";
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatDialog} from "@angular/material/dialog";
-import {ShopStoreService} from "../../../store/shop-store.service";
+import {ShopStoreService} from "../../store/shop-store.service";
 import {SnackBarService} from "../../../../shared/services/snack-bar.service";
 import {CategoryEditComponent} from "../category-edit/category-edit.component";
 

@@ -1,6 +1,6 @@
 import {ActionReducerMap} from "@ngrx/store";
 import {getMetaReducersProvider} from "./store.providers";
-import {ShopState} from "../features/store/shop.reducer";
+import {ShopState} from "../features/shop/store/shop.reducer";
 
 
 export interface AppState {

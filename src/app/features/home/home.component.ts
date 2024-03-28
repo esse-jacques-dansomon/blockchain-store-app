@@ -1,12 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {SectionComponent} from "../../components/section/section.component";
-import {Product} from "../../data/models/product";
-import {ShopStoreService} from "../store/shop-store.service";
 import {AsyncPipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
 import {ProductComponent} from "../../components/product/product.component";
-import {combineLatest, map, Subscription} from "rxjs";
-
-// import {groupBy} from "rxjs";
+import {combineLatest, map} from "rxjs";
+import {ShopStoreService} from "../shop/store/shop-store.service";
 
 
 @Component({

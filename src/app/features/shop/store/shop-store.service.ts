@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AppState} from "../../store/app.reducer";
+import {AppState} from "../../../store/app.reducer";
 import {Store} from "@ngrx/store";
 import {loadCategories, loadProducts, loadShops, login, selectShop} from "./shop.action";
 
