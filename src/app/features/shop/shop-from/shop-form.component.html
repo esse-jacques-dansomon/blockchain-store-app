@@ -6,12 +6,13 @@
     <input matInput formControlName="name">
   </mat-form-field>
   <mat-form-field >
-    <mat-label>Description</mat-label>
-    <input matInput formControlName="description">
+    <mat-label>Location</mat-label>
+    <input matInput formControlName="location">
   </mat-form-field>
 
   <button mat-flat-button color="primary" type="submit" [disabled]="isLoading">
-    <span *ngIf="!isLoading">Create shop</span>
+    <span *ngIf="!isLoading && shop == undefined">Create shop</span>
+    <span *ngIf="!isLoading && shop !== undefined">Update shop</span>
     <span *ngIf="isLoading">Loading...</span>
   </button>
 </form>

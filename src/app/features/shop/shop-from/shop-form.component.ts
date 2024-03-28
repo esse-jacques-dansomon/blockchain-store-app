@@ -7,6 +7,7 @@ import {ShopStoreService} from "../../store/shop-store.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {NgIf} from "@angular/common";
+import {Shop} from "../../../data/models/shop";
 
 @Component({
   selector: 'app-shop-from',
@@ -27,20 +28,24 @@ import {NgIf} from "@angular/common";
 export class ShopFormComponent {
   public isLoading = false
   public formError: string=  '';
+  shop: Shop | undefined;
   constructor(
     private shopStoreService: ShopStoreService,
   ) {
   }
   shopForm : FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required),
+    location: new FormControl('', Validators.required),
   });
 
   ngOnInit() {
-    this.shopForm = new FormGroup({
-      name: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required),
-    });
+    this.shopStoreService.selectSelectedShop$().subscribe(shop => {
+      if (shop) {
+        console.log('shop', shop)
+        this.shop = shop;
+        this.shopForm.patchValue(shop);
+      }
+    })
   }
 
   public async onSubmit() {

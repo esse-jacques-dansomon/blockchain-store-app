@@ -1,10 +1,8 @@
 import { Route } from '@angular/router';
 import {HomeComponent} from "./features/home/home.component";
-import {UploadImageComponent} from "./features/shop/upload-image/upload-image.component";
 import {ShopFormComponent} from "./features/shop/shop-from/shop-form.component";
 import {hasShopGuard} from "./core/guards/has-shop.guard";
 import {isAuthGuard} from "./core/guards/is-auth.guard";
-import {CategoryComponent} from "./features/shop/category/add/category.component";
 import {ProductListComponent} from "./features/shop/products/product-list/product-list.component";
 import {CategoryListComponent} from "./features/shop/category/category-list/category-list.component";
 
