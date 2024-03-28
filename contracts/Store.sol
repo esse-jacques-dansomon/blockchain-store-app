@@ -78,7 +78,7 @@ contract Store {
   uint256 public nextOrderId;
 
   // Function to create a store
-  function createStore(string memory _name, string memory _location) public {
+  function createStore(string memory _name, string memory _location) public  returns (StoreInfo memory){
     require(bytes(_name).length > 0, "Store name cannot be empty");
     require(bytes(_location).length > 0, "Store location cannot be empty");
     require(stores[msg.sender].owner == address(0), "Store already exists");
@@ -86,19 +86,21 @@ contract Store {
     stores[msg.sender] = newStore;
     shops.push(newStore);
     emit StoreCreated(_name, _location, msg.sender);
+    return newStore;
   }
 
-  function updateStore(string memory _name, string memory _location) public {
+  function updateStore(string memory _name, string memory _location) public returns (StoreInfo memory){
     require(bytes(_name).length > 0, "Store name cannot be empty");
     require(bytes(_location).length > 0, "Store location cannot be empty");
     require(stores[msg.sender].owner == address(0), "Store already exists");
     StoreInfo storage store = stores[msg.sender];
     store.name = _name;
     store.location = _location;
+    return stores[msg.sender];
   }
 
   // Function to create a new product in a store
-  function createProduct(string memory _name, string memory _image, uint256 _price, uint256 _quantity, uint256 _categoryId) public {
+  function createProduct(string memory _name, string memory _image, uint256 _price, uint256 _quantity, uint256 _categoryId) public returns (Product memory) {
     require(bytes(_name).length > 0, "Product name cannot be empty");
     require(bytes(_image).length > 0, "Product image cannot be empty");
     require(_price > 0, "Product price must be greater than zero");
@@ -111,16 +113,21 @@ contract Store {
     products.push(newProduct);
     storeProducts[msg.sender].push(productId);
     emit ProductCreated(_name, _image, _price, _quantity, msg.sender);
+    return newProduct;
   }
 
   // Function to modify an existing product
-  function modifyProduct(uint256 _productId, string memory _newName, uint256 _newPrice, uint256 _newQuantity) public {
+  function modifyProduct(uint256 _productId, string memory _newName, uint256 _newPrice, uint256 _newQuantity, uint256 _categoryId) public  returns (Product memory){
     Product storage product = products[_productId];
     require(msg.sender == product.seller, "You are not authorized to modify this product");
+    require(_categoryId < categories.length, "Category does not exist");
+    require(categories[_categoryId].storeOwner == msg.sender, "Category does not belong to this store");
     product.name = _newName;
     product.price = _newPrice;
     product.availableQuantity = _newQuantity;
+    product.categoryId = _categoryId;
     emit ProductModified(_newName, _newPrice, _newQuantity);
+    return products[_productId];
   }
 
   // Function to delete a product
@@ -131,7 +138,7 @@ contract Store {
   }
 
   // Function to create a new category
-  function createCategory(string memory _name, string memory _description) public   {
+  function createCategory(string memory _name, string memory _description) public  returns (Category memory){
     require(bytes(_name).length > 0, "Category name cannot be empty");
     require(bytes(_description).length > 0, "Category description cannot be empty");
     require(stores[msg.sender].owner != address(0), "Store does not exist");
@@ -139,15 +146,17 @@ contract Store {
     Category memory newCategory = Category(categoryId, _name, _description, msg.sender);
     categories.push(newCategory);
     storeCategories[msg.sender].push(categoryId);
+    return newCategory;
   }
 
 
   // Function to update a category
-  function updateCategory(uint256 _categoryId, string memory _newName, string memory _newDescription) public {
+  function updateCategory(uint256 _categoryId, string memory _newName, string memory _newDescription) public  returns (Category memory){
     Category storage category = categories[_categoryId];
     require(msg.sender == category.storeOwner, "You are not authorized to modify this category");
     category.name = _newName;
     category.description = _newDescription;
+    return categories[_categoryId];
   }
 
   // Function to purchase products

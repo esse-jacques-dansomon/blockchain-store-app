@@ -72,183 +72,302 @@ export const shopFeatureKey = 'shop';
 export function shopReducer(state: ShopState, action:ShopActions): ShopState {
 
   switch (action.type) {
-    // Load Shops
-    case ShopActionTypes.LoadShops:
-      return {
-        ...state,
-        isLoading: true,
-      };
-    case ShopActionTypes.LoadShopsSuccess:
-      return {
-        ...state,
-        shopState: {
-          ...state.shopState,
-          shops: action.shops,
-        },
-        isLoading: false,
-      };
-
-    case ShopActionTypes.LoadShopsFailure:
-      return {
-        ...state,
-        error: action.error,
-        isLoading: false,
-      };
+      // Load Shops
+      case ShopActionTypes.LoadShops:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case ShopActionTypes.LoadShopsSuccess:
+        return {
+          ...state,
+          shopState: {
+            ...state.shopState,
+            shops: action.shops,
+          },
+          isLoading: false,
+        };
+      case ShopActionTypes.LoadShopsFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+        };
 
       //  Login
-    case ShopActionTypes.Login:
-      return {
-        ...state,
-        isLoading: true,
-      };
-
-    case ShopActionTypes.LoginSuccess:
-      return {
-        ...state,
-        authState: {
-          ...state.authState,
-          user: action.user,
-        },
-        isLoading: false,
-      };
-
-    case ShopActionTypes.LoginFailure:
-      return {
-        ...state,
-        error: action.error,
-        isLoading: false,
-      };
+      case ShopActionTypes.Login:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case ShopActionTypes.LoginSuccess:
+        return {
+          ...state,
+          authState: {
+            ...state.authState,
+            user: action.user,
+          },
+          isLoading: false,
+        };
+      case ShopActionTypes.LoginFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+        };
 
       // Load Orders
+      case ShopActionTypes.LoadOrders:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case ShopActionTypes.LoadOrdersSuccess:
+        return {
+          ...state,
+          orderState: {
+            ...state.orderState,
+            orders: action.orders,
+          },
+          isLoading: false,
+        };
+      case ShopActionTypes.LoadOrdersFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+        };
 
-    case ShopActionTypes.LoadOrders:
-      return {
-        ...state,
-        isLoading: true,
-      };
 
-    case ShopActionTypes.LoadOrdersSuccess:
-      return {
-        ...state,
-        orderState: {
-          ...state.orderState,
-          orders: action.orders,
-        },
-        isLoading: false,
-      };
-
-    case ShopActionTypes.LoadOrdersFailure:
-      return {
-        ...state,
-        error: action.error,
-        isLoading: false,
-      };
 
       // Select Shop
+      case ShopActionTypes.SelectShop:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case ShopActionTypes.SelectShopSuccess:
+        return {
+          ...state,
+          shopState: {
+            ...state.shopState,
+            selectedShop: action.shop,
+          },
+          isLoading: false,
+        };
+      case ShopActionTypes.SelectShopFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+          shopState: {
+            ...state.shopState,
+            selectedShop: null,
+          }
+        };
 
-    case ShopActionTypes.SelectShop:
-      return {
-        ...state,
-        isLoading: true,
-      };
+      // Create Shop
+      case ShopActionTypes.CreateShop:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case ShopActionTypes.CreateShopSuccess:
+        return {
+          ...state,
+          shopState: {
+            ...state.shopState,
+            shops: [...state.shopState.shops?? [], action.shop],
+          },
+          isLoading: false,
+        };
+      case ShopActionTypes.CreateShopFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+        };
 
-    case ShopActionTypes.SelectShopSuccess:
-      return {
-        ...state,
-        shopState: {
-          ...state.shopState,
-          selectedShop: action.shop,
-        },
-        isLoading: false,
-      };
-
-    case ShopActionTypes.SelectShopFailure:
-      return {
-        ...state,
-        error: action.error,
-        isLoading: false,
-        shopState: {
-          ...state.shopState,
-          selectedShop: null,
-        }
-      };
+      // Update Shop
+      case ShopActionTypes.UpdateShop:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case ShopActionTypes.UpdateShopSuccess:
+        return {
+          ...state,
+          shopState: {
+            ...state.shopState,
+            shops: state.shopState.shops?.map(shop => shop.owner === action.shop.owner ? action.shop : shop) ?? null,
+          },
+          isLoading: false,
+        };
+      case ShopActionTypes.UpdateShopFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+        };
 
 
       // Load Categories
-    case ShopActionTypes.LoadCategories:
-      return {
-        ...state,
-        isLoading: true,
-      };
-
-    case ShopActionTypes.LoadCategoriesSuccess:
-      return {
-        ...state,
-        shopState: {
-          ...state.shopState,
-          categories: action.categories,
-        },
-        isLoading: false,
-      };
-
-    case ShopActionTypes.LoadCategoriesFailure:
-      return {
-        ...state,
-        error: action.error,
-        isLoading: false,
-      };
-
-      // Load Products
-
-    case ShopActionTypes.LoadProducts:
-      return {
-        ...state,
-        isLoading: true,
-      };
-
-    case ShopActionTypes.LoadProductsSuccess:
-      return {
-        ...state,
-        shopState: {
-          ...state.shopState,
-          products: action.products,
-        },
-
-        isLoading: false,
-      };
-
-    case ShopActionTypes.LoadProductsFailure:
-      return {
-        ...state,
-        error: action.error,
-        isLoading: false,
-      };
+      case ShopActionTypes.LoadCategories:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case ShopActionTypes.LoadCategoriesSuccess:
+        return {
+          ...state,
+          shopState: {
+            ...state.shopState,
+            categories: action.categories,
+          },
+          isLoading: false,
+        };
+      case ShopActionTypes.LoadCategoriesFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+        };
 
       // Select Category
+      case ShopActionTypes.SelectCategory:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case ShopActionTypes.SelectCategorySuccess:
+        return {
+          ...state,
+          shopState: {
+            ...state.shopState,
+            selectedCategory: state.shopState.categories?.find(category => category.id === action.categoryId) || null,
+          },
+          isLoading: false,
+        };
+      case ShopActionTypes.SelectCategoryFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+        };
 
-    case ShopActionTypes.SelectCategory:
-      return {
-        ...state,
-        isLoading: true,
-      };
+      // Create Category
+      case ShopActionTypes.CreateCategory:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case ShopActionTypes.CreateCategorySuccess:
+        return {
+          ...state,
+          shopState: {
+            ...state.shopState,
+            categories: [...state.shopState.categories?? [], action.category],
+          },
+          isLoading: false,
+        };
+      case ShopActionTypes.CreateCategoryFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+        };
 
-    case ShopActionTypes.SelectCategorySuccess:
-      return {
-        ...state,
-        shopState: {
-          ...state.shopState,
-          selectedCategory: state.shopState.categories?.find(category => category.id === action.categoryId) || null,
-        },
-        isLoading: false,
-      };
+      // Update Category
+      case ShopActionTypes.UpdateCategory:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case ShopActionTypes.UpdateCategorySuccess:
 
-    case ShopActionTypes.SelectCategoryFailure:
-      return {
-        ...state,
-        error: action.error,
-        isLoading: false,
-      };
+        return {
+          ...state,
+          shopState: {
+            ...state.shopState,
+            categories: state.shopState.categories?.map(category => category.id === action.category.id ? action.category : category) ?? null,
+          },
+          isLoading: false,
+        };
+      case ShopActionTypes.UpdateCategoryFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+        };
 
+
+
+      // Load Products
+      case ShopActionTypes.LoadProducts:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case ShopActionTypes.LoadProductsSuccess:
+        return {
+          ...state,
+          shopState: {
+            ...state.shopState,
+            products: action.products,
+          },
+
+          isLoading: false,
+        };
+      case ShopActionTypes.LoadProductsFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+        };
+
+      // Create Product
+      case ShopActionTypes.CreateProduct:
+          return {
+            ...state,
+            isLoading: true,
+          };
+      case ShopActionTypes.CreateProductSuccess:
+          return {
+            ...state,
+            shopState: {
+              ...state.shopState,
+              products: [...state.shopState.products?? [], action.product],
+            },
+            isLoading: false,
+          };
+      case ShopActionTypes.CreateProductFailure:
+          return {
+            ...state,
+            error: action.error,
+            isLoading: false,
+          };
+
+      // Update Product
+      case ShopActionTypes.UpdateProduct:
+          return {
+            ...state,
+            isLoading: true,
+          };
+      case ShopActionTypes.UpdateProductSuccess:
+          return {
+            ...state,
+            shopState: {
+              ...state.shopState,
+              products: state.shopState.products?.map(product => product.id === action.product.id ? action.product : product) ?? null,
+            },
+            isLoading: false,
+          };
+      case ShopActionTypes.UpdateProductFailure:
+          return {
+            ...state,
+            error: action.error,
+            isLoading: false,
+          };
 
     default:
       return state;

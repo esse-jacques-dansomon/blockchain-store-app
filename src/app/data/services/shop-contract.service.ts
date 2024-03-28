@@ -4,6 +4,9 @@ import { environment } from "../../../environments/environment";
 import Store from '../../../../artifacts/contracts/Store.sol/Store.json'
 import detectEthereumProvider from "@metamask/detect-provider";
 import {Observable, of} from "rxjs";
+import {Shop} from "../models/shop";
+import {Product} from "../models/product";
+import {Category} from "../models/category";
 
 @Injectable({
   providedIn: 'root'
@@ -16,36 +19,64 @@ export class ShopContractService {
     return await contract['getStore'](signer.getAddress())
   }
 
+  async createShop(shop: Shop) {
+    const contract = await ShopContractService.getContract(true)
+    const transaction = await contract['createStore'](shop.name, shop.location)
+    let store = await transaction.wait()
+    console.log(store)
+    return store
+  }
+
+  async updateShop(shop: Shop) {
+    const contract = await ShopContractService.getContract(true)
+    const transaction = await contract['updateStore'](shop.name, shop.location)
+    await transaction.wait()
+  }
+
   public async getProducts(): Promise<any[]> {
     const contract = await ShopContractService.getContract(true)
     const signer = contract.signer
     return await contract['getStoreProducts'](signer.getAddress())
   }
 
+  public async createProduct(product: Product) {
+    const contract = await ShopContractService.getContract(true)
+    const transaction = await contract['createProduct'](product.name, product.image, product.price, product.availableQuantity, product.categoryId)
+    await transaction.wait()
+  }
 
-  public async getStoreCategories(): Promise<any[]> {
+  public async updateProduct(product: Product) {
+    const contract = await ShopContractService.getContract(true)
+    const transaction = await contract['modifyProduct'](product.id, product.name, product.price, product.availableQuantity, product.categoryId)
+    await transaction.wait()
+  }
+
+  public async deleteProduct(id: number) {
+    const contract = await ShopContractService.getContract(true)
+    const transaction = await contract['deleteProduct'](id)
+    await transaction.wait()
+  }
+
+
+  public async getStoreCategories(): Promise<Category[]> {
     const contract = await ShopContractService.getContract(true)
     const signer = contract.signer
     return await contract['getStoreCategories'](signer.getAddress())
   }
 
-
-  public async getImagesByAuthor(): Promise<any[]> {
+  public async createCategory(category: Category) {
     const contract = await ShopContractService.getContract(true)
-
-    return await contract['retrieveImagesByAuthor']()
+    const transaction = await contract['createCategory'](category.name, category.description)
+    await transaction.wait()
   }
 
-  public async addImage(title: string, fileUrl: string): Promise<boolean> {
+  public async updateCategory(category: Category) {
     const contract = await ShopContractService.getContract(true)
-    const transaction = await contract['store'](
-      title,
-      fileUrl
-    )
-    const tx = await transaction.wait()
-
-    return tx.status === 1
+    const transaction = await contract['modifyCategory'](category.id, category.name, category.description)
+    await transaction.wait()
   }
+
+
 
   private static async getContract(bySigner=false) {
     const provider = await ShopContractService.getWebProvider()

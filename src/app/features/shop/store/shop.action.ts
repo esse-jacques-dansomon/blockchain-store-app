@@ -22,13 +22,37 @@ export enum ShopActionTypes {
   SelectShopSuccess = '[Shop] Select Shop Success',
   SelectShopFailure = '[Shop] Select Shop Failure',
 
+  CreateShop = '[Shop] Create Shop',
+  CreateShopSuccess = '[Shop] Create Shop Success',
+  CreateShopFailure = '[Shop] Create Shop Failure',
+
+  UpdateShop = '[Shop] Update Shop',
+  UpdateShopSuccess = '[Shop] Update Shop Success',
+  UpdateShopFailure = '[Shop] Update Shop Failure',
+
   LoadCategories = '[Shop] Load categories by shop',
   LoadCategoriesSuccess = '[Shop] Load categories Success by shop',
   LoadCategoriesFailure = '[Shop] Load categories Failure by shop',
 
+  CreateCategory = '[Shop] Create category by shop',
+  CreateCategorySuccess = '[Shop] Create category Success by shop',
+  CreateCategoryFailure = '[Shop] Create category Failure by shop',
+
+  UpdateCategory = '[Shop] Update category by shop',
+  UpdateCategorySuccess = '[Shop] Update category Success by shop',
+  UpdateCategoryFailure = '[Shop] Update category Failure by shop',
+
   LoadProducts = '[Shop] Load products by shop',
   LoadProductsSuccess = '[Shop] Load products Success by shop',
   LoadProductsFailure = '[Shop] Load products Failure by shop',
+
+  CreateProduct= '[Shop] Create products by shop',
+  CreateProductSuccess = '[Shop] Create products Success by shop',
+  CreateProductFailure = '[Shop] Create products Failure by shop',
+
+  UpdateProduct = '[Shop] Update Product by shop',
+  UpdateProductSuccess = '[Shop] Update Product Success by shop',
+  UpdateProductFailure = '[Shop] Update Product Failure by shop',
 
   SelectCategory = '[Shop] Select category by shop',
   SelectCategorySuccess = '[Shop] Select category Success by shop',
@@ -36,8 +60,9 @@ export enum ShopActionTypes {
 }
 
 
-
-// Load Shops
+/**
+ * Load Shops, Success, Failure
+ */
 export const loadShops = createAction(
   ShopActionTypes.LoadShops
 );
@@ -52,7 +77,10 @@ export const loadShopsFailure = createAction(
   props<{ error: any }>()
 );
 
-// Login
+
+/**
+ * Login, Success, Failure
+ */
 export const login = createAction(
   ShopActionTypes.Login,
   props<{ user: User }>()
@@ -68,7 +96,11 @@ export const loginFailure = createAction(
   props<{ error: any }>()
 );
 
-// Load Orders
+
+
+/**
+ * Load Orders, Success, Failure
+ */
 export const loadOrders = createAction(
   ShopActionTypes.LoadOrders
 );
@@ -83,7 +115,11 @@ export const loadOrdersFailure = createAction(
   props<{ error: any }>()
 );
 
-// Select Shop
+
+
+/**
+ * Select Shop, Success, Failure
+ */
 export const selectShop = createAction(
   ShopActionTypes.SelectShop,
   props<{ shopId: number }>()
@@ -99,7 +135,49 @@ export const selectShopFailure = createAction(
   props<{ error: any }>()
 );
 
-// Load Categories
+
+/**
+ * Create Shop, Success, Failure
+ */
+export const createShop = createAction(
+  ShopActionTypes.CreateShop,
+  props<{ shop: Shop }>()
+);
+
+export const createShopSuccess = createAction(
+  ShopActionTypes.CreateShopSuccess,
+  props<{ shop: Shop }>()
+);
+
+export const createShopFailure = createAction(
+  ShopActionTypes.CreateShopFailure,
+  props<{ error: any }>()
+);
+
+
+/**
+ * Update Shop, Success, Failure
+ */
+
+export const updateShop = createAction(
+  ShopActionTypes.UpdateShop,
+  props<{ shop: Shop }>()
+);
+
+export const updateShopSuccess = createAction(
+  ShopActionTypes.UpdateShopSuccess,
+  props<{ shop: Shop }>()
+);
+
+export const updateShopFailure = createAction(
+  ShopActionTypes.UpdateShopFailure,
+  props<{ error: any }>()
+);
+
+
+/**
+ * load Categories, Success, Failure
+ */
 export const loadCategories = createAction(
   ShopActionTypes.LoadCategories,
   props<{ shopId: number }>()
@@ -115,7 +193,12 @@ export const loadCategoriesFailure = createAction(
   props<{ error: any }>()
 );
 
-// Load Products
+
+
+
+/**
+ * load Product, Success, Failure
+ */
 export const loadProducts = createAction(
   ShopActionTypes.LoadProducts,
   props<{ shopId: number }>()
@@ -131,7 +214,89 @@ export const loadProductsFailure = createAction(
   props<{ error: any }>()
 );
 
-// Select Category
+/**
+ * Create Product, Success, Failure
+ */
+
+export const createProduct = createAction(
+  ShopActionTypes.CreateProduct,
+  props<{ product: Product }>()
+);
+
+export const createProductSuccess = createAction(
+  ShopActionTypes.CreateProductSuccess,
+  props<{ product: Product }>()
+);
+
+export const createProductFailure = createAction(
+  ShopActionTypes.CreateProductFailure,
+  props<{ error: any }>()
+);
+
+
+/**
+ * Update Product, Success, Failure
+ */
+
+export const updateProduct = createAction(
+  ShopActionTypes.UpdateProduct,
+  props<{ product: Product }>()
+);
+
+export const updateProductSuccess = createAction(
+  ShopActionTypes.UpdateProductSuccess,
+  props<{ product: Product }>()
+);
+
+export const updateProductFailure = createAction(
+  ShopActionTypes.UpdateProductFailure,
+  props<{ error: any }>()
+);
+
+
+/**
+ * Create Category, Success, Failure
+ */
+
+export const createCategory = createAction(
+  ShopActionTypes.CreateCategory,
+  props<{ category: Category }>()
+);
+
+export const createCategorySuccess = createAction(
+  ShopActionTypes.CreateCategorySuccess,
+  props<{ category: Category }>()
+);
+
+export const createCategoryFailure = createAction(
+  ShopActionTypes.CreateCategoryFailure,
+  props<{ error: any }>()
+);
+
+
+/**
+ * Update Category, Success, Failure
+ */
+
+export const updateCategory = createAction(
+  ShopActionTypes.UpdateCategory,
+  props<{ category: Category }>()
+);
+
+export const updateCategorySuccess = createAction(
+  ShopActionTypes.UpdateCategorySuccess,
+  props<{ category: Category }>()
+);
+
+export const updateCategoryFailure = createAction(
+  ShopActionTypes.UpdateCategoryFailure,
+  props<{ error: any }>()
+);
+
+
+/**
+ * Select Category, Success, Failure
+ */
 export const selectCategory = createAction(
   ShopActionTypes.SelectCategory,
   props<{ categoryId: number }>()
@@ -150,10 +315,6 @@ export const selectCategoryFailure = createAction(
 
 
 export type ShopActions =
-  ReturnType<typeof loadShops> |
-  ReturnType<typeof loadShopsSuccess> |
-  ReturnType<typeof loadShopsFailure> |
-
   ReturnType<typeof login> |
   ReturnType<typeof loginSuccess> |
   ReturnType<typeof loginFailure> |
@@ -162,18 +323,53 @@ export type ShopActions =
   ReturnType<typeof loadOrdersSuccess> |
   ReturnType<typeof loadOrdersFailure> |
 
+
+
+  ReturnType<typeof loadShops> |
+  ReturnType<typeof loadShopsSuccess> |
+  ReturnType<typeof loadShopsFailure> |
+
   ReturnType<typeof selectShop> |
   ReturnType<typeof selectShopSuccess> |
   ReturnType<typeof selectShopFailure> |
+
+  ReturnType<typeof createShop> |
+  ReturnType<typeof createShopSuccess> |
+  ReturnType<typeof createShopFailure> |
+
+  ReturnType<typeof updateShop> |
+  ReturnType<typeof updateShopSuccess> |
+  ReturnType<typeof updateShopFailure> |
+
+
+
 
   ReturnType<typeof loadCategories> |
   ReturnType<typeof loadCategoriesSuccess> |
   ReturnType<typeof loadCategoriesFailure> |
 
+  ReturnType<typeof createCategory> |
+  ReturnType<typeof createCategorySuccess> |
+  ReturnType<typeof createCategoryFailure> |
+
+  ReturnType<typeof updateCategory> |
+  ReturnType<typeof updateCategorySuccess> |
+  ReturnType<typeof updateCategoryFailure> |
+
+  ReturnType<typeof selectCategory> |
+  ReturnType<typeof selectCategorySuccess> |
+  ReturnType<typeof selectCategoryFailure>|
+
+
+
   ReturnType<typeof loadProducts> |
   ReturnType<typeof loadProductsSuccess> |
   ReturnType<typeof loadProductsFailure> |
 
-  ReturnType<typeof selectCategory> |
-  ReturnType<typeof selectCategorySuccess> |
-  ReturnType<typeof selectCategoryFailure>;
+  ReturnType<typeof createProduct> |
+  ReturnType<typeof createProductSuccess> |
+  ReturnType<typeof createProductFailure> |
+
+  ReturnType<typeof updateProduct> |
+  ReturnType<typeof updateProductSuccess> |
+  ReturnType<typeof updateProductFailure> ;
