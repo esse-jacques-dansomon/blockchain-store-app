@@ -6,7 +6,7 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from "@angular/material/dialog";
-import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatFormField, MatHint, MatLabel} from "@angular/material/form-field";
 import {SnackBarService} from "../../../../shared/services/snack-bar.service";
 import {ShopStoreService} from "../../store/shop-store.service";
@@ -61,12 +61,12 @@ export class ProductEditComponent {
     private ipfs : IpfsService,
   ) {
     this.empForm = this._fb.group({
-      name: '',
-      price: '',
-      availableQuantity: '',
-      available: '',
-      categoryId: '',
-      image:''
+      name: ['',[Validators.required]],
+      price: ['',[Validators.required, Validators.pattern('^[0-9]*$')]],
+      availableQuantity: ['',[Validators.required, Validators.pattern('^[0-9]*$')]],
+      available: ['',[Validators.required]],
+      categoryId: ['',[Validators.required]],
+      image: ['',[Validators.required]]
     });
 
     this._shopStoreService.selectShopLoading$().subscribe({
