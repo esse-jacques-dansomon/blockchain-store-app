@@ -182,6 +182,7 @@ export function shopReducer(state: ShopState, action:ShopActions): ShopState {
           isLoading: false,
         };
       case ShopActionTypes.CreateShopFailure:
+        console.log(action.error)
         return {
           ...state,
           error: action.error,
@@ -266,7 +267,6 @@ export function shopReducer(state: ShopState, action:ShopActions): ShopState {
           ...state,
           shopState: {
             ...state.shopState,
-            categories: [...state.shopState.categories?? [], action.category],
           },
           isLoading: false,
         };

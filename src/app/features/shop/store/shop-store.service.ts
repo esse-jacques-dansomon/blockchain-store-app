@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AppState} from "../../../store/app.reducer";
 import {Store} from "@ngrx/store";
 import {
+  createCategory,
   createProduct, createShop,
   loadCategories,
   loadProducts,
@@ -46,7 +47,7 @@ export class ShopStoreService {
       }
     }));
     updateCategory = ( id: any, value: any) => this.store.dispatch(updateCategory({category: value}));
-    addCategory = (value: any) => this.store.dispatch(updateCategory({category: value}));
+    addCategory = (value: any) => this.store.dispatch(createCategory({category: value}));
     loadShopCategories = (shopId: number) => this.store.dispatch(loadCategories({shopId}));
     selectSelectedShopCategories$ = () => this.store.select(state => state.shop.shopState.categories);
 

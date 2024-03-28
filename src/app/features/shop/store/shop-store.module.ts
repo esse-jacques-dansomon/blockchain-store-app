@@ -5,6 +5,7 @@ import {shopFeatureKey, shopInitialState, shopReducer, ShopState} from "./shop.r
 import {featureStoreConfigFactory, StoreStateService} from "src/app/store";
 import {ShopContractService} from "src/app/data/services/shop-contract.service";
 import {ShopEffects} from "./shop.effects";
+import {SnackBarService} from "../../../shared/services/snack-bar.service";
 
 const featureKey =shopFeatureKey;
 
@@ -36,6 +37,7 @@ export const shopStoreFeatureConfigToken = new InjectionToken<StoreConfig<ShopSt
       useFactory: featureStoreConfigFactory,
     },
     ShopContractService,
+    SnackBarService
   ],
 })
 export class shopStoreModule {}

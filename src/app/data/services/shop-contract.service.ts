@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { ethers } from "ethers";
-import { environment } from "../../../environments/environment";
+import {Injectable} from '@angular/core';
+import {ethers} from "ethers";
+import {environment} from "../../../environments/environment";
 import Store from '../../../../artifacts/contracts/Store.sol/Store.json'
 import detectEthereumProvider from "@metamask/detect-provider";
-import {Observable, of} from "rxjs";
 import {Shop} from "../models/shop";
 import {Product} from "../models/product";
 import {Category} from "../models/category";
@@ -42,13 +41,13 @@ export class ShopContractService {
   public async createProduct(product: Product) {
     const contract = await ShopContractService.getContract(true)
     const transaction = await contract['createProduct'](product.name, product.image, product.price, product.availableQuantity, product.categoryId)
-    await transaction.wait()
+    return await transaction.wait()
   }
 
   public async updateProduct(product: Product) {
     const contract = await ShopContractService.getContract(true)
     const transaction = await contract['modifyProduct'](product.id, product.name, product.price, product.availableQuantity, product.categoryId)
-    await transaction.wait()
+   return  await transaction.wait()
   }
 
   public async deleteProduct(id: number) {
@@ -67,13 +66,14 @@ export class ShopContractService {
   public async createCategory(category: Category) {
     const contract = await ShopContractService.getContract(true)
     const transaction = await contract['createCategory'](category.name, category.description)
-    await transaction.wait()
+    return await transaction.wait()
   }
 
   public async updateCategory(category: Category) {
     const contract = await ShopContractService.getContract(true)
-    const transaction = await contract['modifyCategory'](category.id, category.name, category.description)
-    await transaction.wait()
+    const transaction = await contract['updateCategory'](category.id, category.name, category.description)
+    return await transaction.wait()
+
   }
 
 

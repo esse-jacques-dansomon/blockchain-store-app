@@ -6,6 +6,8 @@ import {Shop} from "../../../data/models/shop";
 import {Category} from "../../../data/models/category";
 import {Product} from "../../../data/models/product";
 import {ShopContractService} from "../../../data/services/shop-contract.service";
+import {SnackBarService} from "../../../shared/services/snack-bar.service";
+import {ShopStoreService} from "./shop-store.service";
 
 @Injectable()
 export class ShopEffects {
@@ -104,7 +106,7 @@ export class ShopEffects {
     createCategory$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ShopActionTypes.CreateCategory),
-        exhaustMap((action: {category: Category}) =>
+        exhaustMap((action: any) =>
           this.shopContractService.createCategory(action.category).then(
             (category) => {
               return {
@@ -113,6 +115,7 @@ export class ShopEffects {
               };
             },
             (error) => {
+              console.log(error)
               return {
                 type: ShopActionTypes.CreateCategoryFailure,
                 error,
@@ -130,13 +133,15 @@ export class ShopEffects {
           exhaustMap((action: any) => {
             let category = action.category;
             return   this.shopContractService.updateCategory(action.category).then(
-                () => {
+                (data) => {
+                  this.snackBarService.openSnackBar('Category detail updated!');
                   return {
                     type: ShopActionTypes.UpdateCategorySuccess,
                     category
                   };
                 },
                 (error) => {
+                  this.snackBarService.openSnackBar('Error updating category detail!' + error);
                   return {
                     type: ShopActionTypes.UpdateCategoryFailure,
                     error,
@@ -243,6 +248,8 @@ export class ShopEffects {
   constructor(
     private actions$: Actions,
     private shopContractService: ShopContractService,
+    private snackBarService: SnackBarService,
+    private shopStoreService: ShopStoreService
   ) {}
 
 }

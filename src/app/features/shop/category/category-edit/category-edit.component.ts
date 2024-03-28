@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {
   MAT_DIALOG_DATA,
@@ -16,6 +16,7 @@ import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {MatSelect} from "@angular/material/select";
 import {NgForOf, NgIf} from "@angular/common";
 import {ShopStoreService} from "../../store/shop-store.service";
+import {SnackBarService} from "../../../../shared/services/snack-bar.service";
 
 @Component({
   selector: 'app-category-edit',
@@ -42,20 +43,31 @@ import {ShopStoreService} from "../../store/shop-store.service";
   styleUrl: './category-edit.component.scss'
 })
 export class CategoryEditComponent {
-  empForm: FormGroup;
+  empForm: FormGroup =  this._fb.group({
+    name: ['', [Validators.required]],
+    description: ['', [Validators.required]]
+  });
 
 
   constructor(
     private _fb: FormBuilder,
-    private _empService: ShopStoreService,
+    private _shopStoreService: ShopStoreService,
     private _dialogRef: MatDialogRef<CategoryEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
 
   ) {
-    this.empForm = this._fb.group({
-      name: '',
-      description: '',
-    });
+
+ this._shopStoreService.selectShopLoading$().subscribe({
+   next: (val: any) => {
+     console.log(val)
+      if (!val) return
+     this._dialogRef.close(true);
+   },
+   error: (err: any) => {
+     console.error(err);
+   },
+ });
+
   }
 
   ngOnInit(): void {
@@ -64,29 +76,20 @@ export class CategoryEditComponent {
 
   onFormSubmit() {
     if (this.empForm.valid) {
-      if (this.data) {
-        this._empService
+      if (this.data && this.data.id) {
+        this._shopStoreService
           .updateCategory(this.data.id, this.empForm.value)
-        // .subscribe({
-        //   next: (val: any) => {
-        //     this._coreService.openSnackBar('Employee detail updated!');
-        //     this._dialogRef.close(true);
-        //   },
-        //   error: (err: any) => {
-        //     console.error(err);
-        //   },
-        // });
       } else {
-        this._empService.addCategory(this.empForm.value)
-        //   .subscribe({
-        //   next: (val: any) => {
-        //     this._coreService.openSnackBar('Employee added successfully');
-        //     this._dialogRef.close(true);
-        //   },
-        //   error: (err: any) => {
-        //     console.error(err);
-        //   },
-        // });
+        this._shopStoreService.addCategory(this.empForm.value)
+        this._shopStoreService.selectSelectedShop$().subscribe({
+          next: (val: any) => {
+            this._shopStoreService.loadShopCategories(val)
+          },
+          error: (err: any) => {
+            console.error(err);
+          },
+      })
+
       }
     }
   }
