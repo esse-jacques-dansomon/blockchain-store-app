@@ -45,4 +45,16 @@ export class ShopStoreService {
   addProduct(value:any) {
 
   }
+
+  deleteCategory(id: number) {
+
+  }
+
+  updateCategory( id: any, value: any) {
+
+  }
+
+  addCategory(value: any) {
+
+  }
 }

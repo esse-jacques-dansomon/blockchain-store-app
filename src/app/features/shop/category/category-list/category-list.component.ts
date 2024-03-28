@@ -1,68 +1,59 @@
 import {Component, ViewChild} from '@angular/core';
-import {ProductEditComponent} from "../product-edit/product-edit.component";
+import {MatButton, MatIconButton} from "@angular/material/button";
 import {
-  MatCell, MatCellDef,
+  MatCell,
+  MatCellDef,
   MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatNoDataRow, MatRow, MatRowDef,
-  MatTable,
-  MatTableDataSource, MatTableModule
+  MatHeaderCell, MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef, MatNoDataRow,
+  MatRow, MatRowDef, MatTable, MatTableDataSource
 } from "@angular/material/table";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatIcon} from "@angular/material/icon";
+import {MatInput} from "@angular/material/input";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort, MatSortHeader} from "@angular/material/sort";
+import {MatToolbar} from "@angular/material/toolbar";
 import {MatDialog} from "@angular/material/dialog";
-import {MatSort, MatSortHeader, MatSortModule} from "@angular/material/sort";
-import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import {ShopStoreService} from "../../../store/shop-store.service";
 import {SnackBarService} from "../../../../shared/services/snack-bar.service";
-import {MatToolbar} from "@angular/material/toolbar";
-import {MatButton, MatIconButton} from "@angular/material/button";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatInput} from "@angular/material/input";
-import {CurrencyPipe, DatePipe} from "@angular/common";
-import {MatIcon} from "@angular/material/icon";
+import {CategoryEditComponent} from "../category-edit/category-edit.component";
 
 @Component({
-  selector: 'app-product-list',
+  selector: 'app-category-list',
   standalone: true,
   imports: [
-    MatToolbar,
     MatButton,
-    MatFormField,
-    MatTable,
-    MatInput,
-    MatColumnDef,
-    MatHeaderCell,
     MatCell,
-    MatHeaderCellDef,
     MatCellDef,
-    MatSort,
-    DatePipe,
-    CurrencyPipe,
-    MatIconButton,
-    MatIcon,
+    MatColumnDef,
+    MatFormField,
+    MatHeaderCell,
     MatHeaderRow,
-    MatNoDataRow,
     MatHeaderRowDef,
-    MatRowDef,
-    MatRow,
-    MatPaginator,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
+    MatIcon,
+    MatIconButton,
+    MatInput,
     MatLabel,
-    MatSortHeader
+    MatPaginator,
+    MatRow,
+    MatRowDef,
+    MatSort,
+    MatSortHeader,
+    MatTable,
+    MatToolbar,
+    MatHeaderCellDef,
+    MatNoDataRow
   ],
-  templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.scss'
+  templateUrl: './category-list.component.html',
+  styleUrl: './category-list.component.scss'
 })
-export class ProductListComponent {
+export class CategoryListComponent {
   displayedColumns: string[] = [
     'id',
     'name',
-    'price',
-    'availableQuantity',
-    'categoryId',
-    'seller',
-    'image',
+    'description',
     'action',
   ];
   dataSource!: MatTableDataSource<any>;
@@ -81,7 +72,7 @@ export class ProductListComponent {
   }
 
   openAddEditEmpForm() {
-    const dialogRef = this._dialog.open(ProductEditComponent);
+    const dialogRef = this._dialog.open(CategoryEditComponent);
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
@@ -92,7 +83,7 @@ export class ProductListComponent {
   }
 
   getEmployeeList() {
-    this._empService.selectSelectedShopProducts$().subscribe({
+    this._empService.selectSelectedShopCategories$().subscribe({
       next: (res) => {
         if (!res) return;
         this.dataSource = new MatTableDataSource(res);
@@ -113,7 +104,7 @@ export class ProductListComponent {
   }
 
   deleteEmployee(id: number) {
-    this._empService.deleteProduct(id)
+    this._empService.deleteCategory(id)
     this._coreService.openSnackBar('Employee deleted!', 'done');
     //   .subscribe({
     //   next: (res) => {
@@ -126,8 +117,10 @@ export class ProductListComponent {
 
   openEditForm(data: any) {
     console.log(data)
-    const dialogRef = this._dialog.open(ProductEditComponent, {
+    const dialogRef = this._dialog.open(CategoryEditComponent, {
       data,
+      width: '400px',
+      maxWidth: '400px'
     });
 
     dialogRef.afterClosed().subscribe({
