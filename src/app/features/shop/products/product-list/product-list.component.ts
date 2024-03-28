@@ -19,6 +19,7 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {CurrencyPipe, DatePipe} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
+import {Category} from "../../../../data/models/category";
 
 @Component({
   selector: 'app-product-list',
@@ -61,23 +62,38 @@ export class ProductListComponent {
     'price',
     'availableQuantity',
     'categoryId',
-    'seller',
     'image',
     'action',
   ];
-  dataSource!: MatTableDataSource<any>;
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  dataSource: MatTableDataSource<any>  = new MatTableDataSource<any>();
+  Categories: Category[] = [];
+  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+  @ViewChild(MatSort) sort: MatSort | undefined;
 
   constructor(
     private _dialog: MatDialog,
     private _empService: ShopStoreService,
     private _coreService: SnackBarService
-  ) {}
+  ) {
+    this._empService.selectSelectedShopCategories$().subscribe({
+      next: (res) => {
+        if (res && res.length > 0) {
+          this.Categories = res;
+        }
+      },
+      error: console.log,
+    });
 
-  ngOnInit(): void {
-    this.getEmployeeList();
+    this._empService.selectSelectedShopProducts$().subscribe({
+      next: (res) => {
+        if (res && res.length > 0) {
+          this.dataSource = new MatTableDataSource(res);
+          this.dataSource.sort = this.sort!;
+          this.dataSource.paginator = this.paginator!;
+        }
+      },
+      error: console.log,
+    });
   }
 
   openAddEditEmpForm() {
@@ -85,22 +101,14 @@ export class ProductListComponent {
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getEmployeeList();
+
         }
       },
     });
   }
 
-  getEmployeeList() {
-    this._empService.selectSelectedShopProducts$().subscribe({
-      next: (res) => {
-        if (!res) return;
-        this.dataSource = new MatTableDataSource(res);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      },
-      error: console.log,
-    });
+  getCategoryName(id: any) {
+    return this.Categories.find((cat) => cat.id.toString() == id)?.name;
   }
 
   applyFilter(event: Event) {
@@ -133,7 +141,7 @@ export class ProductListComponent {
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getEmployeeList();
+
         }
       },
     });

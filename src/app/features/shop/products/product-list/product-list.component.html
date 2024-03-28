@@ -36,18 +36,13 @@
       </ng-container>
 
       <ng-container matColumnDef="availableQuantity">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> available Quantity </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>  Qte </th>
         <td mat-cell *matCellDef="let row"> {{row.availableQuantity}}</td>
       </ng-container>
 
       <ng-container matColumnDef="categoryId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> categoryId </th>
-        <td mat-cell *matCellDef="let row"> {{row.categoryId }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="seller">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> seller </th>
-        <td mat-cell *matCellDef="let row"> Me :) </td>
+        <td mat-cell *matCellDef="let row"> {{ getCategoryName(row.categoryId) }}</td>
       </ng-container>
 
       <ng-container matColumnDef="image">
