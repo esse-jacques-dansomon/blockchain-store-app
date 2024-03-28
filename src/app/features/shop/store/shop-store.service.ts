@@ -46,7 +46,9 @@ export class ShopStoreService {
         storeOwner: '',
       }
     }));
-    updateCategory = ( id: any, value: any) => this.store.dispatch(updateCategory({category: value}));
+    updateCategory = ( id: any, value: any) => this.store.dispatch(updateCategory({category: {
+      ...value,id
+      }}));
     addCategory = (value: any) => this.store.dispatch(createCategory({category: value}));
     loadShopCategories = (shopId: number) => this.store.dispatch(loadCategories({shopId}));
     selectSelectedShopCategories$ = () => this.store.select(state => state.shop.shopState.categories);
@@ -55,7 +57,9 @@ export class ShopStoreService {
 
     loadShopProducts = (shopId: number) => this.store.dispatch(loadProducts({shopId}));
     selectSelectedShopProducts$ = () => this.store.select(state => state.shop.shopState.products);
-    updateProduct =(id: any, value: any) => this.store.dispatch(updateProduct({product: value}));
+    updateProduct =(id: any, value: any) => this.store.dispatch(updateProduct({product: {
+      ...value,id
+      }}));
     addProduct = (value: any) => this.store.dispatch(createProduct({product: value}));
     deleteProduct = (id: number) => this.store.dispatch(updateProduct({
       product: {
