@@ -16,7 +16,7 @@ import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {MatSelect} from "@angular/material/select";
 import {NgForOf, NgIf} from "@angular/common";
 import {ShopStoreService} from "../../store/shop-store.service";
-import {SnackBarService} from "../../../../shared/services/snack-bar.service";
+import {ShopContractService} from "../../../../data/services/shop-contract.service";
 
 @Component({
   selector: 'app-category-edit',
@@ -53,13 +53,14 @@ export class CategoryEditComponent {
     private _fb: FormBuilder,
     private _shopStoreService: ShopStoreService,
     private _dialogRef: MatDialogRef<CategoryEditComponent>,
+    private _shopContractService: ShopContractService,
     @Inject(MAT_DIALOG_DATA) public data: any,
+
 
   ) {
 
  this._shopStoreService.selectShopLoading$().subscribe({
    next: (val: any) => {
-     console.log(val)
       if (!val) return
      this._dialogRef.close(true);
    },
@@ -81,16 +82,9 @@ export class CategoryEditComponent {
           .updateCategory(this.data.id, this.empForm.value)
       } else {
         this._shopStoreService.addCategory(this.empForm.value)
-        this._shopStoreService.selectSelectedShop$().subscribe({
-          next: (val: any) => {
-            this._shopStoreService.loadShopCategories(val)
-          },
-          error: (err: any) => {
-            console.error(err);
-          },
-      })
-
       }
+
+
     }
   }
 

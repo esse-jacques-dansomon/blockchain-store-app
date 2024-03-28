@@ -12,6 +12,8 @@ async function main() {
   let idCategory = 0
   for (let i = 0; i < data.stores.length; i++) {
     let shopOwner = shopOwners[i + 1]
+    console.log("-------------------------------------------------------")
+    console.log('Shop Owner:', shopOwner.address)
     let shop = data.stores[i]
     const tx = await store.connect(shopOwner).createStore(shop.name, shop.location)
     await tx.wait()

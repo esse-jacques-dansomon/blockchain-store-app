@@ -73,12 +73,11 @@ export class ShopContractService {
     const contract = await ShopContractService.getContract(true)
     const transaction = await contract['updateCategory'](category.id, category.name, category.description)
     return await transaction.wait()
-
   }
 
 
 
-  private static async getContract(bySigner=false) {
+  private static async getContract(bySigner=true) {
     const provider = await ShopContractService.getWebProvider()
     const signer = provider.getSigner()
     return new ethers.Contract(
@@ -120,7 +119,7 @@ export class ShopContractService {
     const provider = await ShopContractService.getWebProvider()
     const signer = provider.getSigner()
 
-    const contract = await ShopContractService.getContract()
+    const contract = await ShopContractService.getContract(true)
     const transaction = await contract.connect(signer)['buyProduct'](
       idProduct, 1
     )
@@ -131,7 +130,7 @@ export class ShopContractService {
     const provider = await ShopContractService.getWebProvider()
     const signer = provider.getSigner()
 
-    const contract = await ShopContractService.getContract()
+    const contract = await ShopContractService.getContract(true)
     const transaction = await contract.connect(signer)['sell'](
       1
     )
@@ -145,7 +144,7 @@ export class ShopContractService {
   async fetchOrder(id: number) {
     const provider =  await ShopContractService.getWebProvider()
     const signer = provider.getSigner()
-    const contract = await ShopContractService.getContract()
+    const contract = await ShopContractService.getContract(true)
     const orderCount = await contract['ordersCounter'](signer.getAddress())
 
     const orders = await contract['orders'](signer.getAddress(), orderCount)

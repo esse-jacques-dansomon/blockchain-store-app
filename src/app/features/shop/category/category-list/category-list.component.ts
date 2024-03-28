@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {
   MatCell,
@@ -49,26 +49,41 @@ import {CategoryEditComponent} from "../category-edit/category-edit.component";
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.scss'
 })
-export class CategoryListComponent {
+export class CategoryListComponent implements OnInit{
   displayedColumns: string[] = [
     'id',
     'name',
     'description',
     'action',
   ];
-  dataSource!: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  private user: any;
 
   constructor(
     private _dialog: MatDialog,
-    private _empService: ShopStoreService,
+    private _shopStoreService: ShopStoreService,
     private _coreService: SnackBarService
-  ) {}
+  ) {
+    this._shopStoreService.selectSelectedShopCategories$().subscribe({
+      next: (res) => {
+        this.dataSource = new MatTableDataSource(res || []);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      },
+    });
+
+    this._shopStoreService.selectAccount$().subscribe({
+      next: (res) => {
+        this.user = res;
+      },
+    });
+  }
 
   ngOnInit(): void {
-    this.getEmployeeList();
+
   }
 
   openAddEditEmpForm() {
@@ -76,23 +91,12 @@ export class CategoryListComponent {
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getEmployeeList();
         }
       },
     });
   }
 
-  getEmployeeList() {
-    this._empService.selectSelectedShopCategories$().subscribe({
-      next: (res) => {
-        if (!res) return;
-        this.dataSource = new MatTableDataSource(res);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      },
-      error: console.log,
-    });
-  }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -104,29 +108,19 @@ export class CategoryListComponent {
   }
 
   deleteEmployee(id: number) {
-    this._empService.deleteCategory(id)
-    this._coreService.openSnackBar('Employee deleted!', 'done');
-    //   .subscribe({
-    //   next: (res) => {
-    //     this._coreService.openSnackBar('Employee deleted!', 'done');
-    //     this.getEmployeeList();
-    //   },
-    //   error: console.log,
-    // });
+    this._shopStoreService.deleteCategory(id)
+    this._coreService.openSnackBar('Category deleted!', 'done');
   }
 
   openEditForm(data: any) {
-    console.log(data)
     const dialogRef = this._dialog.open(CategoryEditComponent, {
       data,
-      width: '400px',
-      maxWidth: '400px'
     });
 
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getEmployeeList();
+          this._shopStoreService.loadShopCategories(this.user)
         }
       },
     });

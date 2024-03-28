@@ -108,7 +108,15 @@ export class ShopEffects {
         ofType(ShopActionTypes.CreateCategory),
         exhaustMap((action: any) =>
           this.shopContractService.createCategory(action.category).then(
-            (category) => {
+            () => {
+              this.shopStoreService.selectAccount$().pipe(
+                switchMap((user: any) => {
+                  this.shopStoreService.loadShopCategories(user!)
+                  return user
+                })
+              ).subscribe(
+              )
+              let category = action.category;
               return {
                 type: ShopActionTypes.CreateCategorySuccess,
                 category

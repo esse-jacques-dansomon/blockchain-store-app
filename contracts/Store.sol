@@ -137,7 +137,7 @@ contract Store {
   }
 
   // Function to create a new category
-  function createCategory(string memory _name, string memory _description) public  returns (Category memory){
+  function createCategory(string memory _name, string memory _description) public {
     require(bytes(_name).length > 0, "Category name cannot be empty");
     require(bytes(_description).length > 0, "Category description cannot be empty");
     require(stores[msg.sender].owner != address(0), "Store does not exist");
@@ -145,7 +145,6 @@ contract Store {
     Category memory newCategory = Category(categoryId, _name, _description, msg.sender);
     categories.push(newCategory);
     storeCategories[msg.sender].push(categoryId);
-    return newCategory;
   }
 
 
