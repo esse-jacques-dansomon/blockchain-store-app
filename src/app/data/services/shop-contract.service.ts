@@ -12,10 +12,30 @@ import {Category} from "../models/category";
 })
 export class ShopContractService {
 
-  async getShop() {
+  private static async getContract(bySigner=true) {
+    const provider = await ShopContractService.getWebProvider()
+    const signer = provider.getSigner()
+    return new ethers.Contract(
+      environment.contractAddress,
+      Store.abi,
+      bySigner ? signer : provider
+    )
+  }
+
+
+  private static async getWebProvider(requestAccounts = true) {
+    const provider: any = await detectEthereumProvider()
+
+    if (requestAccounts) {
+      await provider.request({ method: 'eth_requestAccounts' })
+    }
+
+    return new ethers.providers.Web3Provider(provider)
+  }
+
+  async getShop(account: string) {
     const contract = await ShopContractService.getContract(true)
-    const signer = contract.signer
-    return await contract['getStore'](signer.getAddress())
+    return await contract['getStore'](account)
   }
 
   async createShop(shop: Shop) {
@@ -32,10 +52,9 @@ export class ShopContractService {
     await transaction.wait()
   }
 
-  public async getProducts(): Promise<any[]> {
+  public async getStoreProducts(account: string): Promise<any[]> {
     const contract = await ShopContractService.getContract(true)
-    const signer = contract.signer
-    return await contract['getStoreProducts'](signer.getAddress())
+    return await contract['getStoreProducts'](account)
   }
 
   public async createProduct(product: Product) {
@@ -57,10 +76,9 @@ export class ShopContractService {
   }
 
 
-  public async getStoreCategories(): Promise<Category[]> {
+  public async getStoreCategories(account: string): Promise<Category[]> {
     const contract = await ShopContractService.getContract(true)
-    const signer = contract.signer
-    return await contract['getStoreCategories'](signer.getAddress())
+    return await contract['getStoreCategories'](account)
   }
 
   public async createCategory(category: Category) {
@@ -77,26 +95,6 @@ export class ShopContractService {
 
 
 
-  private static async getContract(bySigner=true) {
-    const provider = await ShopContractService.getWebProvider()
-    const signer = provider.getSigner()
-    return new ethers.Contract(
-      environment.contractAddress,
-      Store.abi,
-      bySigner ? signer : provider
-    )
-  }
-
-
-  private static async getWebProvider(requestAccounts = true) {
-    const provider: any = await detectEthereumProvider()
-
-    if (requestAccounts) {
-      await provider.request({ method: 'eth_requestAccounts' })
-    }
-
-    return new ethers.providers.Web3Provider(provider)
-  }
 
   public async getAccount() {
     const provider = await ShopContractService.getWebProvider(true)
@@ -126,31 +124,10 @@ export class ShopContractService {
     await transaction.wait()
   }
 
-  async sellHandler() {
-    const provider = await ShopContractService.getWebProvider()
-    const signer = provider.getSigner()
-
-    const contract = await ShopContractService.getContract(true)
-    const transaction = await contract.connect(signer)['sell'](
-      1
-    )
-    await transaction.wait()
-  }
 
   formatUnits(amount: string) {
     return ethers.utils.formatUnits(amount, 'ether')
   }
 
-  async fetchOrder(id: number) {
-    const provider =  await ShopContractService.getWebProvider()
-    const signer = provider.getSigner()
-    const contract = await ShopContractService.getContract(true)
-    const orderCount = await contract['ordersCounter'](signer.getAddress())
-
-    const orders = await contract['orders'](signer.getAddress(), orderCount)
-    return orders.filter((order: any) =>{
-      return order.product.id == id
-    })
-  }
 
 }

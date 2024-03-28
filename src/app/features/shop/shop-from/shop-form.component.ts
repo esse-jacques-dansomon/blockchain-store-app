@@ -27,7 +27,7 @@ import {Shop} from "../../../data/models/shop";
   styleUrl: './shop-form.component.scss'
 })
 export class ShopFormComponent {
-  public isLoading$ = this.shopStoreService.selectShopLoading$();
+  public isLoading$ = this.shopStoreService.selectIsLoading$();
   public formError: string=  '';
   shop: Shop | undefined;
   shopForm : FormGroup = new FormGroup({

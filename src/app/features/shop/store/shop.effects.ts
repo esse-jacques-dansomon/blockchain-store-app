@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {exhaustMap, map, switchMap} from "rxjs";
-import {ShopActionTypes} from "./shop.action";
+import {loadVendor, ShopActionTypes} from "./shop.action";
 import {Shop} from "../../../data/models/shop";
 import {Category} from "../../../data/models/category";
 import {Product} from "../../../data/models/product";
@@ -15,8 +15,8 @@ export class ShopEffects {
      loadShop$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ShopActionTypes.SelectShop),
-        exhaustMap((action) =>
-          this.shopContractService.getShop().then(
+        exhaustMap((action: any) =>
+          this.shopContractService.getShop(action.shopId).then(
             (shop: Shop) => {
               return {
                 type: ShopActionTypes.SelectShopSuccess,
@@ -84,8 +84,8 @@ export class ShopEffects {
      loadShopCategories$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ShopActionTypes.LoadCategories),
-        exhaustMap((action) =>
-          this.shopContractService.getStoreCategories().then(
+        exhaustMap((action: any) =>
+          this.shopContractService.getStoreCategories(action.shopId).then(
             (categories: Category[]) => {
               return {
                 type: ShopActionTypes.LoadCategoriesSuccess,
@@ -165,8 +165,8 @@ export class ShopEffects {
      loadShopProducts$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ShopActionTypes.LoadProducts),
-        exhaustMap((action) =>
-          this.shopContractService.getProducts().then(
+        exhaustMap((action:any) =>
+          this.shopContractService.getStoreProducts(action.shopId).then(
             (products: Product[]) => {
               return {
                 type: ShopActionTypes.LoadProductsSuccess,
@@ -254,6 +254,72 @@ export class ShopEffects {
           (error) => {
             return {
               type: ShopActionTypes.LoginFailure,
+              error,
+            };
+          }
+        )
+      )
+    )
+    );
+
+    loadVendorShop$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ShopActionTypes.LoadVendor),
+      exhaustMap((action: any) =>
+        this.shopContractService.getShop(action.shopId).then(
+          (shop: Shop) => {
+            return {
+              type: ShopActionTypes.LoadVendorSuccess,
+              shop
+            };
+          },
+          (error) => {
+            return {
+              type: ShopActionTypes.LoadVendorFailure,
+              error,
+            };
+          }
+        )
+      )
+    )
+    );
+
+    loadVendorCategories$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ShopActionTypes.LoadVendorCategories),
+      exhaustMap((action:any) =>
+        this.shopContractService.getStoreCategories(action.shopId).then(
+          (categories: Category[]) => {
+            return {
+              type: ShopActionTypes.LoadVendorCategoriesSuccess,
+              categories,
+            };
+          },
+          (error) => {
+            return {
+              type: ShopActionTypes.LoadVendorCategoriesFailure,
+              error,
+            };
+          }
+        )
+      )
+    )
+    );
+
+    loadVendorProducts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ShopActionTypes.LoadVendorProducts),
+      exhaustMap((action: any) =>
+        this.shopContractService.getStoreProducts(action.shopId).then(
+          (products: Product[]) => {
+            return {
+              type: ShopActionTypes.LoadVendorProductsSuccess,
+              products,
+            };
+          },
+          (error) => {
+            return {
+              type: ShopActionTypes.LoadVendorProductsFailure,
               error,
             };
           }

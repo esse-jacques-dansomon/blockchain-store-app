@@ -23,8 +23,8 @@ export class ShopStoreService {
       this.store = store;
     }
 
-    selectShopLoading$ = () => this.store.select(state => state.shop.isLoading);
-    selectShopError$ = () => this.store.select(state => state.shop.error);
+    selectIsLoading$ = () => this.store.select(state => state.shop.isLoading);
+    selectError$ = () => this.store.select(state => state.shop.error);
 
 
     loadShops() {this.store.dispatch(loadShops());}

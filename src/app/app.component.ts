@@ -13,6 +13,7 @@ export class AppComponent {
   title = 'angular-dapp';
   account: any;
   shop$ = this.shopStoreService.selectSelectedShop$();
+  isLoading$ = this.shopStoreService.selectIsLoading$();
 
    constructor(
     private shopContractService: ShopContractService,

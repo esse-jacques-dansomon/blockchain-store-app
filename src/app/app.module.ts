@@ -11,32 +11,34 @@ import {BrowserModule} from "@angular/platform-browser";
 import localeFr from '@angular/common/locales/fr';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {shopStoreModule} from "./features/shop/store/shop-store.module";
+import {MatProgressBar} from "@angular/material/progress-bar";
 registerLocaleData(localeFr);
 
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    RouterModule.forRoot(appRoutes,{
-      useHash: true,
-      scrollPositionRestoration: 'enabled' ,
-      anchorScrolling: 'enabled',
-      preloadingStrategy: PreloadAllModules
-    }),
-    CommonModule,
-    RouterOutlet,
-    StoreModule.forRoot(appReducer, {
-      runtimeChecks: {
-        strictActionImmutability: false,
-        strictStateImmutability: false,
-      },
-    }),
-    EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({maxAge: 100, logOnly: !isDevMode()}),
-    shopStoreModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        RouterModule.forRoot(appRoutes, {
+            useHash: true,
+            scrollPositionRestoration: 'enabled',
+            anchorScrolling: 'enabled',
+            preloadingStrategy: PreloadAllModules
+        }),
+        CommonModule,
+        RouterOutlet,
+        StoreModule.forRoot(appReducer, {
+            runtimeChecks: {
+                strictActionImmutability: false,
+                strictStateImmutability: false,
+            },
+        }),
+        EffectsModule.forRoot([]),
+        StoreDevtoolsModule.instrument({maxAge: 100, logOnly: !isDevMode()}),
+        shopStoreModule,
+        MatProgressBar
+    ],
   providers: [
 
     metaReducersProvider,

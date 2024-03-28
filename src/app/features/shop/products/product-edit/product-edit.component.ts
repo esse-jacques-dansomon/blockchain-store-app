@@ -69,7 +69,7 @@ export class ProductEditComponent {
       image: ['',[Validators.required]]
     });
 
-    this._shopStoreService.selectShopLoading$().subscribe({
+    this._shopStoreService.selectIsLoading$().subscribe({
       next: (val: any) => {
         if (!val) return
         this._dialogRef.close(true);

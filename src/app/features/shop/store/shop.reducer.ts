@@ -6,16 +6,15 @@ import {Order} from "../../../data/models/order";
 
 export interface ShopState {
 
+  vendor: {
+    vendorAccount: string | null;
+    vendorShop: Shop | null;
+    vendorProducts: Product[] | null;
+    vendorCategories: Category[] | null;
+  }
   // Auth State
   authState: {
     user: string | null;
-    token: string | null;
-
-    // categories: Category[] | null;
-    // selectedCategory: Category | null;
-    //
-    // products: Product[] | null;
-    // selectedProduct: Product | null;
   }
 
   // Shop State
@@ -25,9 +24,9 @@ export interface ShopState {
     selectedShop: Shop | null;
 
     categories: Category[] | null;
-    selectedCategory: Category | null;
-
     products: Product[] | null;
+
+    selectedCategory: Category | null;
     selectedProduct: Product | null;
   }
 
@@ -41,9 +40,16 @@ export interface ShopState {
 }
 
 export const shopInitialState: ShopState = {
+
+  vendor: {
+    vendorAccount: null,
+    vendorShop: null,
+    vendorProducts: null,
+    vendorCategories: null,
+  },
+
   authState: {
     user: null,
-    token: null,
   },
 
   orderState: {
@@ -364,6 +370,81 @@ export function shopReducer(state: ShopState, action:ShopActions): ShopState {
             error: action.error,
             isLoading: false,
           };
+
+      // Load Vendor
+      case ShopActionTypes.LoadVendor:
+        return {
+          ...state,
+          vendor: {
+            ...state.vendor,
+            vendorAccount: action.shopId,
+          },
+          isLoading: true,
+        };
+      case ShopActionTypes.LoadVendorSuccess:
+        return {
+          ...state,
+          vendor: {
+            ...state.vendor,
+            vendorShop: action.shop,
+          },
+          isLoading: false,
+        };
+      case ShopActionTypes.LoadVendorFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+        };
+
+      // Load Vendor Products
+      case ShopActionTypes.LoadVendorProducts:
+        return {
+          ...state,
+          isLoading: true,
+        };
+
+      case ShopActionTypes.LoadVendorProductsSuccess:
+        return {
+          ...state,
+          vendor: {
+            ...state.vendor,
+            vendorProducts: action.products,
+          },
+          isLoading: false,
+        };
+
+      case ShopActionTypes.LoadVendorProductsFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+        };
+
+      // Load Vendor Categories
+      case ShopActionTypes.LoadVendorCategories:
+        return {
+          ...state,
+          isLoading: true,
+        };
+
+      case ShopActionTypes.LoadVendorCategoriesSuccess:
+        return {
+          ...state,
+          vendor: {
+            ...state.vendor,
+            vendorCategories: action.categories,
+          },
+          isLoading: false,
+        };
+
+      case ShopActionTypes.LoadVendorCategoriesFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+        };
+
 
     default:
       return state;
