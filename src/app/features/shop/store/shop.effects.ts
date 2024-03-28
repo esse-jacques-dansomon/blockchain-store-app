@@ -190,12 +190,21 @@ export class ShopEffects {
         exhaustMap((action: {product: Product}) =>
           this.shopContractService.createProduct(action.product).then(
             (product) => {
+              this.shopStoreService.selectAccount$().pipe(
+                switchMap((user: any) => {
+                  this.shopStoreService.loadShopProducts(user!)
+                  return user
+                })
+              ).subscribe(
+              )
+              this.snackBarService.openSnackBar('Product detail updated!');
               return {
                 type: ShopActionTypes.CreateProductSuccess,
                 product
               };
             },
             (error) => {
+              this.snackBarService.openSnackBar('Error updating product detail!' + error.message);
               return {
                 type: ShopActionTypes.CreateProductFailure,
                 error,

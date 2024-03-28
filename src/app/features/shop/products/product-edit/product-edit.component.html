@@ -22,11 +22,13 @@
         <input type="number" matInput placeholder="10" formControlName="availableQuantity">
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" *ngIf="categories$ | async as categories">
         <mat-label>Category</mat-label>
         <mat-select formControlName="categoryId">
-          <mat-option *ngFor="let val of education" [value]="val">{{val}}
-          </mat-option>
+          @for (category of categories; track category.id){
+            <mat-option  [value]="category.id.toString()">{{category.name}}
+            </mat-option>
+          }
         </mat-select>
       </mat-form-field>
     </div>
@@ -34,8 +36,8 @@
     <div class="row">
         <mat-label>available</mat-label>
         <mat-radio-group formControlName="available" aria-label="Select an option">
-          <mat-radio-button value="1">Yes</mat-radio-button>
-          <mat-radio-button value="2">No</mat-radio-button>
+          <mat-radio-button value="true">Yes</mat-radio-button>
+          <mat-radio-button value="false">No</mat-radio-button>
         </mat-radio-group>
     </div>
 

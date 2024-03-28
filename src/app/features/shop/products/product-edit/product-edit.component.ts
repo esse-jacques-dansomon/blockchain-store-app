@@ -15,8 +15,9 @@ import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/m
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MatButton} from "@angular/material/button";
-import {NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {IpfsService} from "../../../../data/services/ipfs.service";
+import {Product} from "../../../../data/models/product";
 
 @Component({
   selector: 'app-product-edit',
@@ -40,28 +41,22 @@ import {IpfsService} from "../../../../data/services/ipfs.service";
     MatDialogClose,
     MatHint,
     NgForOf,
-    NgIf
+    NgIf,
+    AsyncPipe
   ],
   templateUrl: './product-edit.component.html',
   styleUrl: './product-edit.component.scss'
 })
 export class ProductEditComponent {
   empForm: FormGroup;
-
-  education: string[] = [
-    'Matric',
-    'Diploma',
-    'Intermediate',
-    'Graduate',
-    'Post Graduate',
-  ];
   uploadedImage: string = '';
 
+  categories$ = this._shopStoreService.selectSelectedShopCategories$()  ;
   constructor(
     private _fb: FormBuilder,
-    private _empService: ShopStoreService,
+    private _shopStoreService: ShopStoreService,
     private _dialogRef: MatDialogRef<ProductEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: Product,
     private _coreService: SnackBarService,
     private ipfs : IpfsService,
   ) {
@@ -73,37 +68,34 @@ export class ProductEditComponent {
       categoryId: '',
       image:''
     });
+
+    this._shopStoreService.selectShopLoading$().subscribe({
+      next: (val: any) => {
+        if (!val) return
+        this._dialogRef.close(true);
+      },
+      error: (err: any) => {
+        console.error(err);
+      },
+    });
   }
 
   ngOnInit(): void {
-    this.empForm.patchValue(this.data);
+    if (this.data) {
+      this.empForm.patchValue(this.data);
+      this.empForm.get('available')?.setValue(this.data.available ? 'true' : 'false');
+      this.empForm.get('categoryId')?.setValue(this.data.categoryId.toString());
+    }
+
   }
 
   onFormSubmit() {
     if (this.empForm.valid) {
       if (this.data) {
-        this._empService
+        this._shopStoreService
           .updateProduct(this.data.id, this.empForm.value)
-          // .subscribe({
-          //   next: (val: any) => {
-          //     this._coreService.openSnackBar('Employee detail updated!');
-          //     this._dialogRef.close(true);
-          //   },
-          //   error: (err: any) => {
-          //     console.error(err);
-          //   },
-          // });
       } else {
-        this._empService.addProduct(this.empForm.value)
-        //   .subscribe({
-        //   next: (val: any) => {
-        //     this._coreService.openSnackBar('Employee added successfully');
-        //     this._dialogRef.close(true);
-        //   },
-        //   error: (err: any) => {
-        //     console.error(err);
-        //   },
-        // });
+        this._shopStoreService.addProduct(this.empForm.value)
       }
     }
   }

@@ -68,7 +68,7 @@ export class ShopStoreService {
         available: false,
         name: '',
         price: 0,
-        categoryId: 0,
+        categoryId: '',
         image: '',
         seller: ''
       }}));

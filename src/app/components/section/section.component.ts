@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {RatingComponent} from "../rating/rating.component";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {ProductComponent} from "../product/product.component";
 import {MatDialog} from "@angular/material/dialog";
 import {formatUnits} from "ethers/lib/utils";
@@ -11,25 +11,28 @@ import {Product} from "../../data/models/product";
   standalone: true,
   imports: [
     RatingComponent,
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   template: `
-    <div class="cards__section">
-      <h3 [id]="title">{{ title }}</h3>
-      <hr />
-      <div class="cards">
-        <div *ngFor="let item of items; let index = index" class="card" (click)="togglePop(item)">
-          <div class="card__image">
-            <img [src]="item.image" alt="Item" />
-          </div>
-          <div class="card__info">
-            <h4>{{ item.name }}</h4>
-            <app-rating [value]="3"></app-rating>
-            <p>{{ formatUnits(item.price) }} ETH</p>
+    <ng-container *ngIf="items.length > 0">
+      <div class="cards__section">
+        <h3 [id]="title">{{ title }}</h3>
+        <hr />
+        <div class="cards">
+          <div *ngFor="let item of items; let index = index" class="card" (click)="togglePop(item)">
+            <div class="card__image">
+              <img [src]="item.image" alt="Item" />
+            </div>
+            <div class="card__info">
+              <h4>{{ item.name }}</h4>
+              <app-rating [value]="3"></app-rating>
+              <p>{{ formatUnits(item.price) }} ETH</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </ng-container>
   `
 })
 export class SectionComponent {

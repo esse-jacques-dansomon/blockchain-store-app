@@ -17,7 +17,7 @@ import {MatToolbar} from "@angular/material/toolbar";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
-import {CurrencyPipe, DatePipe} from "@angular/common";
+import {CurrencyPipe, DatePipe, NgIf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {Category} from "../../../../data/models/category";
 
@@ -50,7 +50,8 @@ import {Category} from "../../../../data/models/category";
     MatPaginatorModule,
     MatSortModule,
     MatLabel,
-    MatSortHeader
+    MatSortHeader,
+    NgIf
   ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss'
@@ -63,6 +64,7 @@ export class ProductListComponent {
     'availableQuantity',
     'categoryId',
     'image',
+    'available',
     'action',
   ];
   dataSource: MatTableDataSource<any>  = new MatTableDataSource<any>();
