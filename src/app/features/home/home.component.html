@@ -4,7 +4,7 @@
 
   </h1>
 
-  <p>
+  <p class="container">
     We are a restaurant that serves food from all over the multiverse. We have a wide variety of dishes that are sure to please any palate. Whether you're in the mood for something sweet, savory, or spicy, we have something for you. Our chefs are experts in creating delicious meals that will transport you to another world. So come on in and experience the flavors of the multiverse at the Multivers Restaurant!
   </p>
 
@@ -19,8 +19,13 @@
   </ul>
 
   <h2>Search restaurant</h2>
-<!--  angular -->
+<!--  angular  form ngModel-->
+  <form  class="flex-container">
+    <mat-form-field>
+      <input matInput placeholder="Search for a restaurant" [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
+    </mat-form-field>
 
-
+    <button mat-raised-button color="primary" (click)="searchRestaurant()">Search</button>
+  </form>
 
 </div>

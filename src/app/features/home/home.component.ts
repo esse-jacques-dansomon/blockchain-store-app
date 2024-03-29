@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {SectionComponent} from "../../components/section/section.component";
-import {AsyncPipe, JsonPipe, NgForOf, NgIf} from "@angular/common";
-import {ProductComponent} from "../../components/product/product.component";
-import {combineLatest, map} from "rxjs";
-import {ShopStoreService} from "../shop/store/shop-store.service";
+import {Component} from '@angular/core';
+import {MatFormField} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
+import {MatButton} from "@angular/material/button";
+import {Router} from "@angular/router";
+
+
 
 
 @Component({
@@ -12,39 +14,19 @@ import {ShopStoreService} from "../shop/store/shop-store.service";
   styleUrls: ['./home.component.scss'],
   standalone: true,
   imports: [
-    SectionComponent,
-    AsyncPipe,
-    NgIf,
-    ProductComponent,
-    NgForOf,
-    JsonPipe
+    MatFormField,
+    MatInput,
+    FormsModule,
+    MatButton
   ]
 })
 export class HomeComponent  {
-  public productsByCategory$ = this.groupProductsByCategory();
+  search: any;
   constructor(
-    private shopStoreService: ShopStoreService,
+    private pouter: Router,
   ) { }
 
-
-  private groupProductsByCategory() {
-   return   combineLatest(
-      this.shopStoreService.selectSelectedShopCategories$(),
-      this.shopStoreService.selectSelectedShopProducts$()
-    ).pipe(
-      map(([categories, products]) => {
-        // Group products by category
-        if (!categories || !products) return [];
-        return categories!.map(category => {
-          let d =  {
-            category: category.name,
-            produits: products!.filter(product =>{
-             return  product.categoryId.toString() == category.id.toString()
-            })
-          };
-          return d;
-        });
-      })
-    )
+  searchRestaurant() {
+    this.pouter.navigate(['/vendor', this.search]);
   }
 }

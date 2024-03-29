@@ -11,19 +11,19 @@
             {
               "name": "Laptop",
               "image": "https://placehold.co/400?text=Store+A+Laptop",
-              "price": 800,
+              "price": 0.4,
               "quantity": 5
             },
             {
               "name": "Smartphone",
               "image": "https://placehold.co/400?text=Store+A+Smartphone",
-              "price": 600,
+              "price": 0.6,
               "quantity": 10
             },
             {
               "name": "Tablet",
               "image": "https://placehold.co/400?text=Store+A+Tablet",
-              "price": 400,
+              "price": 0.4,
               "quantity": 15
             }
           ]
@@ -35,13 +35,13 @@
             {
               "name": "T-Shirt",
               "image": "https://placehold.co/400?text=Store+A+T-Shirt",
-              "price": 20,
+              "price": 1,
               "quantity": 20
             },
             {
               "name": "Jeans",
               "image": "https://placehold.co/400?text=Store+A+Jeans",
-              "price": 50,
+              "price":0.4,
               "quantity": 15
             }
           ]
@@ -53,13 +53,13 @@
             {
               "name": "Sneakers",
               "image": "https://placehold.co/400?text=Store+A+Sneakers",
-              "price": 60,
+              "price": 0.60,
               "quantity": 10
             },
             {
               "name": "Boots",
               "image": "https://placehold.co/400?text=Store+A+Boots",
-              "price": 80,
+              "price": 0.80,
               "quantity": 8
             }
           ]
@@ -77,13 +77,13 @@
             {
               "name": "Fantasy Novel",
               "image": "https://placehold.co/400?text=Store+B+Fantasy+Novel",
-              "price": 15,
+              "price": 0.15,
               "quantity": 30
             },
             {
               "name": "Science Fiction",
               "image": "https://placehold.co/400?text=Store+B+Science+Fiction",
-              "price": 18,
+              "price": 0.18,
               "quantity": 25
             }
           ]
@@ -95,13 +95,13 @@
             {
               "name": "Microwave Oven",
               "image": "https://placehold.co/400?text=Store+B+Microwave+Oven",
-              "price": 150,
+              "price": 0.150,
               "quantity": 8
             },
             {
               "name": "Blender",
               "image": "https://placehold.co/400?text=Store+B+Blender",
-              "price": 50,
+              "price": 0.50,
               "quantity": 15
             }
           ]
@@ -119,13 +119,13 @@
             {
               "name": "Sofa",
               "image": "https://placehold.co/400?text=Store+C+Sofa",
-              "price": 300,
+              "price": 0.300,
               "quantity": 10
             },
             {
               "name": "Dining Table",
               "image": "https://placehold.co/400?text=Store+C+Dining+Table",
-              "price": 200,
+              "price": 0.200,
               "quantity": 15
             }
           ]
@@ -137,13 +137,13 @@
             {
               "name": "Cookware Set",
               "image": "https://placehold.co/400?text=Store+C+Cookware+Set",
-              "price": 100,
+              "price": 0.100,
               "quantity": 20
             },
             {
               "name": "Cutlery Set",
               "image": "https://placehold.co/400?text=Store+C+Cutlery+Set",
-              "price": 50,
+              "price": 0.50,
               "quantity": 25
             }
           ]
@@ -161,13 +161,13 @@
             {
               "name": "Action Figure",
               "image": "https://placehold.co/400?text=Store+D+Action+Figure",
-              "price": 10,
+              "price": 0.10,
               "quantity": 50
             },
             {
               "name": "Doll",
               "image": "https://placehold.co/400?text=Store+D+Doll",
-              "price": 8,
+              "price": 0.8,
               "quantity": 60
             }
           ]
@@ -179,13 +179,13 @@
             {
               "name": "Basketball",
               "image": "https://placehold.co/400?text=Store+D+Basketball",
-              "price": 20,
+              "price": 0.20,
               "quantity": 30
             },
             {
               "name": "Soccer Ball",
               "image": "https://placehold.co/400?text=Store+D+Soccer+Ball",
-              "price": 15,
+              "price": 10.5,
               "quantity": 40
             }
           ]
@@ -203,13 +203,13 @@
             {
               "name": "Shampoo",
               "image": "https://placehold.co/400?text=Store+E+Shampoo",
-              "price": 5,
+              "price": 0.5,
               "quantity": 100
             },
             {
               "name": "Toothpaste",
               "image": "https://placehold.co/400?text=Store+E+Toothpaste",
-              "price": 3,
+              "price": 0.3,
               "quantity": 150
             }
           ]
@@ -221,13 +221,13 @@
             {
               "name": "Dog Food",
               "image": "https://placehold.co/400?text=Store+E+Dog+Food",
-              "price": 10,
+              "price": 0.10,
               "quantity": 80
             },
             {
               "name": "Cat Litter",
               "image": "https://placehold.co/400?text=Store+E+Cat+Litter",
-              "price": 8,
+              "price": 0.8,
               "quantity": 90
             }
           ]
