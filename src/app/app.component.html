@@ -23,7 +23,7 @@
     <ng-template #noShop>
       <button mat-button [routerLink]="['create-store']">Create your shop</button>
     </ng-template>
-    <button mat-button [routerLink]="['orders']">Account</button>
+    <button mat-button [routerLink]="['orders']">Account ({{account.slice(0, 6) + '...' + account.slice(38, 42)}})</button>
   </ng-container>
   <ng-template #notAuth>>
   <button mat-button [routerLink]="['/store/product']">Login</button>

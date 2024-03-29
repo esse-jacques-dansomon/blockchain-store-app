@@ -2,7 +2,6 @@ import {AfterViewInit, Component, inject, ViewChild} from '@angular/core';
 import {ShopContractService} from "./data/services/shop-contract.service";
 import {Router} from "@angular/router";
 import {ShopStoreService} from "./features/shop/store/shop-store.service";
-import {MatMenuTrigger} from "@angular/material/menu";
 
 @Component({
   selector: 'app-root',
@@ -40,7 +39,11 @@ export class AppComponent  implements AfterViewInit{
   }
 
   async ngAfterViewInit(): Promise<void> {
-    // await this.shopContractService.listenToEvents();
+    const contract = await this.shopContractService.getContractInstance();
+    contract.on('OrderCreated', (storeOwner: any) => {
+      this.shopStoreService.loadShopOrders(this.account)
+      this.shopStoreService.loadUserOrders(this.account)
+    })
   }
 
   async connectHandler() {

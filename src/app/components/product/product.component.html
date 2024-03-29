@@ -28,7 +28,7 @@
         </strong>
       </p>
       <p>{{ item.availableQuantity > 0 ? 'In Stock' : 'Out of Stock' }}</p>
-      <button class="product__buy" (click)="buyHandler()">Buy Now</button>
+      <button *ngIf="!isMyProduct" class="product__buy" (click)="buyHandler()">Buy Now</button>
     </div>
   </div>
 

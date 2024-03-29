@@ -117,7 +117,7 @@ export class ShopContractService {
     const contract = await ShopContractService.getContract(true)
     const signer = contract.signer
     const transaction = await contract.connect(signer)['orderProduct'](product.id, quantity, {value:
-    (product.price * quantity ) } )
+    ((product.price * quantity) + 10) } )
     await transaction.wait()
   }
 
@@ -152,5 +152,9 @@ export class ShopContractService {
       console.log('OrderCreated created by', storeOwner)
     })
 
+  }
+
+  async getContractInstance() {
+    return await ShopContractService.getContract(false)
   }
 }

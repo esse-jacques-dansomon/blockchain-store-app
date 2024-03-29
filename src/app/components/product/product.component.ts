@@ -30,13 +30,17 @@ import { formatUnits } from 'ethers/lib/utils';
 })
 export class ProductComponent implements OnInit {
   item: Product;
+  isMyProduct = false;
 
   constructor(
     public dialogRef: MatDialogRef<ProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private shopStoreService: ShopStoreService
   ) {
-    this.item = data.item;
+    this.item = data;
+    this.shopStoreService.selectAccount$().subscribe(account => {
+      this.isMyProduct = account === this.item.seller;
+    });
   }
 
   async ngOnInit(): Promise<void> {
@@ -46,15 +50,6 @@ export class ProductComponent implements OnInit {
 
    buyHandler() {
       this.shopStoreService.orderProduct(this.item, 1);
-  }
-
-  fetchOrder() {
-    // console.log('fetching order', this.account)
-    // if (!this.account) return;
-    // this.dappazonService.fetchOrder(this.item.id).then((order) => {
-    //   this.order = order;
-    //   console.log('order', order)
-    // });
   }
 
 

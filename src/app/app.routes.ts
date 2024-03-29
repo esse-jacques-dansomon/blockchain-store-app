@@ -6,8 +6,8 @@ import {isAuthGuard} from "./core/guards/is-auth.guard";
 import {ProductListComponent} from "./features/shop/products/product-list/product-list.component";
 import {CategoryListComponent} from "./features/shop/category/category-list/category-list.component";
 import {VendorShopComponent} from "./features/vendor/vendor-shop/vendor-shop.component";
-import {CartComponent} from "./features/vendor/cart/cart.component";
 import {OrderListComponent} from "./features/vendor/order-list/order-list.component";
+import {ShopOrderListComponent} from "./features/shop/shop-order-list/shop-order-list.component";
 
 export const appRoutes: Route[] = [
   {'path': '', redirectTo: 'home', pathMatch: 'full'},
@@ -30,6 +30,7 @@ export const appRoutes: Route[] = [
     children: [
       {'path': 'category', loadComponent: () => CategoryListComponent},
       {'path': 'product', loadComponent: () => ProductListComponent},
+      {'path': 'orders', loadComponent: () => ShopOrderListComponent},
     ]
   }
 ];

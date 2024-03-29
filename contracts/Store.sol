@@ -54,7 +54,7 @@ contract Store {
   }
 
   // Event triggered when a product is sold
-  event OrderCreated(string order);
+  event OrderCreated(Order order);
   event StoreCreated(string name, string location, address owner);
   event ProductCreated(string name, string image, uint256 price, uint256 availableQuantity, address seller);
   event ProductModified(string name, uint256 price, uint256 availableQuantity);
@@ -182,7 +182,7 @@ contract Store {
     Product storage product = products[_productId];
     require(product.availableQuantity >= _quantity, "Requested quantity not available");
     require(product.available, "Product is no longer available");
-    uint256 totalPrice = (product.price * _quantity );
+    uint256 totalPrice = (product.price * _quantity ) ;
     //convert to wei
 
     console.log("Total Price: ", totalPrice);
@@ -194,7 +194,7 @@ contract Store {
     require(msg.value >= totalPrice, "Insufficient funds to purchase this product");
     Order memory newOrder = Order(product, _quantity, totalPrice, msg.sender);
     orders.push(newOrder);
-    storeOrders[msg.sender].push(orders.length - 1);
+    storeOrders[product.seller].push(orders.length - 1);
     buyerOrders[msg.sender].push(orders.length - 1);
 
     // Transfer total amount to seller
@@ -211,7 +211,7 @@ contract Store {
       product.available = false;
     }
 
-//    emit OrderCreated("Order created successfully");
+    emit OrderCreated(newOrder);
   }
 
   // Function to purchase products

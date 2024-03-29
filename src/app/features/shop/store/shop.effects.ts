@@ -376,7 +376,7 @@ export class ShopEffects {
     this.actions$.pipe(
       ofType(ShopActionTypes.LoadOrdersByUser),
       exhaustMap((action: any) =>
-        this.shopContractService.getStoreOrders(action.userId).then(
+        this.shopContractService.getBuyerOrders(action.userId).then(
           (orders: any) => {
             return {
               type: ShopActionTypes.LoadOrdersByUserSuccess,
