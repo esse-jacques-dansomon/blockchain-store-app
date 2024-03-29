@@ -1,7 +1,8 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ViewChild} from '@angular/core';
 import {ShopContractService} from "./data/services/shop-contract.service";
 import {Router} from "@angular/router";
 import {ShopStoreService} from "./features/shop/store/shop-store.service";
+import {MatMenuTrigger} from "@angular/material/menu";
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ export class AppComponent {
   account: any;
   shop$ = this.shopStoreService.selectSelectedShop$();
   isLoading$ = this.shopStoreService.selectIsLoading$();
+  vendorShop$ = this.shopStoreService.selectVendorShop$();
 
    constructor(
     private shopContractService: ShopContractService,
@@ -57,5 +59,10 @@ export class AppComponent {
      } catch (error) {
         console.error('error', error)
      }
+  }
+  @ViewChild(MatMenuTrigger) trigger!: MatMenuTrigger;
+
+  someMethod() {
+    this.trigger.openMenu();
   }
 }

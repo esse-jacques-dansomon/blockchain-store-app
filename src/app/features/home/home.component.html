@@ -1,22 +1,26 @@
-<h2>
-  Multivers Best seller
-</h2>
+<div class="flex-container">
+  <h1>
+    Welcome to the Home Page of the <strong>Multivers Restaurant</strong>
 
-<ng-container *ngIf="productsByCategory$ | async as items">
-  @if (items.length > 0) {
-    @for (pc of items; track pc.category){
-      <app-section [title]="pc.category" [items]="pc.produits"></app-section>
-    } @empty {
-      <p>
-        No products found
-      </p>
-    }
-  } @else {
-    <p>
-      No products found
-    </p>
-  }
-</ng-container>
+  </h1>
+
+  <p>
+    We are a restaurant that serves food from all over the multiverse. We have a wide variety of dishes that are sure to please any palate. Whether you're in the mood for something sweet, savory, or spicy, we have something for you. Our chefs are experts in creating delicious meals that will transport you to another world. So come on in and experience the flavors of the multiverse at the Multivers Restaurant!
+  </p>
+
+  <h2>Our Service</h2>
+
+  <ul>
+    <li>1- Create an account as Restaurant, Client</li>
+    <li>2- Log in</li>
+    <li>3- Browse our menu</li>
+    <li>4- Place an order</li>
+    <li>5- Enjoy your meal!</li>
+  </ul>
+
+  <h2>Search restaurant</h2>
+<!--  angular -->
 
 
 
+</div>

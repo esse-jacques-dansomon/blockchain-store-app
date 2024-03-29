@@ -5,10 +5,15 @@ import {hasShopGuard} from "./core/guards/has-shop.guard";
 import {isAuthGuard} from "./core/guards/is-auth.guard";
 import {ProductListComponent} from "./features/shop/products/product-list/product-list.component";
 import {CategoryListComponent} from "./features/shop/category/category-list/category-list.component";
+import {VendorShopComponent} from "./features/vendor/vendor-shop/vendor-shop.component";
 
 export const appRoutes: Route[] = [
     {'path': '', redirectTo: 'home', pathMatch: 'full'},
     {'path': 'home', loadComponent: () => HomeComponent},
+    {
+      'path': 'vendor/:id',
+      loadComponent: () => VendorShopComponent
+    },
     {
       'path': 'create-store',
       canActivate: [isAuthGuard],

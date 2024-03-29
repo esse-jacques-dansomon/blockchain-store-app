@@ -49,6 +49,7 @@ nav {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
+  //justify-content: space-between;
 
   background-color: var(--clr-bunker);
 }
@@ -112,7 +113,8 @@ nav {
   margin: 0 auto;
 
   background-color: var(--clr-orange);
-  color: var(--clr-black);
+  //color: var(--clr-black);
+  color: white;
 
   border: none;
   border-radius: 4px;

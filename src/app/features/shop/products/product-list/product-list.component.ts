@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {ProductEditComponent} from "../product-edit/product-edit.component";
 import {
   MatCell, MatCellDef,
@@ -56,7 +56,7 @@ import {Category} from "../../../../data/models/category";
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss'
 })
-export class ProductListComponent {
+export class ProductListComponent implements AfterViewInit {
   displayedColumns: string[] = [
     'id',
     'name',
@@ -69,8 +69,8 @@ export class ProductListComponent {
   ];
   dataSource: MatTableDataSource<any>  = new MatTableDataSource<any>();
   Categories: Category[] = [];
-  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
-  @ViewChild(MatSort) sort: MatSort | undefined;
+  @ViewChild(MatPaginator) paginator!: MatPaginator ;
+  @ViewChild(MatSort) sort!: MatSort ;
 
   constructor(
     private _dialog: MatDialog,
@@ -96,6 +96,11 @@ export class ProductListComponent {
       },
       error: console.log,
     });
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   openAddEditEmpForm() {

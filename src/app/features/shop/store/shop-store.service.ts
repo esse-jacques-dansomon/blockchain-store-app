@@ -6,7 +6,7 @@ import {
   createProduct, createShop,
   loadCategories,
   loadProducts,
-  loadShops,
+  loadShops, loadVendor, loadVendorCategories, loadVendorProducts,
   login,
   selectShop,
   updateCategory,
@@ -78,4 +78,11 @@ export class ShopStoreService {
     loadLogin = (user: any) => this.store.dispatch(login({user:  user }));
     selectAccount$ = () => this.store.select(state => state.shop.authState.user);
 
+    loadVendorShop = (shopOwner: any) => this.store.dispatch(loadVendor({shopId: shopOwner}));
+    loadVendorCategories = (shopOwner: any) => this.store.dispatch(loadVendorCategories({shopId: shopOwner}));
+    loadVendorProducts = (shopOwner: any) => this.store.dispatch(loadVendorProducts({shopId: shopOwner}));
+
+    selectVendorCategories$ = () => this.store.select(state => state.shop.vendor.vendorCategories);
+    selectVendorProducts$ = () => this.store.select(state => state.shop.vendor.vendorProducts);
+     selectVendorShop$ = () => this.store.select(state => state.shop.vendor.vendorShop);
 }

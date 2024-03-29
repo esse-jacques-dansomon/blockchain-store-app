@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {
   MatCell,
@@ -49,7 +49,7 @@ import {CategoryEditComponent} from "../category-edit/category-edit.component";
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.scss'
 })
-export class CategoryListComponent implements OnInit{
+export class CategoryListComponent implements AfterViewInit{
   displayedColumns: string[] = [
     'id',
     'name',
@@ -81,10 +81,11 @@ export class CategoryListComponent implements OnInit{
       },
     });
   }
-
-  ngOnInit(): void {
-
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
+
 
   openAddEditEmpForm() {
     const dialogRef = this._dialog.open(CategoryEditComponent);

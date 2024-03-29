@@ -370,7 +370,8 @@ export const loadVendorCategoriesFailure = createAction(
  * Load Vendor Products, Success, Failure
  */
 export const loadVendorProducts = createAction(
-  ShopActionTypes.LoadVendorProducts
+  ShopActionTypes.LoadVendorProducts,
+  props<{ shopId: any }>()
 );
 
 export const loadVendorProductsSuccess = createAction(

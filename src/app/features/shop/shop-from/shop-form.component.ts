@@ -8,6 +8,9 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {MatButton} from "@angular/material/button";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {Shop} from "../../../data/models/shop";
+import {QRCodeModule} from "angularx-qrcode";
+import {SafeUrl} from "@angular/platform-browser";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-shop-from',
@@ -21,7 +24,8 @@ import {Shop} from "../../../data/models/shop";
     ReactiveFormsModule,
     MatButton,
     NgIf,
-    AsyncPipe
+    AsyncPipe,
+    QRCodeModule
   ],
   templateUrl: './shop-form.component.html',
   styleUrl: './shop-form.component.scss'
@@ -30,6 +34,9 @@ export class ShopFormComponent {
   public isLoading$ = this.shopStoreService.selectIsLoading$();
   public formError: string=  '';
   shop: Shop | undefined;
+  public myAngularxQrCode: string = "";
+  public qrCodeDownloadLink: SafeUrl = "";
+
   shopForm : FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
     location: new FormControl('', Validators.required),
@@ -39,6 +46,11 @@ export class ShopFormComponent {
   ) {
   }
 
+  onChangeURL(url: SafeUrl) {
+    console.log('url', url)
+    this.qrCodeDownloadLink = url;
+  }
+
 
   ngOnInit() {
     this.shopStoreService.selectSelectedShop$().subscribe(shop => {
@@ -46,6 +58,9 @@ export class ShopFormComponent {
         console.log('shop', shop)
         this.shop = shop;
         this.shopForm.patchValue(shop);
+
+        this.myAngularxQrCode =environment.baseUrl + '/vendor/' + this.shop?.owner.toString();
+
       }
     })
   }

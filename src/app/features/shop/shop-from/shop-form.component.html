@@ -1,25 +1,37 @@
 <p *ngIf="formError" class="error">{{formError}}</p>
 
-<form [formGroup]="shopForm" (ngSubmit)="onSubmit()" class="shop-form">
-  <mat-form-field >
-    <mat-label>Name</mat-label>
-    <input matInput formControlName="name">
-  </mat-form-field>
-  <mat-form-field >
-    <mat-label>Location</mat-label>
-    <input matInput formControlName="location">
-  </mat-form-field>
+<div class="shop-page">
+  <form [formGroup]="shopForm" (ngSubmit)="onSubmit()" class="shop-form">
+    <mat-form-field >
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field >
+      <mat-label>Location</mat-label>
+      <input matInput formControlName="location">
+    </mat-form-field>
 
-  <ng-container *ngIf="isLoading$ | async as isLoading; else we">
-    <span *ngIf="isLoading">Loading...</span>
-  </ng-container>
-  <ng-template #we>
+    <ng-container *ngIf="isLoading$ | async as isLoading; else we">
+      <span *ngIf="isLoading">Loading...</span>
+    </ng-container>
+    <ng-template #we>
       <button mat-flat-button color="primary" type="submit" >
         <span *ngIf="!shop">Create shop</span>
         <span *ngIf="shop">Update shop</span>
       </button>
-  </ng-template>
+    </ng-template>
 
 
 
-</form>
+  </form>
+
+  <div class="code-qr" *ngIf="shop">
+    <qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    <a [href]="qrCodeDownloadLink" download="qrcode">
+      <button mat-flat-button color="primary" type="submit" >
+        Download QR code
+      </button>
+    </a>
+  </div>
+</div>
+

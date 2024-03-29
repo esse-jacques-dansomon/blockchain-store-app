@@ -28,6 +28,7 @@
     "@ngrx/effects": "^17.1.1",
     "@ngrx/store": "^17.1.1",
     "@ngrx/store-devtools": "^17.1.1",
+    "angularx-qrcode": "^17.0.0",
     "dotenv": "^10.0.0",
     "ipfs-http-client": "^54.0.2",
     "rxjs": "^6.5.3 || ^7.5.0",

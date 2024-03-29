@@ -1,55 +1,105 @@
 <ng-container *ngIf="isLoading$ | async">
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </ng-container>
-<nav>
-  <div class="nav__brand">
-    <h1>Multivers</h1>
-  </div>
+<mat-toolbar color="primary">
+  <span>Multivers Restaurant</span>
+  <div class="spacer"></div>
 
-  <input
-    type="text"
-    class="nav__search"
-  />
-
-  <ng-container *ngIf="account ;else notAuth">
-      <ng-container *ngIf="shop$ | async as shop; else noShop">
-        <button
-          type="button"
-          class="nav__connect">
-          {{ shop.name }}
-        </button>
-        <ul class="nav__links">
-          <li><a [routerLink]="'/'" >Shop</a></li>
-          <li><a [routerLink]="'create-store'" >My Shop</a></li>
-          <li><a [routerLink]="'store/category'" >My Categories</a></li>
-          <li><a [routerLink]="'store/product'">My products</a></li>
-        </ul>
-      </ng-container>
-    <ng-template #noShop>
-      <a [routerLink]="'create-store'">
-        <button
-          type="button"
-          class="nav__connect">
-          Create your shop
-        </button>
-      </a>
-
-    </ng-template>
-
-
-
+  <button mat-button [routerLink]="['/']">Home</button>
+  <ng-container *ngIf="vendorShop$ | async as vendorShop;">
+    <button mat-button [routerLink]="['vendor', vendorShop.owner]">Visit Store: {{ vendorShop.name }}</button>
   </ng-container>
-  <ng-template #notAuth>
-    <button
-      type="button"
-      class="nav__connect"
-      (click)="connectHandler()">
-      Connect
-    </button>
+  <ng-container *ngIf="account ;else notAuth">
+    <ng-container *ngIf="shop$ | async as shop; else noShop">
+      <button mat-button [matMenuTriggerFor]="menu">My Shop</button>
+      <mat-menu #menu="matMenu">
+        <button  [routerLink]="'create-store'" mat-menu-item>Store</button>
+        <button [routerLink]="'store/category'" mat-menu-item>Categories</button>
+        <button [routerLink]="'store/product'" mat-menu-item>Products</button>
+      </mat-menu>
+    </ng-container>
+
+    <ng-template #noShop>
+      <button mat-button [routerLink]="['create-store']">Create your shop</button>
+    </ng-template>
+  </ng-container>
+  <ng-template #notAuth>>
+  <button mat-button [routerLink]="['/store/product']">Login</button>
   </ng-template>
 
 
-</nav>
+
+</mat-toolbar>
+<!--<nav>-->
+<!--  <div class="nav__brand">-->
+<!--    <ng-container *ngIf="shop$ | async as shop; else multivers">-->
+<!--      <h1>{{shop.name}}</h1>-->
+<!--    </ng-container>-->
+<!--    <ng-template #multivers>-->
+<!--      <h1>Multivers</h1>-->
+<!--    </ng-template>-->
+<!--  </div>-->
+
+<!--  <input-->
+<!--    type="text"-->
+<!--    class="nav__search"-->
+<!--  />-->
+
+<!--  <ng-container *ngIf="account ;else notAuth">-->
+
+
+<!--      <ng-container *ngIf="vendorShop$ | async as vendorShop;">-->
+<!--        <a   class="nav__connect" [routerLink]="['vendor', vendorShop.owner]" >-->
+<!--          <button-->
+<!--            type="button"-->
+<!--            class="nav__connect"-->
+<!--           >-->
+<!--            Visit Store: {{ vendorShop.name }}-->
+<!--          </button>-->
+<!--        </a>-->
+
+<!--      </ng-container>-->
+
+
+<!--    <ng-container *ngIf="shop$ | async as shop; else noShop">-->
+<!--      <ul class="nav__links">-->
+<!--        <ng-container *ngIf="shop$ | async">-->
+<!--          <li><a [routerLink]="'create-store'" >My Shop</a></li>-->
+<!--          <li><a [routerLink]="'store/category'" >My Categories</a></li>-->
+<!--          <li><a [routerLink]="'store/product'">My products</a></li>-->
+<!--        </ng-container>-->
+
+<!--      </ul>-->
+<!--    </ng-container>-->
+
+
+
+
+<!--    <ng-template #noShop>-->
+<!--      <a [routerLink]="'create-store'">-->
+<!--        <button-->
+<!--          type="button"-->
+<!--          class="nav__connect">-->
+<!--          Create your shop-->
+<!--        </button>-->
+<!--      </a>-->
+
+<!--    </ng-template>-->
+
+
+
+<!--  </ng-container>-->
+<!--  <ng-template #notAuth>-->
+<!--    <button-->
+<!--      type="button"-->
+<!--      class="nav__connect"-->
+<!--      (click)="connectHandler()">-->
+<!--      Connect-->
+<!--    </button>-->
+<!--  </ng-template>-->
+
+
+<!--</nav>-->
 
 
 <main>

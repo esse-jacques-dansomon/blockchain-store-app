@@ -1,0 +1,28 @@
+  <ng-container *ngIf="vendorShop$ | async as shop;else noVendorShop" >
+    <div class="flex-container">
+      <h2>Welcome to {{shop.name}} </h2>
+      <br>
+      <h3>{{shop.location}} </h3>
+    </div>
+
+  </ng-container>
+<ng-template #noVendorShop>
+  <h2 class="flex-container">
+    Le vendeur n'a pas de boutique
+  </h2>
+</ng-template>
+
+<ng-container *ngIf="productsByCategory$ | async as items">
+  @if (items.length > 0) {
+    @for (pc of items; track pc.category){
+      <app-section [title]="pc.category" [items]="pc.produits"></app-section>
+    } @empty {
+      <p>
+        Loading...
+      </p>
+    }
+  }
+</ng-container>
+
+
+

@@ -20,23 +20,12 @@ import {ShopStoreService} from "../shop/store/shop-store.service";
     JsonPipe
   ]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent  {
   public productsByCategory$ = this.groupProductsByCategory();
-
-  categories$ = this.shopStoreService.selectSelectedShopCategories$();
-  products$ = this.shopStoreService.selectSelectedShopProducts$();
-
   constructor(
     private shopStoreService: ShopStoreService,
   ) { }
 
-  public async ngOnInit(): Promise<void> {
-    // this.groupProductsByCategory().subscribe(
-    //   (productsByCategory) => {
-    //     this.productsByCategory = productsByCategory;
-    //   }
-    // );
-  }
 
   private groupProductsByCategory() {
    return   combineLatest(
