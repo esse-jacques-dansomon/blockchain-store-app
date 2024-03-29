@@ -113,15 +113,21 @@ export class ShopContractService {
     }
   }
 
-  async buyHandler(idProduct: any) {
-    const provider = await ShopContractService.getWebProvider()
-    const signer = provider.getSigner()
-
+  async orderProduct(product: Product, quantity: number) {
     const contract = await ShopContractService.getContract(true)
-    const transaction = await contract.connect(signer)['buyProduct'](
-      idProduct, 1
-    )
+    const signer = contract.signer
+    const transaction = await contract.connect(signer)['orderProduct'](product.id, quantity, {value:
+    (product.price * quantity ) } )
     await transaction.wait()
+  }
+
+  async getBuyerOrders(account: string) {
+    const contract = await ShopContractService.getContract(true)
+    return await contract['getBuyerOrders'](account)
+  }
+  async getStoreOrders(account: string) {
+    const contract = await ShopContractService.getContract(true)
+    return await contract['getStoreOrders'](account)
   }
 
 
@@ -130,4 +136,21 @@ export class ShopContractService {
   }
 
 
+  async getAccountInfo() {
+    const contract = await ShopContractService.getContract(true)
+    const signer = contract.signer
+    return {
+      balance: await signer.getBalance(),
+      address: await signer.getAddress()
+    };
+  }
+
+
+  async listenToEvents() {
+    const contract = await ShopContractService.getContract(false)
+    contract.on('OrderCreated', (storeOwner: any) => {
+      console.log('OrderCreated created by', storeOwner)
+    })
+
+  }
 }

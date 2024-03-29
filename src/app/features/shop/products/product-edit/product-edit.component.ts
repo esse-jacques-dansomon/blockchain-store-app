@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions, MatDialogClose,
@@ -8,7 +8,6 @@ import {
 } from "@angular/material/dialog";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatFormField, MatHint, MatLabel} from "@angular/material/form-field";
-import {SnackBarService} from "../../../../shared/services/snack-bar.service";
 import {ShopStoreService} from "../../store/shop-store.service";
 import {MatInput} from "@angular/material/input";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
@@ -47,7 +46,7 @@ import {Product} from "../../../../data/models/product";
   templateUrl: './product-edit.component.html',
   styleUrl: './product-edit.component.scss'
 })
-export class ProductEditComponent {
+export class ProductEditComponent implements OnInit{
   empForm: FormGroup;
   uploadedImage: string = '';
 
@@ -57,7 +56,6 @@ export class ProductEditComponent {
     private _shopStoreService: ShopStoreService,
     private _dialogRef: MatDialogRef<ProductEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Product,
-    private _coreService: SnackBarService,
     private ipfs : IpfsService,
   ) {
     this.empForm = this._fb.group({

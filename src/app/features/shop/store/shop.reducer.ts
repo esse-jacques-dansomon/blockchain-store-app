@@ -15,6 +15,7 @@ export interface ShopState {
   // Auth State
   authState: {
     user: string | null;
+    orders: Order[] | null;
   }
 
   // Shop State
@@ -50,6 +51,7 @@ export const shopInitialState: ShopState = {
 
   authState: {
     user: null,
+    orders: null,
   },
 
   orderState: {
@@ -122,7 +124,7 @@ export function shopReducer(state: ShopState, action:ShopActions): ShopState {
           isLoading: false,
         };
 
-      // Load Orders
+      // Load Orders by shop
       case ShopActionTypes.LoadOrders:
         return {
           ...state,
@@ -439,6 +441,50 @@ export function shopReducer(state: ShopState, action:ShopActions): ShopState {
         };
 
       case ShopActionTypes.LoadVendorCategoriesFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+        };
+
+        // Create Order
+      case ShopActionTypes.CreateOrder:
+        return {
+          ...state,
+          isLoading: true,
+        };
+
+      case ShopActionTypes.CreateOrderSuccess:
+        return {
+          ...state,
+          isLoading: false,
+        };
+
+      case ShopActionTypes.CreateOrderFailure:
+        return {
+          ...state,
+          error: action.error,
+          isLoading: false,
+        };
+
+        // load user orders
+      case ShopActionTypes.LoadOrdersByUser:
+        return {
+          ...state,
+          isLoading: true,
+        };
+
+      case ShopActionTypes.LoadOrdersByUserSuccess:
+        return {
+          ...state,
+          authState: {
+            ...state.authState,
+            orders: action.orders,
+          },
+          isLoading: false,
+        };
+
+      case ShopActionTypes.LoadOrdersByUserFailure:
         return {
           ...state,
           error: action.error,

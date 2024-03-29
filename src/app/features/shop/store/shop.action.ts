@@ -71,6 +71,14 @@ export enum ShopActionTypes {
   LoadVendorProducts = '[Shop] Load Vendor Products',
   LoadVendorProductsSuccess = '[Shop] Load Vendor Products Success',
   LoadVendorProductsFailure = '[Shop] Load Vendor Products Failure',
+
+  CreateOrder = '[Order] Create Order',
+  CreateOrderSuccess = '[Order] Create Order Success',
+  CreateOrderFailure = '[Order] Create Order Failure',
+
+  LoadOrdersByUser = '[Order User] Load Orders',
+  LoadOrdersByUserSuccess = '[Order User] Load Orders Success',
+  LoadOrdersByUserFailure = '[Order User] Load Orders Failure',
 }
 
 
@@ -116,7 +124,8 @@ export const loginFailure = createAction(
  * Load Orders, Success, Failure
  */
 export const loadOrders = createAction(
-  ShopActionTypes.LoadOrders
+  ShopActionTypes.LoadOrders,
+  props<{ userId: any }>()
 );
 
 export const loadOrdersSuccess = createAction(
@@ -385,8 +394,44 @@ export const loadVendorProductsFailure = createAction(
 );
 
 
+/**
+ * Create Order, Success, Failure
+ */
+export const createOrder = createAction(
+  ShopActionTypes.CreateOrder,
+  props<{ product: Product, quantity: number }>()
+);
+
+export const createOrderSuccess = createAction(
+  ShopActionTypes.CreateOrderSuccess,
+  props<{ order: Order }>()
+);
+
+export const createOrderFailure = createAction(
+  ShopActionTypes.CreateOrderFailure,
+  props<{ error: any }>()
+);
 
 
+
+/**
+ * Load Orders By User, Success, Failure
+ */
+
+export const loadOrdersByUser = createAction(
+  ShopActionTypes.LoadOrdersByUser,
+  props<{ userId: any }>()
+);
+
+export const loadOrdersByUserSuccess = createAction(
+  ShopActionTypes.LoadOrdersByUserSuccess,
+  props<{ orders: Order[] }>()
+);
+
+export const loadOrdersByUserFailure = createAction(
+  ShopActionTypes.LoadOrdersByUserFailure,
+  props<{ error: any }>()
+);
 
 export type ShopActions =
   ReturnType<typeof login> |
@@ -459,6 +504,16 @@ export type ShopActions =
 
   ReturnType<typeof loadVendorProducts> |
   ReturnType<typeof loadVendorProductsSuccess> |
-  ReturnType<typeof loadVendorProductsFailure>
+  ReturnType<typeof loadVendorProductsFailure>|
+
+
+  ReturnType<typeof createOrder> |
+  ReturnType<typeof createOrderSuccess> |
+  ReturnType<typeof createOrderFailure> |
+
+  ReturnType<typeof loadOrdersByUser> |
+  ReturnType<typeof loadOrdersByUserSuccess> |
+  ReturnType<typeof loadOrdersByUserFailure>
+
 
   ;

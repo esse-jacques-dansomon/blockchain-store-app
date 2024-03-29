@@ -1,4 +1,4 @@
-import {Component, inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, inject, ViewChild} from '@angular/core';
 import {ShopContractService} from "./data/services/shop-contract.service";
 import {Router} from "@angular/router";
 import {ShopStoreService} from "./features/shop/store/shop-store.service";
@@ -10,7 +10,7 @@ import {MatMenuTrigger} from "@angular/material/menu";
   styleUrls: ['./app.component.scss'],
 
 })
-export class AppComponent {
+export class AppComponent  implements AfterViewInit{
   title = 'angular-dapp';
   account: any;
   shop$ = this.shopStoreService.selectSelectedShop$();
@@ -24,11 +24,7 @@ export class AppComponent {
   ) {
      this.shopContractService.getAccount().then(
       (account: any) => {
-        this.shopStoreService.loadLogin(account)
-        this.account = account;
-        this.shopStoreService.loadShop(account)
-        this.shopStoreService.loadShopCategories(account)
-        this.shopStoreService.loadShopProducts(account)
+        this.loadData(account)
       },
       () => {
         this.account = null;
@@ -37,17 +33,14 @@ export class AppComponent {
 
      (window as any).ethereum.on('accountsChanged',(accounts: any) =>{
        let account = accounts[0]
-       this.shopStoreService.loadLogin(account)
-       this.account = account;
-       this.shopStoreService.loadShop(account)
-       this.shopStoreService.loadShopCategories(account)
-       this.shopStoreService.loadShopProducts(account)
+       this.loadData(account)
        this.router.navigate(['/'])
      })
 
+  }
 
-
-
+  async ngAfterViewInit(): Promise<void> {
+    // await this.shopContractService.listenToEvents();
   }
 
   async connectHandler() {
@@ -60,9 +53,17 @@ export class AppComponent {
         console.error('error', error)
      }
   }
-  @ViewChild(MatMenuTrigger) trigger!: MatMenuTrigger;
 
-  someMethod() {
-    this.trigger.openMenu();
+  loadData(account: any) {
+    this.shopStoreService.loadLogin(account)
+    this.account = account;
+    this.shopStoreService.loadShop(account)
+    this.shopStoreService.loadShopCategories(account)
+    this.shopStoreService.loadShopProducts(account)
+
+    this.shopStoreService.loadShopOrders(account)
+    this.shopStoreService.loadUserOrders(account)
+
   }
+
 }

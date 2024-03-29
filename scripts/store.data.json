@@ -11,19 +11,19 @@
             {
               "name": "Laptop",
               "image": "https://placehold.co/400?text=Store+A+Laptop",
-              "price": 0.4,
+              "price": 4,
               "quantity": 5
             },
             {
               "name": "Smartphone",
               "image": "https://placehold.co/400?text=Store+A+Smartphone",
-              "price": 0.6,
+              "price": 6,
               "quantity": 10
             },
             {
               "name": "Tablet",
               "image": "https://placehold.co/400?text=Store+A+Tablet",
-              "price": 0.4,
+              "price": 4,
               "quantity": 15
             }
           ]
@@ -41,7 +41,7 @@
             {
               "name": "Jeans",
               "image": "https://placehold.co/400?text=Store+A+Jeans",
-              "price":0.4,
+              "price":4,
               "quantity": 15
             }
           ]
@@ -53,13 +53,13 @@
             {
               "name": "Sneakers",
               "image": "https://placehold.co/400?text=Store+A+Sneakers",
-              "price": 0.60,
+              "price": 6,
               "quantity": 10
             },
             {
               "name": "Boots",
               "image": "https://placehold.co/400?text=Store+A+Boots",
-              "price": 0.80,
+              "price": 8,
               "quantity": 8
             }
           ]
@@ -119,13 +119,13 @@
             {
               "name": "Sofa",
               "image": "https://placehold.co/400?text=Store+C+Sofa",
-              "price": 0.300,
+              "price": 0.3,
               "quantity": 10
             },
             {
               "name": "Dining Table",
               "image": "https://placehold.co/400?text=Store+C+Dining+Table",
-              "price": 0.200,
+              "price": 0.2,
               "quantity": 15
             }
           ]
@@ -137,13 +137,13 @@
             {
               "name": "Cookware Set",
               "image": "https://placehold.co/400?text=Store+C+Cookware+Set",
-              "price": 0.100,
+              "price": 0.1,
               "quantity": 20
             },
             {
               "name": "Cutlery Set",
               "image": "https://placehold.co/400?text=Store+C+Cutlery+Set",
-              "price": 0.50,
+              "price": 0.5,
               "quantity": 25
             }
           ]

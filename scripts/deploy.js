@@ -1,7 +1,8 @@
 
 const hre = require('hardhat')
 const data = require('./store.data.json')
-const tokens = (n) => hre.ethers.utils.parseUnits(n.toString(), 'ether')
+const {formatUnits} = require("ethers/lib/utils");
+const tokens = (n) => hre.ethers.utils.parseUnits(n.toString(), 'wei')
 
 async function main() {
   // We get the contract to deploy
@@ -30,7 +31,7 @@ async function main() {
       for (let k = 0; k < category.products.length; k++) {
         console.log('=---------Product Name:', category.products[k].name)
         let product = category.products[k]
-        const tx = await store.connect(shopOwner).createProduct(product.name, product.image, tokens(product.price), product.quantity, idCategory)
+        const tx = await store.connect(shopOwner).createProduct(product.name, product.image, tokens(k +1), product.quantity, idCategory)
         await tx.wait()
         console.log('------------Product created')
       }

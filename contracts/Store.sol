@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.9 <0.9.0;
+import "hardhat/console.sol";
 
 contract Store {
   address public owner;
@@ -28,8 +29,18 @@ contract Store {
 
   // Structure to represent an order
   struct Order {
-    uint256[] productIds; // List of product IDs in the order
-    uint256[] quantities; // List of quantities of each product in the order
+//    uint256[] productIds; // List of product IDs in the order
+//    uint256[] quantities; // List of quantities of each product in the order
+
+    Product product;
+    uint256 quantity;
+    uint256 totalPrice;
+    address buyer;
+  }
+
+  struct OrderItem {
+    Product product;
+    uint256 quantity;
     address buyer;
     uint256 totalPrice;
     bool paid;
@@ -43,7 +54,7 @@ contract Store {
   }
 
   // Event triggered when a product is sold
-  event ProductSold(uint256[] productIds, uint256[] quantities, address buyer);
+  event OrderCreated(string order);
   event StoreCreated(string name, string location, address owner);
   event ProductCreated(string name, string image, uint256 price, uint256 availableQuantity, address seller);
   event ProductModified(string name, uint256 price, uint256 availableQuantity);
@@ -71,8 +82,16 @@ contract Store {
   StoreInfo[] public shops;
   // Storage variable for store information
   mapping(address => StoreInfo) public stores;
-  // Mapping to track orders
-  mapping(uint256 => Order) public orders;
+
+
+    // Mapping to track orders
+    Order[] public orders;
+    mapping(address => uint256[]) public storeOrders;
+    //mapping order to buyer
+    mapping(address => uint256[]) public buyerOrders;
+
+
+  // Mapping to track order items
 
   // Variable to manage order IDs
   uint256 public nextOrderId;
@@ -157,46 +176,84 @@ contract Store {
     return categories[_categoryId];
   }
 
-  // Function to purchase products
-  function purchaseProducts(uint256[] memory _productIds, uint256[] memory _quantities) public payable {
-    require(_productIds.length == _quantities.length, "Arrays must have the same length");
+  //Function to order product
+  function orderProduct(uint256 _productId, uint256 _quantity) public payable {
+    //the app unit is in ether
+    Product storage product = products[_productId];
+    require(product.availableQuantity >= _quantity, "Requested quantity not available");
+    require(product.available, "Product is no longer available");
+    uint256 totalPrice = (product.price * _quantity );
+    //convert to wei
 
-    uint256 totalPrice;
-    for (uint256 i = 0; i < _productIds.length; i++) {
-      uint256 productId = _productIds[i];
-      uint256 quantity = _quantities[i];
-      require(quantity > 0, "Quantity must be greater than zero");
-      require(productId < products.length, "Product does not exist");
+    console.log("Total Price: ", totalPrice);
+    console.log("msg.value: ", msg.value);
+    console.log("Product Price: ", product.price);
+    console.log("Product Quantity: ", product.availableQuantity);
 
-      Product storage product = products[productId];
-      require(product.available, "One or more products are no longer available");
-      require(quantity <= product.availableQuantity, "Requested quantity not available");
+  //make sure the buyer has enough funds in their wallet; ETH is the default currency
+    require(msg.value >= totalPrice, "Insufficient funds to purchase this product");
+    Order memory newOrder = Order(product, _quantity, totalPrice, msg.sender);
+    orders.push(newOrder);
+    storeOrders[msg.sender].push(orders.length - 1);
+    buyerOrders[msg.sender].push(orders.length - 1);
 
-      totalPrice += product.price * quantity;
-      product.availableQuantity -= quantity;
+    // Transfer total amount to seller
+    address payable seller = payable(product.seller);
+    seller.transfer(totalPrice);
 
-      if (product.availableQuantity == 0) {
-        product.available = false;
-      }
+    // Transfer Commission to the owner
+//    address payable owner = payable(owner);
+//    owner.transfer(product.price * _quantity * 10 / 100);
+
+    // Update product quantity
+    product.availableQuantity -= _quantity;
+    if (product.availableQuantity == 0) {
+      product.available = false;
     }
 
-    require(msg.value >= totalPrice, "Insufficient funds to purchase these products");
-
-    // Transfer total amount to sellers
-    for (uint256 i = 0; i < _productIds.length; i++) {
-      uint256 productId = _productIds[i];
-      uint256 quantity = _quantities[i];
-      address payable seller = payable(products[productId].seller);
-      seller.transfer(products[productId].price * quantity);
-    }
-
-    // Create a new order
-    Order memory newOrder = Order(_productIds, _quantities, msg.sender, totalPrice, true);
-    orders[nextOrderId] = newOrder;
-    nextOrderId++;
-
-    emit ProductSold(_productIds, _quantities, msg.sender);
+//    emit OrderCreated("Order created successfully");
   }
+
+  // Function to purchase products
+//  function purchaseProducts(uint256[] memory _productIds, uint256[] memory _quantities) public payable {
+//    require(_productIds.length == _quantities.length, "Arrays must have the same length");
+//
+//    uint256 totalPrice;
+//    for (uint256 i = 0; i < _productIds.length; i++) {
+//      uint256 productId = _productIds[i];
+//      uint256 quantity = _quantities[i];
+//      require(quantity > 0, "Quantity must be greater than zero");
+//      require(productId < products.length, "Product does not exist");
+//
+//      Product storage product = products[productId];
+//      require(product.available, "One or more products are no longer available");
+//      require(quantity <= product.availableQuantity, "Requested quantity not available");
+//
+//      totalPrice += product.price * quantity;
+//      product.availableQuantity -= quantity;
+//
+//      if (product.availableQuantity == 0) {
+//        product.available = false;
+//      }
+//    }
+//
+//    require(msg.value >= totalPrice, "Insufficient funds to purchase these products");
+//
+//    // Transfer total amount to sellers
+//    for (uint256 i = 0; i < _productIds.length; i++) {
+//      uint256 productId = _productIds[i];
+//      uint256 quantity = _quantities[i];
+//      address payable seller = payable(products[productId].seller);
+//      seller.transfer(products[productId].price * quantity);
+//    }
+//
+//    // Create a new order
+//    Order memory newOrder = Order(_productIds, _quantities, msg.sender, totalPrice, true);
+//    orders[nextOrderId] = newOrder;
+//    nextOrderId++;
+//
+//    emit ProductSold(_productIds, _quantities, msg.sender);
+//  }
 
   // Function to get store information
   function getStore(address _owner) public view returns (StoreInfo memory) {
@@ -215,14 +272,26 @@ contract Store {
     return storeCategoriesList;
   }
 
-  function getCategory(uint256 _categoryID) public view returns (Category memory category){
-    return categories[_categoryID];
+  // Function to get orders of a store
+  function getStoreOrders(address _owner) public view returns (Order[] memory) {
+    uint256[] memory orderIds = storeOrders[_owner];
+    Order[] memory storeOrdersList = new Order[](orderIds.length);
+    for (uint i = 0; i < orderIds.length; i++) {
+      storeOrdersList[i] = orders[orderIds[i]];
+    }
+    return storeOrdersList;
   }
 
-  // Function to get product information
-  function getProduct(uint256 _productId) public view returns (Product memory product) {
-    return products[_productId];
+  // Function to get orders of a buyer
+  function getBuyerOrders(address _buyer) public view returns (Order[] memory) {
+    uint256[] memory orderIds = buyerOrders[_buyer];
+    Order[] memory buyerOrdersList = new Order[](orderIds.length);
+    for (uint i = 0; i < orderIds.length; i++) {
+      buyerOrdersList[i] = orders[orderIds[i]];
+    }
+    return buyerOrdersList;
   }
+
 
   // Function to get store products
   function getStoreProducts(address _owner) public view returns (Product[] memory) {
@@ -234,22 +303,11 @@ contract Store {
     return storeProductsList;
   }
 
-  // Function to get order information
-  function getOrder(uint256 _orderId) public view returns (Order memory order) {
-    return orders[_orderId];
-  }
 
   // Withdraw funds from the contract
   function withdraw() public onlyOwner {
     (bool success, ) = owner.call{value: address(this).balance}("");
     require(success, "Failed to send ether");
   }
-
-
-  // Function to retrieve all stores
-  function getAllStores() public view returns (StoreInfo[] memory) {
-    return shops;
-  }
-
 
 }

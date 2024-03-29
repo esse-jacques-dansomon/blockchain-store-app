@@ -328,6 +328,72 @@ export class ShopEffects {
     )
     );
 
+    createOrder$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ShopActionTypes.CreateOrder),
+      exhaustMap((action: any) =>
+        this.shopContractService.orderProduct(action.product, action.quantity).then(
+          (order) => {
+            return {
+              type: ShopActionTypes.CreateOrderSuccess,
+              order
+            };
+          },
+          (error) => {
+            return {
+              type: ShopActionTypes.CreateOrderFailure,
+              error,
+            };
+          }
+        )
+      )
+    )
+    );
+
+  loadStoreOrders$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ShopActionTypes.LoadOrders),
+      exhaustMap((action: any) =>
+        this.shopContractService.getStoreOrders(action.userId).then(
+          (orders: any) => {
+            return {
+              type: ShopActionTypes.LoadOrdersSuccess,
+              orders,
+            };
+          },
+          (error) => {
+            return {
+              type: ShopActionTypes.LoadOrdersFailure,
+              error,
+            };
+          }
+        )
+      )
+    )
+    );
+
+  loadUserOrders$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ShopActionTypes.LoadOrdersByUser),
+      exhaustMap((action: any) =>
+        this.shopContractService.getStoreOrders(action.userId).then(
+          (orders: any) => {
+            return {
+              type: ShopActionTypes.LoadOrdersByUserSuccess,
+              orders,
+            };
+          },
+          (error) => {
+            return {
+              type: ShopActionTypes.LoadOrdersByUserFailure,
+              error,
+            };
+          }
+        )
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private shopContractService: ShopContractService,

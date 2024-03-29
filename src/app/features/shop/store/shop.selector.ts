@@ -1,6 +1,6 @@
 import {createSelector} from "@ngrx/store";
-import {AppState} from "../../store/app.reducer";
 import {ShopState} from "./shop.reducer";
+import {AppState} from "../../../store/app.reducer";
 
 class ShopStoreSelector {
   public static selectShopState= (state: AppState) => state.shop;

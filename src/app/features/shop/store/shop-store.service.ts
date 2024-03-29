@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import {AppState} from "../../../store/app.reducer";
 import {Store} from "@ngrx/store";
 import {
-  createCategory,
+  createCategory, createOrder,
   createProduct, createShop,
-  loadCategories,
+  loadCategories, loadOrders, loadOrdersByUser,
   loadProducts,
   loadShops, loadVendor, loadVendorCategories, loadVendorProducts,
   login,
@@ -12,6 +12,7 @@ import {
   updateCategory,
   updateProduct, updateShop
 } from "./shop.action";
+import {Product} from "../../../data/models/product";
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,11 @@ import {
 export class ShopStoreService {
     private readonly store: Store<AppState>;
 
+
     constructor(store: Store<AppState>) {
       this.store = store;
     }
+
 
     selectIsLoading$ = () => this.store.select(state => state.shop.isLoading);
     selectError$ = () => this.store.select(state => state.shop.error);
@@ -29,7 +32,7 @@ export class ShopStoreService {
 
     loadShops() {this.store.dispatch(loadShops());}
     selectShops$ = () => this.store.select(state => state.shop.shopState.shops);
-
+    loadShopOrders = (shopId: number) => this.store.dispatch(loadOrders({userId: shopId}));
 
     loadShop = (shopId: number) => this.store.dispatch(selectShop({shopId}));
     selectSelectedShop$ = () => this.store.select(state => state.shop.shopState.selectedShop);
@@ -85,4 +88,10 @@ export class ShopStoreService {
     selectVendorCategories$ = () => this.store.select(state => state.shop.vendor.vendorCategories);
     selectVendorProducts$ = () => this.store.select(state => state.shop.vendor.vendorProducts);
      selectVendorShop$ = () => this.store.select(state => state.shop.vendor.vendorShop);
+
+      orderProduct = (product: Product, qte: number) => this.store.dispatch(createOrder({product: product, quantity: qte}));
+      loadUserOrders = (userId: any) => this.store.dispatch(loadOrdersByUser({userId: userId}));
+      selectUserOrders$ = () => this.store.select(state => state.shop.authState.orders);
+      selectShopOrders$ = () => this.store.select(state => state.shop.orderState.orders);
+
 }

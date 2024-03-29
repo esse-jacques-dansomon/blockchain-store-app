@@ -1,0 +1,20 @@
+<!-- cart.component.html -->
+
+{{formatUnits( account['balance'].toString())  }}
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Shopping Cart</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <!-- Display cart items here -->
+    <mat-list>
+      <mat-list-item *ngFor="let item of cartItems">
+        <h3 matLine>{{ item.name }}</h3>
+        <p matLine>Price: {{ item.price | currency }}</p>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="checkout()">Checkout</button>
+  </mat-card-actions>
+</mat-card>

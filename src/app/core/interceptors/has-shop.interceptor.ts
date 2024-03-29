@@ -9,7 +9,7 @@ import {environment} from "../../../environments/environment";
 import {Injectable} from "@angular/core";
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+export class hasShopInterceptor implements HttpInterceptor {
 
   constructor() {}
 

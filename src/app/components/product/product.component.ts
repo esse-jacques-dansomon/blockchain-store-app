@@ -9,8 +9,9 @@ import {
   MatDialogTitle
 } from "@angular/material/dialog";
 import {MatButton} from "@angular/material/button";
-import {ShopContractService} from "../../data/services/shop-contract.service";
 import {Product} from "../../data/models/product";
+import {ShopStoreService} from "../../features/shop/store/shop-store.service";
+import { formatUnits } from 'ethers/lib/utils';
 
 @Component({
   selector: 'app-product',
@@ -27,38 +28,27 @@ import {Product} from "../../data/models/product";
   ],
   templateUrl: './product.component.html'
 })
-export class ProductComponent implements OnInit{
+export class ProductComponent implements OnInit {
+  item: Product;
+
   constructor(
     public dialogRef: MatDialogRef<ProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dappazonService: ShopContractService
+    private shopStoreService: ShopStoreService
   ) {
     this.item = data.item;
-
   }
 
   async ngOnInit(): Promise<void> {
-    // this.account = data.account;
-    await this.dappazonService.getAccount().then((user) => {
-      this.account = user
-    })
-    this.fetchOrder();
-  }
-   item: Product;
-   account: any;
 
-  order: any = null;
-  deliveryDate: Date = new Date(Date.now() + 345600000); // 4 days from now
-
-
-  async buyHandler() {
-    console.log("Buying item", this.item);
-    await this.dappazonService.buyHandler(this.item.id)
-
-    this.fetchOrder()
   }
 
-   fetchOrder() {
+
+   buyHandler() {
+      this.shopStoreService.orderProduct(this.item, 1);
+  }
+
+  fetchOrder() {
     // console.log('fetching order', this.account)
     // if (!this.account) return;
     // this.dappazonService.fetchOrder(this.item.id).then((order) => {
@@ -68,12 +58,13 @@ export class ProductComponent implements OnInit{
   }
 
 
-
   onNoClick() {
     this.dialogRef.close();
   }
 
   formatUnits(amount: any) {
-    return this.dappazonService.formatUnits(amount)
+    return formatUnits(amount,'ether');
   }
+
+  protected readonly Date = Date;
 }
