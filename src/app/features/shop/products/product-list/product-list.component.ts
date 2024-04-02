@@ -20,6 +20,7 @@ import {MatInput} from "@angular/material/input";
 import {CurrencyPipe, DatePipe, NgIf} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {Category} from "../../../../data/models/category";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-product-list',
@@ -152,5 +153,16 @@ export class ProductListComponent implements AfterViewInit {
         }
       },
     });
+  }
+
+  getImage(image: any) {
+    if (image?.toString().startsWith('http')) {
+      return image;
+    }
+    return environment.ipfs + image;
+  }
+
+  openImage(image: string | undefined | SVGImageElement) {
+    window.open(this.getImage(image), '_blank');
   }
 }

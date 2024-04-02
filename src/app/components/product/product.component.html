@@ -2,7 +2,7 @@
 
   <div class="product__details">
     <div class="product__image">
-      <img [src]="item.image" alt="Product" />
+      <img [src]="getImage(item.image)" alt="Product" />
     </div>
     <div class="product__overview">
       <h1>{{ item.name }}</h1>

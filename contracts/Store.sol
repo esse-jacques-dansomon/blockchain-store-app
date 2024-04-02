@@ -2,9 +2,10 @@
 pragma solidity >=0.8.9 <0.9.0;
 import "hardhat/console.sol";
 
-contract Store {
+contract Store{
   address public owner;
-  constructor() {
+  constructor()
+  {
     owner = msg.sender;
   }
   // Structure to represent a product
@@ -29,9 +30,6 @@ contract Store {
 
   // Structure to represent an order
   struct Order {
-//    uint256[] productIds; // List of product IDs in the order
-//    uint256[] quantities; // List of quantities of each product in the order
-
     Product product;
     uint256 quantity;
     uint256 totalPrice;
@@ -51,13 +49,16 @@ contract Store {
     string name;
     string location;
     address owner;
+    uint256 balance;
   }
 
   // Event triggered when a product is sold
   event OrderCreated(Order order);
-  event StoreCreated(string name, string location, address owner);
-  event ProductCreated(string name, string image, uint256 price, uint256 availableQuantity, address seller);
-  event ProductModified(string name, uint256 price, uint256 availableQuantity);
+  event StoreCreated(StoreInfo store);
+  event StoreUpdate(StoreInfo store);
+  event ProductCreated(Product product);
+  event ProductModified(Product product);
+
 
   // Modifier
   modifier onlyOwner() {
@@ -70,55 +71,54 @@ contract Store {
 
 
   // Storage variable for products
-  Product[] public products;
+  Product[] private products;
   // Mapping to track products of each store
-  mapping(address => uint256[]) public storeProducts;
+  mapping(address => uint256[]) private storeProducts;
 
   // Storage variable for categories
-  Category[] public categories;
+  Category[] private categories;
   // Mapping to track categories of each store
-  mapping(address => uint256[]) public storeCategories;
+  mapping(address => uint256[]) private storeCategories;
 
-  StoreInfo[] public shops;
+  StoreInfo[] private shops;
   // Storage variable for store information
-  mapping(address => StoreInfo) public stores;
+  mapping(address => StoreInfo) private stores;
 
 
     // Mapping to track orders
-    Order[] public orders;
-    mapping(address => uint256[]) public storeOrders;
+    Order[] private orders;
+    mapping(address => uint256[]) private storeOrders;
     //mapping order to buyer
-    mapping(address => uint256[]) public buyerOrders;
+    mapping(address => uint256[]) private buyerOrders;
 
 
   // Mapping to track order items
 
   // Variable to manage order IDs
-  uint256 public nextOrderId;
+  uint256 private nextOrderId;
 
   // Function to create a store
-  function createStore(string memory _name, string memory _location) public  returns (StoreInfo memory){
+  function createStore(string memory _name, string memory _location) public payable{
     require(bytes(_name).length > 0, "Store name cannot be empty");
     require(bytes(_location).length > 0, "Store location cannot be empty");
     require(stores[msg.sender].owner == address(0), "Store already exists");
-    StoreInfo memory newStore = StoreInfo(_name, _location, msg.sender);
+    StoreInfo memory newStore = StoreInfo(_name, _location, msg.sender, 0);
     stores[msg.sender] = newStore;
     shops.push(newStore);
-    emit StoreCreated(_name, _location, msg.sender);
-    return newStore;
+    emit StoreCreated(newStore);
   }
 
-  function updateStore(string memory _name, string memory _location) public returns (StoreInfo memory){
+  function updateStore(string memory _name, string memory _location) public payable{
     require(bytes(_name).length > 0, "Store name cannot be empty");
     require(bytes(_location).length > 0, "Store location cannot be empty");
     StoreInfo storage store = stores[msg.sender];
     store.name = _name;
     store.location = _location;
-    return stores[msg.sender];
+    emit StoreUpdate(store);
   }
 
   // Function to create a new product in a store
-  function createProduct(string memory _name, string memory _image, uint256 _price, uint256 _quantity, uint256 _categoryId) public returns (Product memory) {
+  function createProduct(string memory _name, string memory _image, uint256 _price, uint256 _quantity, uint256 _categoryId) public {
     require(bytes(_name).length > 0, "Product name cannot be empty");
     require(bytes(_image).length > 0, "Product image cannot be empty");
     require(_price > 0, "Product price must be greater than zero");
@@ -130,12 +130,11 @@ contract Store {
     Product memory newProduct = Product(productId, _name, _image, _price, _quantity, msg.sender, true, _categoryId);
     products.push(newProduct);
     storeProducts[msg.sender].push(productId);
-    emit ProductCreated(_name, _image, _price, _quantity, msg.sender);
-    return newProduct;
+    emit ProductCreated(newProduct);
   }
 
   // Function to modify an existing product
-  function modifyProduct(uint256 _productId, string memory _newName, uint256 _newPrice, uint256 _newQuantity, uint256 _categoryId) public  returns (Product memory){
+  function modifyProduct(uint256 _productId, string memory _newName, uint256 _newPrice, uint256 _newQuantity, uint256 _categoryId) public {
     Product storage product = products[_productId];
     require(msg.sender == product.seller, "You are not authorized to modify this product");
     require(_categoryId < categories.length, "Category does not exist");
@@ -144,8 +143,7 @@ contract Store {
     product.price = _newPrice;
     product.availableQuantity = _newQuantity;
     product.categoryId = _categoryId;
-    emit ProductModified(_newName, _newPrice, _newQuantity);
-    return products[_productId];
+    emit ProductModified(product);
   }
 
   // Function to delete a product
@@ -182,13 +180,7 @@ contract Store {
     Product storage product = products[_productId];
     require(product.availableQuantity >= _quantity, "Requested quantity not available");
     require(product.available, "Product is no longer available");
-    uint256 totalPrice = (product.price * _quantity ) ;
-    //convert to wei
-
-    console.log("Total Price: ", totalPrice);
-    console.log("msg.value: ", msg.value);
-    console.log("Product Price: ", product.price);
-    console.log("Product Quantity: ", product.availableQuantity);
+    uint256 totalPrice = (product.price * _quantity );
 
   //make sure the buyer has enough funds in their wallet; ETH is the default currency
     require(msg.value >= totalPrice, "Insufficient funds to purchase this product");
@@ -197,13 +189,15 @@ contract Store {
     storeOrders[product.seller].push(orders.length - 1);
     buyerOrders[msg.sender].push(orders.length - 1);
 
-    // Transfer total amount to seller
-    address payable seller = payable(product.seller);
-    seller.transfer(totalPrice);
+    //update balance of the store
+    stores[product.seller].balance += totalPrice;
+    // Calculer et transférer la commission au créateur du contrat
+    // Calculer et transférer la commission au créateur du contrat
+    uint256 commission = msg.value / 10; // Commission de 10%
+    payable(owner).transfer(commission);
 
-    // Transfer Commission to the owner
-//    address payable owner = payable(owner);
-//    owner.transfer(product.price * _quantity * 10 / 100);
+    // Transférer le montant au propriétaire de la boutique
+    payable(product.seller).transfer(msg.value - commission);
 
     // Update product quantity
     product.availableQuantity -= _quantity;
@@ -214,46 +208,6 @@ contract Store {
     emit OrderCreated(newOrder);
   }
 
-  // Function to purchase products
-//  function purchaseProducts(uint256[] memory _productIds, uint256[] memory _quantities) public payable {
-//    require(_productIds.length == _quantities.length, "Arrays must have the same length");
-//
-//    uint256 totalPrice;
-//    for (uint256 i = 0; i < _productIds.length; i++) {
-//      uint256 productId = _productIds[i];
-//      uint256 quantity = _quantities[i];
-//      require(quantity > 0, "Quantity must be greater than zero");
-//      require(productId < products.length, "Product does not exist");
-//
-//      Product storage product = products[productId];
-//      require(product.available, "One or more products are no longer available");
-//      require(quantity <= product.availableQuantity, "Requested quantity not available");
-//
-//      totalPrice += product.price * quantity;
-//      product.availableQuantity -= quantity;
-//
-//      if (product.availableQuantity == 0) {
-//        product.available = false;
-//      }
-//    }
-//
-//    require(msg.value >= totalPrice, "Insufficient funds to purchase these products");
-//
-//    // Transfer total amount to sellers
-//    for (uint256 i = 0; i < _productIds.length; i++) {
-//      uint256 productId = _productIds[i];
-//      uint256 quantity = _quantities[i];
-//      address payable seller = payable(products[productId].seller);
-//      seller.transfer(products[productId].price * quantity);
-//    }
-//
-//    // Create a new order
-//    Order memory newOrder = Order(_productIds, _quantities, msg.sender, totalPrice, true);
-//    orders[nextOrderId] = newOrder;
-//    nextOrderId++;
-//
-//    emit ProductSold(_productIds, _quantities, msg.sender);
-//  }
 
   // Function to get store information
   function getStore(address _owner) public view returns (StoreInfo memory) {
@@ -310,4 +264,15 @@ contract Store {
     require(success, "Failed to send ether");
   }
 
+
+// * receive function
+  receive() external payable {}
+
+  // * fallback function
+  fallback() external payable {}
+
+  //Get contract balance
+  function getBalance() public view returns (uint256) {
+    return address(this).balance;
+  }
 }

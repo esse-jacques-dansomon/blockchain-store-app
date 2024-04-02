@@ -4,6 +4,7 @@ import {SectionComponent} from "../../../components/section/section.component";
 import {ShopStoreService} from "../../shop/store/shop-store.service";
 import {combineLatest, map} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-vendor-shop',
@@ -30,6 +31,13 @@ export class VendorShopComponent {
       this.shopStoreService.loadVendorCategories(shopOwner);
       this.shopStoreService.loadVendorProducts(shopOwner);
     });
+  }
+
+  getImage(image: any) {
+    if (image?.toString().startsWith('http')) {
+      return image;
+    }
+    return environment.ipfs + image;
   }
 
 

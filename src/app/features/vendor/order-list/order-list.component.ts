@@ -22,6 +22,7 @@ import {ShopStoreService} from "../../shop/store/shop-store.service";
 import {SnackBarService} from "../../../shared/services/snack-bar.service";
 import {ProductEditComponent} from "../../shop/products/product-edit/product-edit.component";
 import {Order} from "../../../data/models/order";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-order-list',
@@ -129,6 +130,12 @@ export class OrderListComponent implements AfterViewInit {
     this._coreService.openSnackBar('Employee deleted!', 'done');
   }
 
+  getImage(image: any) {
+    if (image?.toString().startsWith('http')) {
+      return image;
+    }
+    return environment.ipfs + image;
+  }
   openEditForm(data: any) {
     console.log(data)
     const dialogRef = this._dialog.open(ProductEditComponent, {

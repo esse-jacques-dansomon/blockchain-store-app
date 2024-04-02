@@ -44,25 +44,23 @@ export class ShopFormComponent {
   constructor(
     private shopStoreService: ShopStoreService,
   ) {
+    this.shopStoreService.selectSelectedShop$().subscribe(shop => {
+      if (shop) {
+        this.shop = shop;
+        this.shopForm.patchValue(shop);
+
+        this.myAngularxQrCode =environment.baseUrl + '/vendor/' + this.shop?.owner.toString();
+      }
+    })
   }
 
   onChangeURL(url: SafeUrl) {
-    console.log('url', url)
     this.qrCodeDownloadLink = url;
   }
 
 
   ngOnInit() {
-    this.shopStoreService.selectSelectedShop$().subscribe(shop => {
-      if (shop) {
-        console.log('shop', shop)
-        this.shop = shop;
-        this.shopForm.patchValue(shop);
 
-        this.myAngularxQrCode =environment.baseUrl + '/vendor/' + this.shop?.owner.toString();
-
-      }
-    })
   }
 
   public async onSubmit() {

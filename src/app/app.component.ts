@@ -1,7 +1,9 @@
-import {AfterViewInit, Component, inject, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, inject, OnInit, ViewChild} from '@angular/core';
 import {ShopContractService} from "./data/services/shop-contract.service";
 import {Router} from "@angular/router";
 import {ShopStoreService} from "./features/shop/store/shop-store.service";
+import {SnackBarService} from "./shared/services/snack-bar.service";
+import {Shop} from "./data/models/shop";
 
 @Component({
   selector: 'app-root',
@@ -9,18 +11,20 @@ import {ShopStoreService} from "./features/shop/store/shop-store.service";
   styleUrls: ['./app.component.scss'],
 
 })
-export class AppComponent  implements AfterViewInit{
+export class AppComponent  implements OnInit{
   title = 'angular-dapp';
   account: any;
   shop$ = this.shopStoreService.selectSelectedShop$();
   isLoading$ = this.shopStoreService.selectIsLoading$();
+  error$ = this.shopStoreService.selectError$();
   vendorShop$ = this.shopStoreService.selectVendorShop$();
-
    constructor(
     private shopContractService: ShopContractService,
     private shopStoreService:ShopStoreService,
-    private router: Router
+    private router: Router,
+    private snackBar: SnackBarService
   ) {
+
      this.shopContractService.getAccount().then(
       (account: any) => {
         this.loadData(account)
@@ -29,21 +33,32 @@ export class AppComponent  implements AfterViewInit{
         this.account = null;
       }
      );
-
      (window as any).ethereum.on('accountsChanged',(accounts: any) =>{
        let account = accounts[0]
        this.loadData(account)
-       this.router.navigate(['/'])
+       this.router.navigate(['/home'])
      })
+
+     this.error$.subscribe((error) => {
+       if(error) {
+         this.snackBar.openSnackBar(error.message, 'error')
+       }
+     });
 
   }
 
-  async ngAfterViewInit(): Promise<void> {
+  async ngOnInit() {
     const contract = await this.shopContractService.getContractInstance();
     contract.on('OrderCreated', (storeOwner: any) => {
       this.shopStoreService.loadShopOrders(this.account)
       this.shopStoreService.loadUserOrders(this.account)
     })
+    contract.on('StoreCreated', (storeOwner: Shop) => {
+      if (storeOwner.owner === this.account) {
+        this.loadShopData(this.account)
+      }
+    })
+
   }
 
   async connectHandler() {
@@ -58,15 +73,24 @@ export class AppComponent  implements AfterViewInit{
   }
 
   loadData(account: any) {
-    this.shopStoreService.loadLogin(account)
+     if (!account) {
+      this.account = null;
+      return;
+     }
     this.account = account;
+    this.shopStoreService.loadLogin(account)
+    this.shopStoreService.loadUserOrders(account)
+    this.loadShopData(account)
+  }
+
+  loadShopData(account: any) {
+    if (!account) {
+      return;
+    }
     this.shopStoreService.loadShop(account)
     this.shopStoreService.loadShopCategories(account)
     this.shopStoreService.loadShopProducts(account)
-
     this.shopStoreService.loadShopOrders(account)
-    this.shopStoreService.loadUserOrders(account)
-
   }
 
 }

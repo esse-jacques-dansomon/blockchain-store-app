@@ -17,6 +17,7 @@ import {MatToolbar} from "@angular/material/toolbar";
 import {MatAnchor, MatButton, MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
+import {HttpClientModule} from "@angular/common/http";
 registerLocaleData(localeFr);
 
 
@@ -25,6 +26,7 @@ registerLocaleData(localeFr);
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes, {
       useHash: false,
       scrollPositionRestoration: 'enabled',

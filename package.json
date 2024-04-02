@@ -9,6 +9,7 @@
     "test": "npx hardhat test",
     "node:localhost": "npx hardhat node",
     "deploy:localhost": "npx hardhat run --network localhost scripts/deploy.js",
+    "deploy:etherlinkTest": "npx hardhat run --network etherlinkTest scripts/deploy.js",
     "deploy:testnet": "npx hardhat run --network testnet scripts/deploy.js",
     "deploy:mainnet": "npx hardhat run --network mainnet scripts/deploy.js"
   },

@@ -12,6 +12,7 @@ import {MatButton} from "@angular/material/button";
 import {Product} from "../../data/models/product";
 import {ShopStoreService} from "../../features/shop/store/shop-store.service";
 import { formatUnits } from 'ethers/lib/utils';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-product',
@@ -50,6 +51,7 @@ export class ProductComponent implements OnInit {
 
    buyHandler() {
       this.shopStoreService.orderProduct(this.item, 1);
+      this.dialogRef.close();
   }
 
 
@@ -62,4 +64,11 @@ export class ProductComponent implements OnInit {
   }
 
   protected readonly Date = Date;
+
+  getImage(image: any) {
+    if (image?.toString().startsWith('http')) {
+      return image;
+    }
+    return environment.ipfs + image;
+  }
 }

@@ -1,6 +1,8 @@
 export const environment = {
   production: false,
-  contractAddress: '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9',
-  ipfs: 'https://ipfs.infura.io',
+  contractAddress: '0x610178dA211FEF7D417bC0e6FeD39F05609AD788',
+  ipfs: 'https://turquoise-left-pelican-778.mypinata.cloud/ipfs/',
   baseUrl: 'http://localhost:4200',
+  JWT: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJlNWFlOWRiNy03MTE4LTRkNGEtODQ1ZC0zODBhYzc5NmY4NzIiLCJlbWFpbCI6InJha2VuODExMjBAaWt1bWFydS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJpZCI6IkZSQTEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX0seyJpZCI6Ik5ZQzEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudGljYXRpb25UeXBlIjoic2NvcGVkS2V5Iiwic2NvcGVkS2V5S2V5IjoiNTdjNTM1MmFkY2FmODljZGYyYWMiLCJzY29wZWRLZXlTZWNyZXQiOiJlMThiZGMwMGJhYWZlNmFkNDliYTU3MzJjYzcyZTFhYjQ5Y2YyYzQ1OWI0Y2NiM2ViZmQyZTc4ZTkxM2QwYmRkIiwiaWF0IjoxNzExODgzNzA4fQ.3zXzjoOR7fcQeJ-QgHCrSYdTY8bSJAq4YQ2MkQedrHw'
+
 };

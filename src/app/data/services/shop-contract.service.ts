@@ -40,10 +40,10 @@ export class ShopContractService {
 
   async createShop(shop: Shop) {
     const contract = await ShopContractService.getContract(true)
-    const transaction = await contract['createStore'](shop.name, shop.location)
-    let store = await transaction.wait()
-    console.log(store)
-    return store
+    const signer = contract.signer
+    console.log('signer', signer)
+    const transaction = await contract.connect(signer)['createStore'](shop.name, shop.location, {value: ethers.utils.parseEther('1')} )
+    return await transaction.wait()
   }
 
   async updateShop(shop: Shop) {
@@ -117,7 +117,7 @@ export class ShopContractService {
     const contract = await ShopContractService.getContract(true)
     const signer = contract.signer
     const transaction = await contract.connect(signer)['orderProduct'](product.id, quantity, {value:
-    ((product.price * quantity) + 10) } )
+    ((product.price * quantity) ) } )
     await transaction.wait()
   }
 
@@ -156,5 +156,10 @@ export class ShopContractService {
 
   async getContractInstance() {
     return await ShopContractService.getContract(false)
+  }
+
+  async getContractBalance() {
+    const contract = await ShopContractService.getContract(false)
+    return await contract['getBalance']()
   }
 }

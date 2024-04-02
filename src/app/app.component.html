@@ -2,7 +2,7 @@
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </ng-container>
 <mat-toolbar color="primary">
-  <span [routerLink]="['/']">Multivers Restaurant</span>
+  <span [routerLink]="['/']">Multivers Restaurant {{contractBalance}}</span>
   <div class="spacer"></div>
 
   <button mat-button [routerLink]="['/']">Home</button>
@@ -25,8 +25,8 @@
     </ng-template>
     <button mat-button [routerLink]="['orders']">Account ({{account.slice(0, 6) + '...' + account.slice(38, 42)}})</button>
   </ng-container>
-  <ng-template #notAuth>>
-  <button mat-button [routerLink]="['/store/product']">Login</button>
+  <ng-template #notAuth>
+  <button mat-button (click)="connectHandler()" >Login</button>
   </ng-template>
 
 

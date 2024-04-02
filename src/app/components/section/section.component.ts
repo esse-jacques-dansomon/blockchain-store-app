@@ -5,6 +5,7 @@ import {ProductComponent} from "../product/product.component";
 import {MatDialog} from "@angular/material/dialog";
 import {formatUnits} from "ethers/lib/utils";
 import {Product} from "../../data/models/product";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-section',
@@ -22,7 +23,7 @@ import {Product} from "../../data/models/product";
         <div class="cards">
           <div *ngFor="let item of items; let index = index" class="card" (click)="togglePop(item)">
             <div class="card__image">
-              <img [src]="item.image" alt="Item" />
+              <img [src]="getImage(item.image)" alt="Item" />
             </div>
             <div class="card__info">
               <h4>{{ item.name }}</h4>
@@ -44,6 +45,13 @@ export class SectionComponent {
   ) {
   }
 
+
+  getImage(image: any) {
+    if (image?.toString().startsWith('http')) {
+      return image;
+    }
+    return environment.ipfs + image;
+  }
 
 
   togglePop(item: any) {

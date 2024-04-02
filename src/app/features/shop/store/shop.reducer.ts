@@ -105,7 +105,7 @@ export function shopReducer(state: ShopState, action:ShopActions): ShopState {
       //  Login
       case ShopActionTypes.Login:
         return {
-          ...state,
+          ...shopInitialState,
           isLoading: true,
         };
       case ShopActionTypes.LoginSuccess:
@@ -183,10 +183,6 @@ export function shopReducer(state: ShopState, action:ShopActions): ShopState {
       case ShopActionTypes.CreateShopSuccess:
         return {
           ...state,
-          shopState: {
-            ...state.shopState,
-            shops: [...state.shopState.shops?? [], action.shop],
-          },
           isLoading: false,
         };
       case ShopActionTypes.CreateShopFailure:

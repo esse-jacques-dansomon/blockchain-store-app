@@ -22,6 +22,7 @@ import {SnackBarService} from "../../../shared/services/snack-bar.service";
 import {ProductEditComponent} from "../products/product-edit/product-edit.component";
 import {MatToolbar} from "@angular/material/toolbar";
 import {CurrencyPipe, DatePipe, NgIf} from "@angular/common";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-shop-order-list',
@@ -148,5 +149,12 @@ export class ShopOrderListComponent implements AfterViewInit {
 
   getCategoryName(id: any) {
     return this.Categories.find((cat) => cat.id.toString() == id)?.name;
+  }
+
+  getImage(image: any) {
+    if (image?.toString().startsWith('http')) {
+      return image;
+    }
+    return environment.ipfs + image;
   }
 }

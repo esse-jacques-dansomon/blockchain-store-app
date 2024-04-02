@@ -32,7 +32,7 @@ async function main() {
       for (let k = 0; k < category.products.length; k++) {
         console.log('=---------Product Name:', category.products[k].name)
         let product = category.products[k]
-        const tx = await store.connect(shopOwner).createProduct(product.name, product.image, tokens(k +1), product.quantity, idCategory)
+        const tx = await store.connect(shopOwner).createProduct(product.name, 'QmXm32BLCkvhPa14DcnCZnZAXn5AspF1bDkBdJNYkkkU6B', tokens(k +1), product.quantity, idCategory)
         await tx.wait()
         console.log('------------Product created')
       }

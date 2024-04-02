@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {exhaustMap, map, switchMap} from "rxjs";
-import {loadVendor, ShopActionTypes} from "./shop.action";
+import {exhaustMap, switchMap} from "rxjs";
+import { ShopActionTypes} from "./shop.action";
 import {Shop} from "../../../data/models/shop";
 import {Category} from "../../../data/models/category";
 import {Product} from "../../../data/models/product";

@@ -56,7 +56,7 @@
       <ng-container matColumnDef="image">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> image </th>
         <td mat-cell *matCellDef="let row">
-          <img [src]="row.image" alt="image" width="50" height="50">
+          <img (click)="openImage(row.image)" [src]=" getImage(row.image)" alt="image" width="50" height="50">
         </td>
       </ng-container>
 

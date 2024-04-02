@@ -98,9 +98,25 @@ export class ProductEditComponent implements OnInit{
     }
   }
 
-  public async uploadImage(eventTarget: any) {
-    const fileUrl = await this.ipfs.uploadFile(eventTarget.files[0])
-    this.uploadedImage = fileUrl
-    this.empForm.get('image')?.setValue(fileUrl)
+  public  uploadImage(eventTarget: any) {
+    // const fileUrl =  this.ipfs.uploadFile(eventTarget.files[0]).subscribe(
+    //   (res: any) => {
+    //     console.log(res);
+    //     this.uploadedImage = res.IpfsHash
+    //     this.empForm.get('image')?.setValue(res.IpfsHash)
+    //   },
+    //   (err: any) => {
+    //     console.error(err);
+    //   }
+    //)
+
+    this.ipfs.handleSubmission(eventTarget.files[0]).then((res: any) => {
+      console.log(res);
+      this.uploadedImage = res.IpfsHash
+      this.empForm.get('image')?.setValue(res.IpfsHash)
+    }).catch((err: any) => {
+      console.error(err);
+    });
+
   }
 }

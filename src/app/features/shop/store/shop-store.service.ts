@@ -32,9 +32,9 @@ export class ShopStoreService {
 
     loadShops() {this.store.dispatch(loadShops());}
     selectShops$ = () => this.store.select(state => state.shop.shopState.shops);
-    loadShopOrders = (shopId: number) => this.store.dispatch(loadOrders({userId: shopId}));
+    loadShopOrders = (shopId: any) => this.store.dispatch(loadOrders({userId: shopId}));
 
-    loadShop = (shopId: number) => this.store.dispatch(selectShop({shopId}));
+    loadShop = (shopId: any) => this.store.dispatch(selectShop({shopId}));
     selectSelectedShop$ = () => this.store.select(state => state.shop.shopState.selectedShop);
     createShop = (value: any) => this.store.dispatch(createShop({shop: value}));
     updateShop = (value: any) => this.store.dispatch(updateShop({shop: value}));
@@ -53,12 +53,12 @@ export class ShopStoreService {
       ...value,id
       }}));
     addCategory = (value: any) => this.store.dispatch(createCategory({category: value}));
-    loadShopCategories = (shopId: number) => this.store.dispatch(loadCategories({shopId}));
+    loadShopCategories = (shopId: any) => this.store.dispatch(loadCategories({shopId}));
     selectSelectedShopCategories$ = () => this.store.select(state => state.shop.shopState.categories);
 
 
 
-    loadShopProducts = (shopId: number) => this.store.dispatch(loadProducts({shopId}));
+    loadShopProducts = (shopId: any) => this.store.dispatch(loadProducts({shopId}));
     selectSelectedShopProducts$ = () => this.store.select(state => state.shop.shopState.products);
     updateProduct =(id: any, value: any) => this.store.dispatch(updateProduct({product: {
       ...value,id
