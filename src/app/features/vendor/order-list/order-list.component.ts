@@ -23,6 +23,7 @@ import {SnackBarService} from "../../../shared/services/snack-bar.service";
 import {ProductEditComponent} from "../../shop/products/product-edit/product-edit.component";
 import {Order} from "../../../data/models/order";
 import {environment} from "../../../../environments/environment";
+import {formatUnits} from "ethers/lib/utils";
 
 @Component({
   selector: 'app-order-list',
@@ -150,5 +151,7 @@ export class OrderListComponent implements AfterViewInit {
       },
     });
   }
+
+  protected readonly formatUnits = formatUnits;
 }
 

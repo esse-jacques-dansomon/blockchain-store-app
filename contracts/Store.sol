@@ -66,9 +66,6 @@ contract Store{
     _;
   }
 
-  //validate store data
-
-
 
   // Storage variable for products
   Product[] private products;
@@ -98,7 +95,7 @@ contract Store{
   uint256 private nextOrderId;
 
   // Function to create a store
-  function createStore(string memory _name, string memory _location) public payable{
+  function createStore(string memory _name, string memory _location) public{
     require(bytes(_name).length > 0, "Store name cannot be empty");
     require(bytes(_location).length > 0, "Store location cannot be empty");
     require(stores[msg.sender].owner == address(0), "Store already exists");
@@ -108,7 +105,7 @@ contract Store{
     emit StoreCreated(newStore);
   }
 
-  function updateStore(string memory _name, string memory _location) public payable{
+  function updateStore(string memory _name, string memory _location) public {
     require(bytes(_name).length > 0, "Store name cannot be empty");
     require(bytes(_location).length > 0, "Store location cannot be empty");
     StoreInfo storage store = stores[msg.sender];
@@ -151,6 +148,7 @@ contract Store{
     Product storage product = products[_productId];
     require(msg.sender == product.seller, "You are not authorized to delete this product");
     product.available = false;
+
   }
 
   // Function to create a new category
@@ -178,11 +176,12 @@ contract Store{
   function orderProduct(uint256 _productId, uint256 _quantity) public payable {
     //the app unit is in ether
     Product storage product = products[_productId];
+    require(product.seller != msg.sender, "You cannot order your own product");
     require(product.availableQuantity >= _quantity, "Requested quantity not available");
     require(product.available, "Product is no longer available");
     uint256 totalPrice = (product.price * _quantity );
 
-  //make sure the buyer has enough funds in their wallet; ETH is the default currency
+    //make sure the buyer has enough funds in their wallet; ETH is the default currency
     require(msg.value >= totalPrice, "Insufficient funds to purchase this product");
     Order memory newOrder = Order(product, _quantity, totalPrice, msg.sender);
     orders.push(newOrder);

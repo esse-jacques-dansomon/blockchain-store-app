@@ -23,6 +23,7 @@ import {ProductEditComponent} from "../products/product-edit/product-edit.compon
 import {MatToolbar} from "@angular/material/toolbar";
 import {CurrencyPipe, DatePipe, NgIf} from "@angular/common";
 import {environment} from "../../../../environments/environment";
+import {formatUnits} from "ethers/lib/utils";
 
 @Component({
   selector: 'app-shop-order-list',
@@ -157,4 +158,6 @@ export class ShopOrderListComponent implements AfterViewInit {
     }
     return environment.ipfs + image;
   }
+
+    protected readonly formatUnits = formatUnits;
 }

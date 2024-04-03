@@ -41,8 +41,7 @@ export class ShopContractService {
   async createShop(shop: Shop) {
     const contract = await ShopContractService.getContract(true)
     const signer = contract.signer
-    console.log('signer', signer)
-    const transaction = await contract.connect(signer)['createStore'](shop.name, shop.location, {value: ethers.utils.parseEther('1')} )
+    const transaction = await contract.connect(signer)['createStore'](shop.name, shop.location)
     return await transaction.wait()
   }
 
@@ -117,7 +116,7 @@ export class ShopContractService {
     const contract = await ShopContractService.getContract(true)
     const signer = contract.signer
     const transaction = await contract.connect(signer)['orderProduct'](product.id, quantity, {value:
-    ((product.price * quantity) ) } )
+        (`${product.price}`)} )
     await transaction.wait()
   }
 
@@ -136,30 +135,9 @@ export class ShopContractService {
   }
 
 
-  async getAccountInfo() {
-    const contract = await ShopContractService.getContract(true)
-    const signer = contract.signer
-    return {
-      balance: await signer.getBalance(),
-      address: await signer.getAddress()
-    };
-  }
-
-
-  async listenToEvents() {
-    const contract = await ShopContractService.getContract(false)
-    contract.on('OrderCreated', (storeOwner: any) => {
-      console.log('OrderCreated created by', storeOwner)
-    })
-
-  }
 
   async getContractInstance() {
     return await ShopContractService.getContract(false)
   }
 
-  async getContractBalance() {
-    const contract = await ShopContractService.getContract(false)
-    return await contract['getBalance']()
-  }
 }
